@@ -1,0 +1,11 @@
+# Ghost HMS
+
+An offline-first Hospital Management System built specifically for Nigerian hospitals.
+
+## Built With
+
+- React
+- Node.js
+- Express
+- PostgreSQL
+- Prisma
