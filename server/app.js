@@ -2,11 +2,11 @@ require("dotenv").config();
 
 const express = require("express");
 const pool = require("./config/db");
-
+const patientRoutes = require("./routes/patientRoutes");
 const app = express();
 
 app.use(express.json());
-
+app.use("/patients", patientRoutes);
 // Home Route
 app.get("/", (req, res) => {
     res.send("🔥 THIS IS THE NEW GHOST HMS SERVER 🔥");
@@ -27,6 +27,7 @@ app.get("/test-db", async (req, res) => {
     });
 }
 });
+
 
 const PORT = process.env.PORT || 5000;
 
