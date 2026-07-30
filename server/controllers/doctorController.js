@@ -1,7 +1,7 @@
 const doctorModel = require("../models/doctorModel");
 
 // Create Doctor
-const createDoctor = async (req, res) => {
+const createDoctor = async (req, res, next) => {
     try {
 
         const {
@@ -26,18 +26,13 @@ const createDoctor = async (req, res) => {
 
     } catch (err) {
 
-        console.error(err.message);
+    next(err);
 
-        res.status(500).json({
-            success: false,
-            error: err.message
-        });
-
-    }
+}
 };
 
 // Get All Doctors
-const getAllDoctors = async (req, res) => {
+const getAllDoctors = async (req, res, next) => {
     try {
 
         const doctors = await doctorModel.getAllDoctors();
@@ -46,18 +41,13 @@ const getAllDoctors = async (req, res) => {
 
     } catch (err) {
 
-        console.error(err.message);
+    next(err);
 
-        res.status(500).json({
-            success: false,
-            error: err.message
-        });
-
-    }
+}
 };
 
 // Get Doctor By ID
-const getDoctorById = async (req, res) => {
+const getDoctorById = async (req, res, next) => {
     try {
 
         const doctor = await doctorModel.getDoctorById(req.params.id);
@@ -73,18 +63,13 @@ const getDoctorById = async (req, res) => {
 
     } catch (err) {
 
-        console.error(err.message);
+    next(err);
 
-        res.status(500).json({
-            success: false,
-            error: err.message
-        });
-
-    }
+}
 };
 
 // Update Doctor
-const updateDoctor = async (req, res) => {
+const updateDoctor = async (req, res, next) => {
     try {
 
         const { id } = req.params;
@@ -119,18 +104,13 @@ const updateDoctor = async (req, res) => {
 
     } catch (err) {
 
-        console.error(err.message);
+    next(err);
 
-        res.status(500).json({
-            success: false,
-            error: err.message
-        });
-
-    }
+}
 };
 
 // Delete Doctor
-const deleteDoctor = async (req, res) => {
+const deleteDoctor = async (req, res, next) => {
     try {
 
         const doctor = await doctorModel.deleteDoctor(req.params.id);
@@ -150,14 +130,9 @@ const deleteDoctor = async (req, res) => {
 
     } catch (err) {
 
-        console.error(err.message);
+    next(err);
 
-        res.status(500).json({
-            success: false,
-            error: err.message
-        });
-
-    }
+}
 };
 
 module.exports = {

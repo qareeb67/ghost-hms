@@ -1,5 +1,7 @@
+
 const express = require("express");
 const router = express.Router();
+const validatePatient = require("../middlewares/patientValidation");
 
 const {
     createPatient,
@@ -20,7 +22,7 @@ router.get("/search", searchPatients);
 router.get("/:id", getPatientById);
 
 // Create a patient
-router.post("/", createPatient);
+router.post("/", validatePatient, createPatient);
 
 // Update a patient
 router.put("/:id", updatePatient);

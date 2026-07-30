@@ -1,7 +1,7 @@
 const appointmentModel = require("../models/appointmentModel");
 
 // Create Appointment
-const createAppointment = async (req, res) => {
+const createAppointment = async (req, res, next) => {
 
     try {
 
@@ -27,19 +27,14 @@ const createAppointment = async (req, res) => {
 
     } catch (err) {
 
-        console.error(err.message);
+    next(err);
 
-        res.status(500).json({
-            success: false,
-            error: err.message
-        });
-
-    }
+}
 
 };
 
 // Get All Appointments
-const getAllAppointments = async (req, res) => {
+const getAllAppointments = async (req, res, next) => {
 
     try {
 
@@ -49,19 +44,14 @@ const getAllAppointments = async (req, res) => {
 
     } catch (err) {
 
-        console.error(err.message);
+    next(err);
 
-        res.status(500).json({
-            success: false,
-            error: err.message
-        });
-
-    }
+}
 
 };
 
 // Get Appointment By ID
-const getAppointmentById = async (req, res) => {
+const getAppointmentById = async (req, res, next) => {
 
     try {
 
@@ -80,19 +70,14 @@ const getAppointmentById = async (req, res) => {
 
     } catch (err) {
 
-        console.error(err.message);
+    next(err);
 
-        res.status(500).json({
-            success: false,
-            error: err.message
-        });
-
-    }
+}
 
 };
 
 // Update Appointment
-const updateAppointment = async (req, res) => {
+const updateAppointment = async (req, res, next) => {
 
     try {
 
@@ -128,18 +113,13 @@ const updateAppointment = async (req, res) => {
 
     } catch (err) {
 
-        console.error(err.message);
+    next(err);
 
-        res.status(500).json({
-            success: false,
-            error: err.message
-        });
-
-    }
+}
 
 };
 
-const deleteAppointment = async (req, res) => {
+const deleteAppointment = async (req, res, next) => {
     try {
         const { id } = req.params;
 
@@ -158,18 +138,15 @@ const deleteAppointment = async (req, res) => {
             appointment
         });
 
-    } catch (err) {
-        console.error(err.message);
+    }catch (err) {
 
-        res.status(500).json({
-            success: false,
-            error: err.message
-        });
-    }
+    next(err);
+
+}
 };
 
 // Complete Appointment
-const completeAppointment = async (req, res) => {
+const completeAppointment = async (req, res, next) => {
 
     try {
 
@@ -192,14 +169,9 @@ const completeAppointment = async (req, res) => {
 
     } catch (err) {
 
-        console.error(err.message);
+    next(err);
 
-        res.status(500).json({
-            success: false,
-            error: err.message
-        });
-
-    }
+}
 
 };
 

@@ -1,7 +1,7 @@
 const patientModel = require("../models/patientModel");
 
 // Create Patient
-const createPatient = async (req, res) => {
+const createPatient = async (req, res, next) => {
     try {
 
         const {
@@ -24,18 +24,15 @@ const createPatient = async (req, res) => {
 
 res.status(201).json(patient);
 
-    } catch (err) {
-        console.error(err.message);
+    }catch (err) {
 
-        res.status(500).json({
-            success: false,
-            error: err.message
-        });
-    }
+    next(err);
+
+}
 };
 
 // Get All Patients
-const getAllPatients = async (req, res) => {
+const getAllPatients = async (req, res, next) => {
     try {
 
        const patients = await patientModel.getAllPatients();
@@ -43,15 +40,12 @@ const getAllPatients = async (req, res) => {
 res.status(200).json(patients);
 
     } catch (err) {
-        console.error(err.message);
 
-        res.status(500).json({
-            success: false,
-            error: err.message
-        });
-    }
+    next(err);
+
+}
 };
-const getPatientById = async (req, res) => {
+const getPatientById = async (req, res, next) => {
 
     try {
 
@@ -68,18 +62,13 @@ const getPatientById = async (req, res) => {
 
     } catch (err) {
 
-        console.error(err.message);
+    next(err);
 
-        res.status(500).json({
-            success: false,
-            error: err.message
-        });
-
-    }
+}
 
 };
 
-const updatePatient = async (req, res) => {
+const updatePatient = async (req, res, next) => {
 
     try {
 
@@ -113,20 +102,15 @@ const updatePatient = async (req, res) => {
 
         res.status(200).json(patient);
 
-    } catch (err) {
+    }catch (err) {
 
-        console.error(err.message);
+    next(err);
 
-        res.status(500).json({
-            success: false,
-            error: err.message
-        });
-
-    }
+}
 
 };
 // Delete Patient
-const deletePatient = async (req, res) => {
+const deletePatient = async (req, res, next) => {
     try {
         const { id } = req.params;
 
@@ -146,16 +130,13 @@ const deletePatient = async (req, res) => {
         });
 
     } catch (err) {
-        console.error(err.message);
 
-        res.status(500).json({
-            success: false,
-            error: err.message
-        });
-    }
+    next(err);
+
+}
 };
 // Search Patients
-const searchPatients = async (req, res) => {
+const searchPatients = async (req, res, next) => {
 
     try {
 
@@ -167,14 +148,9 @@ const searchPatients = async (req, res) => {
 
     } catch (err) {
 
-        console.error(err.message);
+    next(err);
 
-        res.status(500).json({
-            success: false,
-            error: err.message
-        });
-
-    }
+}
 
 };
 

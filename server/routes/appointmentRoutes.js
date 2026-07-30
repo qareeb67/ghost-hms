@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const validateAppointment = require("../middlewares/appointmentValidation");
 
 const {
     createAppointment,
@@ -14,7 +15,7 @@ const {
 router.get("/", getAllAppointments);
 
 // Create appointment
-router.post("/", createAppointment);
+router.post("/", validateAppointment, createAppointment);
 
 // Get appointment by ID
 router.get("/:id", getAppointmentById);

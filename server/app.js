@@ -1,14 +1,20 @@
-
 require("dotenv").config();
+
+const express = require("express");
+const app = express();
+
+const pool = require("./config/db");
+
+const patientRoutes = require("./routes/patientRoutes");
 const doctorRoutes = require("./routes/doctorRoutes");
 const appointmentRoutes = require("./routes/appointmentRoutes");
 
-const express = require("express");
-const pool = require("./config/db");
-const patientRoutes = require("./routes/patientRoutes");
-const app = express();
+const errorHandler = require("./middlewares/errorHandler");
 
+// Middleware
 app.use(express.json());
+
+// Routes
 app.use("/patients", patientRoutes);
 app.use("/doctors", doctorRoutes);
 app.use("/appointments", appointmentRoutes);
@@ -19,21 +25,24 @@ app.get("/", (req, res) => {
 });
 
 // Database Test
-app.get("/test-db", async (req, res) => {
-    try {
-        const result = await pool.query("SELECT NOW()");
-        res.json(result.rows);
-    }catch (err) {
-    console.error("Database Error:");
-    console.error(err.message);
+app.get("/test-db", async (req, res, next) => {
 
-    res.status(500).json({
-        success: false,
-        error: err.message
-    });
-}
+    try {
+
+        const result = await pool.query("SELECT NOW()");
+
+        res.json(result.rows);
+
+    } catch (err) {
+
+        next(err);
+
+    }
+
 });
 
+// Global Error Handler
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
 
