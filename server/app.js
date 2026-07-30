@@ -1,5 +1,8 @@
 require("dotenv").config();
 
+const swaggerUi = require("swagger-ui-express");
+const swaggerSpec = require("./config/swagger");
+
 const express = require("express");
 const app = express();
 
@@ -19,6 +22,7 @@ app.use("/patients", patientRoutes);
 app.use("/doctors", doctorRoutes);
 app.use("/appointments", appointmentRoutes);
 
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 // Home Route
 app.get("/", (req, res) => {
     res.send("🔥 THIS IS THE NEW GHOST HMS SERVER 🔥");
