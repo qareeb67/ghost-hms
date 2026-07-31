@@ -6,6 +6,7 @@ const {
     loginUser
 } = require("../controllers/userController");
 
+const authorizeRoles = require("../middlewares/roleMiddleware");
 // Register User
 router.post("/register", validateUser, registerUser);
 

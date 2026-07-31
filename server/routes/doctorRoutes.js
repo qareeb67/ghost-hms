@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const validateDoctor = require("../middlewares/doctorValidation");
+const authenticateToken = require("../middlewares/authMiddleware");
 
 const {
     createDoctor,
@@ -23,7 +24,7 @@ const {
  *       200:
  *         description: Successfully retrieved all doctors.
  */
-router.get("/", getAllDoctors);
+router.get("/", authenticateToken, getAllDoctors);
 
 /**
  * @swagger
@@ -45,7 +46,7 @@ router.get("/", getAllDoctors);
  *       404:
  *         description: Doctor not found.
  */
-router.get("/:id", getDoctorById);
+router.get("/:id", authenticateToken, getDoctorById);
 
 /**
  * @swagger
@@ -85,7 +86,7 @@ router.get("/:id", getDoctorById);
  *       201:
  *         description: Doctor created successfully.
  */
-router.post("/", validateDoctor, createDoctor);
+router.post("/", authenticateToken, validateDoctor, createDoctor);
 
 /**
  * @swagger
@@ -133,7 +134,7 @@ router.post("/", validateDoctor, createDoctor);
  *       404:
  *         description: Doctor not found.
  */
-router.put("/:id", updateDoctor);
+router.patch("/:id", authenticateToken, validateDoctor, updateDoctor);
 
 /**
  * @swagger
@@ -155,6 +156,6 @@ router.put("/:id", updateDoctor);
  *       404:
  *         description: Doctor not found.
  */
-router.delete("/:id", deleteDoctor);
+router.delete("/:id", authenticateToken, deleteDoctor);
 
 module.exports = router;

@@ -3,7 +3,7 @@ const express = require("express");
 const router = express.Router();
 const validatePatient = require("../middlewares/patientValidation");
 const authenticateToken = require("../middlewares/authMiddleware");
-
+const authorizeRoles = require("../middlewares/roleMiddleware");
 const {
     createPatient,
     getAllPatients,
@@ -26,10 +26,10 @@ const {
  *         description: Successfully retrieved all patients.
  */
 // Get all patients
-router.get("/", getAllPatients);
+router.get("/", authenticateToken, getAllPatients);
 
 // Search patients
-router.get("/search", searchPatients);
+router.get("/search", authenticateToken, searchPatients);
 
 /**
  * @swagger
@@ -53,7 +53,7 @@ router.get("/search", searchPatients);
  *         description: Patient not found.
  */
 // Get one patient by ID
-router.get("/:id", getPatientById);
+router.get("/:id", authenticateToken, getPatientById);
 
 /**
  * @swagger
@@ -152,7 +152,7 @@ router.post("/", authenticateToken, validatePatient, createPatient);
  *         description: Patient not found.
  */
 // Update a patient
-router.put("/:id", updatePatient);
+router.put("/:id", authenticateToken, validatePatient, updatePatient);
 
 /**
  * @swagger
@@ -176,6 +176,6 @@ router.put("/:id", updatePatient);
  *         description: Patient not found.
  */
 // Delete a patient
-router.delete("/:id", deletePatient);
+router.delete("/:id", authenticateToken,authorizeRoles("admin"), deletePatient);
 
 module.exports = router;

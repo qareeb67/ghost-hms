@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const validateAppointment = require("../middlewares/appointmentValidation");
-
+const authenticateToken = require("../middlewares/authMiddleware");
 const {
     createAppointment,
     getAllAppointments,
@@ -23,7 +23,7 @@ const {
  *         description: Successfully retrieved all appointments.
  */
 // Get all appointments
-router.get("/", getAllAppointments);
+router.get("/", authenticateToken, getAllAppointments);
 
 /**
  * @swagger
@@ -63,7 +63,7 @@ router.get("/", getAllAppointments);
  *         description: Appointment created successfully.
  */
 // Create appointment
-router.post("/", validateAppointment, createAppointment);
+router.post("/", authenticateToken, validateAppointment, createAppointment);
 
 /**
  * @swagger
@@ -86,7 +86,7 @@ router.post("/", validateAppointment, createAppointment);
  *         description: Appointment not found.
  */
 // Get appointment by ID
-router.get("/:id", getAppointmentById);
+router.get("/:id", authenticateToken, getAppointmentById);
 
 /**
  * @swagger
@@ -135,7 +135,7 @@ router.get("/:id", getAppointmentById);
  *         description: Appointment not found.
  */
 // Update appointment
-router.patch("/:id", updateAppointment);
+router.patch("/:id", authenticateToken, validateAppointment, updateAppointment);
 
 /**
  * @swagger
@@ -158,8 +158,8 @@ router.patch("/:id", updateAppointment);
 *         description: Appointment not found.
 */
 // Delete appointment
-router.delete("/:id", deleteAppointment);
+router.delete("/:id", authenticateToken, deleteAppointment);
 
 // Complete appointment
-router.patch("/:id/complete", completeAppointment);
+router.patch("/:id/complete", authenticateToken, completeAppointment);
 module.exports = router;
