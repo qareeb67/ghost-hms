@@ -14,11 +14,13 @@ const appointmentRoutes = require("./routes/appointmentRoutes");
 
 const errorHandler = require("./middlewares/errorHandler");
 
+const userRoutes = require("./routes/userRoutes");
 // Middleware
 app.use(express.json());
 
 // Routes
 app.use("/patients", patientRoutes);
+app.use("/users", userRoutes);
 app.use("/doctors", doctorRoutes);
 app.use("/appointments", appointmentRoutes);
 

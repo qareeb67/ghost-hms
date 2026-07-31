@@ -2,6 +2,7 @@
 const express = require("express");
 const router = express.Router();
 const validatePatient = require("../middlewares/patientValidation");
+const authenticateToken = require("../middlewares/authMiddleware");
 
 const {
     createPatient,
@@ -97,7 +98,7 @@ router.get("/:id", getPatientById);
  *         description: Patient created successfully.
  */
 // Create a patient
-router.post("/", validatePatient, createPatient);
+router.post("/", authenticateToken, validatePatient, createPatient);
 
 /**
  * @swagger
