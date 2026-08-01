@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const validateAppointment = require("../middlewares/appointmentValidation");
 const authenticateToken = require("../middlewares/authMiddleware");
+const authorizeRoles = require("../middlewares/roleMiddleware");
 const {
     createAppointment,
     getAllAppointments,
@@ -23,7 +24,12 @@ const {
  *         description: Successfully retrieved all appointments.
  */
 // Get all appointments
-router.get("/", authenticateToken, getAllAppointments);
+router.get(
+    "/",
+    authenticateToken,
+    authorizeRoles("admin", "doctor", "receptionist", "staff"),
+    getAllAppointments
+);
 
 /**
  * @swagger
@@ -63,7 +69,13 @@ router.get("/", authenticateToken, getAllAppointments);
  *         description: Appointment created successfully.
  */
 // Create appointment
-router.post("/", authenticateToken, validateAppointment, createAppointment);
+router.post(
+    "/",
+    authenticateToken,
+    authorizeRoles("admin", "receptionist", "staff"),
+    validateAppointment,
+    createAppointment
+);
 
 /**
  * @swagger
@@ -86,7 +98,12 @@ router.post("/", authenticateToken, validateAppointment, createAppointment);
  *         description: Appointment not found.
  */
 // Get appointment by ID
-router.get("/:id", authenticateToken, getAppointmentById);
+router.get(
+    "/:id",
+    authenticateToken,
+    authorizeRoles("admin", "doctor", "receptionist", "staff"),
+    getAppointmentById
+);
 
 /**
  * @swagger
@@ -135,7 +152,13 @@ router.get("/:id", authenticateToken, getAppointmentById);
  *         description: Appointment not found.
  */
 // Update appointment
-router.patch("/:id", authenticateToken, validateAppointment, updateAppointment);
+router.patch(
+    "/:id",
+    authenticateToken,
+    authorizeRoles("admin", "receptionist"),
+    validateAppointment,
+    updateAppointment
+);
 
 /**
  * @swagger
@@ -158,8 +181,19 @@ router.patch("/:id", authenticateToken, validateAppointment, updateAppointment);
 *         description: Appointment not found.
 */
 // Delete appointment
-router.delete("/:id", authenticateToken, deleteAppointment);
+router.delete(
+    "/:id",
+    authenticateToken,
+    authorizeRoles("admin"),
+    deleteAppointment
+);
 
 // Complete appointment
-router.patch("/:id/complete", authenticateToken, completeAppointment);
+router.patch(
+    "/:id/complete",
+    authenticateToken,
+    authorizeRoles("admin", "doctor"),
+    completeAppointment
+);
+
 module.exports = router;

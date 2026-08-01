@@ -1,25 +1,19 @@
 const express = require("express");
 const router = express.Router();
 
-const validateUser = require("../middlewares/userValidation");
 const authenticateToken = require("../middlewares/authMiddleware");
 const authorizeRoles = require("../middlewares/roleMiddleware");
 
 const {
-    registerUser,
-    loginUser
-} = require("../controllers/userController");
+    getDashboardStats
+} = require("../controllers/dashboardController");
 
-// Only admin can register users
-router.post(
-    "/register",
+// Dashboard Statistics
+router.get(
+    "/",
     authenticateToken,
     authorizeRoles("admin"),
-    validateUser,
-    registerUser
+    getDashboardStats
 );
-
-// Login is public
-router.post("/login", loginUser);
 
 module.exports = router;

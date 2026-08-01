@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const validateDoctor = require("../middlewares/doctorValidation");
 const authenticateToken = require("../middlewares/authMiddleware");
-
+const authorizeRoles = require("../middlewares/roleMiddleware");
 const {
     createDoctor,
     getAllDoctors,
@@ -24,7 +24,12 @@ const {
  *       200:
  *         description: Successfully retrieved all doctors.
  */
-router.get("/", authenticateToken, getAllDoctors);
+router.get(
+    "/",
+    authenticateToken,
+    authorizeRoles("admin", "doctor", "receptionist", "staff"),
+    getAllDoctors
+);
 
 /**
  * @swagger
@@ -46,7 +51,12 @@ router.get("/", authenticateToken, getAllDoctors);
  *       404:
  *         description: Doctor not found.
  */
-router.get("/:id", authenticateToken, getDoctorById);
+router.get(
+    "/:id",
+    authenticateToken,
+    authorizeRoles("admin", "doctor", "receptionist", "staff"),
+    getDoctorById
+);
 
 /**
  * @swagger
@@ -86,7 +96,13 @@ router.get("/:id", authenticateToken, getDoctorById);
  *       201:
  *         description: Doctor created successfully.
  */
-router.post("/", authenticateToken, validateDoctor, createDoctor);
+router.post(
+    "/",
+    authenticateToken,
+    authorizeRoles("admin"),
+    validateDoctor,
+    createDoctor
+);
 
 /**
  * @swagger
@@ -134,7 +150,13 @@ router.post("/", authenticateToken, validateDoctor, createDoctor);
  *       404:
  *         description: Doctor not found.
  */
-router.patch("/:id", authenticateToken, validateDoctor, updateDoctor);
+router.patch(
+    "/:id",
+    authenticateToken,
+    authorizeRoles("admin"),
+    validateDoctor,
+    updateDoctor
+);
 
 /**
  * @swagger
@@ -156,6 +178,11 @@ router.patch("/:id", authenticateToken, validateDoctor, updateDoctor);
  *       404:
  *         description: Doctor not found.
  */
-router.delete("/:id", authenticateToken, deleteDoctor);
+router.delete(
+    "/:id",
+    authenticateToken,
+    authorizeRoles("admin"),
+    deleteDoctor
+);
 
 module.exports = router;

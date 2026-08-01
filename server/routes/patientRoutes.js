@@ -26,10 +26,20 @@ const {
  *         description: Successfully retrieved all patients.
  */
 // Get all patients
-router.get("/", authenticateToken, getAllPatients);
+router.get(
+    "/",
+    authenticateToken,
+    authorizeRoles("admin", "doctor", "receptionist", "staff"),
+    getAllPatients
+);
 
 // Search patients
-router.get("/search", authenticateToken, searchPatients);
+router.get(
+    "/search",
+    authenticateToken,
+    authorizeRoles("admin", "doctor", "receptionist", "staff"),
+    searchPatients
+);
 
 /**
  * @swagger
@@ -53,7 +63,12 @@ router.get("/search", authenticateToken, searchPatients);
  *         description: Patient not found.
  */
 // Get one patient by ID
-router.get("/:id", authenticateToken, getPatientById);
+router.get(
+    "/:id",
+    authenticateToken,
+    authorizeRoles("admin", "doctor", "receptionist", "staff"),
+    getPatientById
+);
 
 /**
  * @swagger
@@ -98,7 +113,13 @@ router.get("/:id", authenticateToken, getPatientById);
  *         description: Patient created successfully.
  */
 // Create a patient
-router.post("/", authenticateToken, validatePatient, createPatient);
+router.post(
+    "/",
+    authenticateToken,
+    authorizeRoles("admin", "receptionist", "staff"),
+    validatePatient,
+    createPatient
+);
 
 /**
  * @swagger
@@ -152,7 +173,13 @@ router.post("/", authenticateToken, validatePatient, createPatient);
  *         description: Patient not found.
  */
 // Update a patient
-router.put("/:id", authenticateToken, validatePatient, updatePatient);
+router.put(
+    "/:id",
+    authenticateToken,
+    authorizeRoles("admin", "doctor", "receptionist"),
+    validatePatient,
+    updatePatient
+);
 
 /**
  * @swagger
