@@ -15,6 +15,11 @@ const {
 router.get(
     "/",
     authenticateToken,
+    authorizeRoles(
+        "admin",
+        "doctor",
+        "staff"
+    ),
     getAllMedicines
 );
 
@@ -22,6 +27,11 @@ router.get(
 router.get(
     "/:id",
     authenticateToken,
+    authorizeRoles(
+        "admin",
+        "doctor",
+        "staff"
+    ),
     getMedicineById
 );
 

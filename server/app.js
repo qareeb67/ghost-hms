@@ -18,6 +18,7 @@ const medicalRecordRoutes = require("./routes/medicalRecordRoutes");
 const emergencyRoutes = require("./routes/emergencyRoutes");
 const medicineRoutes = require("./routes/medicineRoutes");
 const laboratoryRoutes = require("./routes/laboratoryRoutes");
+const billingRoutes = require("./routes/billingRoutes");
 
 // Middleware
 app.use(express.json());
@@ -33,6 +34,7 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use("/emergency", emergencyRoutes);
 app.use("/medicines", medicineRoutes);
 app.use("/laboratory", laboratoryRoutes);
+app.use("/billing", billingRoutes);
 
 
 // Home Route
