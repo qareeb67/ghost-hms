@@ -15,6 +15,7 @@ const errorHandler = require("./middlewares/errorHandler");
 const userRoutes = require("./routes/userRoutes");
 const dashboardRoutes = require("./routes/dashboardRoutes");
 const medicalRecordRoutes = require("./routes/medicalRecordRoutes");
+const emergencyRoutes = require("./routes/emergencyRoutes");
 
 // Middleware
 app.use(express.json());
@@ -27,7 +28,7 @@ app.use("/appointments", appointmentRoutes);
 app.use("/dashboard", dashboardRoutes);
 app.use("/medical-records", medicalRecordRoutes);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-
+app.use("/emergency", emergencyRoutes);
 // Home Route
 app.get("/", (req, res) => {
     res.send("🔥 THIS IS THE NEW GHOST HMS SERVER 🔥");
