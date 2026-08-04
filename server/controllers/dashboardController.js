@@ -24,16 +24,17 @@ const getDashboardStats = async (req, res, next) => {
             "SELECT COUNT(*) FROM appointments WHERE status = 'Scheduled'"
         );
 
-        res.status(200).json({
-            success: true,
-            statistics: {
-                totalPatients: Number(totalPatients.rows[0].count),
-                totalDoctors: Number(totalDoctors.rows[0].count),
-                totalAppointments: Number(totalAppointments.rows[0].count),
-                completedAppointments: Number(completedAppointments.rows[0].count),
-                pendingAppointments: Number(pendingAppointments.rows[0].count)
-            }
-        });
+       res.status(200).json({
+    success: true,
+    message: "Dashboard statistics retrieved successfully",
+    statistics: {
+        totalPatients: Number(totalPatients.rows[0].count),
+        totalDoctors: Number(totalDoctors.rows[0].count),
+        totalAppointments: Number(totalAppointments.rows[0].count),
+        completedAppointments: Number(completedAppointments.rows[0].count),
+        pendingAppointments: Number(pendingAppointments.rows[0].count)
+    }
+});
 
     } catch (err) {
 

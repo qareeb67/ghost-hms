@@ -22,7 +22,11 @@ const createPatient = async (req, res, next) => {
     date_of_birth
 );
 
-res.status(201).json(patient);
+res.status(201).json({
+    success: true,
+    message: "Patient created successfully",
+    patient
+});
 
     }catch (err) {
 
@@ -37,7 +41,11 @@ const getAllPatients = async (req, res, next) => {
 
        const patients = await patientModel.getAllPatients();
 
-res.status(200).json(patients);
+res.status(200).json({
+    success: true,
+    message: "Patients retrieved successfully",
+    patients
+});
 
     } catch (err) {
 
@@ -58,7 +66,11 @@ const getPatientById = async (req, res, next) => {
             });
         }
 
-        res.status(200).json(patient);
+       res.status(200).json({
+    success: true,
+    message: "Patient retrieved successfully",
+    patient
+});
 
     } catch (err) {
 
@@ -100,7 +112,11 @@ const updatePatient = async (req, res, next) => {
             });
         }
 
-        res.status(200).json(patient);
+        res.status(200).json({
+    success: true,
+    message: "Patient updated successfully",
+    patient
+});
 
     }catch (err) {
 
@@ -144,7 +160,11 @@ const searchPatients = async (req, res, next) => {
 
         const patients = await patientModel.searchPatients(q);
 
-        res.status(200).json(patients);
+        res.status(200).json({
+    success: true,
+    message: "Patients retrieved successfully",
+    patients
+});
 
     } catch (err) {
 

@@ -23,7 +23,11 @@ const createAppointment = async (req, res, next) => {
             status
         );
 
-        res.status(201).json(appointment);
+        res.status(201).json({
+    success: true,
+    message: "Appointment created successfully",
+    appointment
+});
 
     } catch (err) {
 
@@ -40,7 +44,11 @@ const getAllAppointments = async (req, res, next) => {
 
         const appointments = await appointmentModel.getAllAppointments();
 
-        res.status(200).json(appointments);
+        res.status(200).json({
+    success: true,
+    message: "Appointments retrieved successfully",
+    appointments
+});
 
     } catch (err) {
 
@@ -66,7 +74,11 @@ const getAppointmentById = async (req, res, next) => {
             });
         }
 
-        res.status(200).json(appointment);
+        res.status(200).json({
+    success: true,
+    message: "Appointment retrieved successfully",
+    appointment
+});
 
     } catch (err) {
 
@@ -109,7 +121,11 @@ const updateAppointment = async (req, res, next) => {
             });
         }
 
-        res.status(200).json(appointment);
+        res.status(200).json({
+    success: true,
+    message: "Appointment updated successfully",
+    appointment
+});
 
     } catch (err) {
 

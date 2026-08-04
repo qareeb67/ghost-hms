@@ -22,7 +22,11 @@ const createDoctor = async (req, res, next) => {
             years_of_experience
         );
 
-        res.status(201).json(doctor);
+        res.status(201).json({
+    success: true,
+    message: "Doctor created successfully",
+    doctor
+});
 
     } catch (err) {
 
@@ -37,7 +41,11 @@ const getAllDoctors = async (req, res, next) => {
 
         const doctors = await doctorModel.getAllDoctors();
 
-        res.status(200).json(doctors);
+        res.status(200).json({
+    success: true,
+    message: "Doctors retrieved successfully",
+    doctors
+});
 
     } catch (err) {
 
@@ -59,7 +67,11 @@ const getDoctorById = async (req, res, next) => {
             });
         }
 
-        res.status(200).json(doctor);
+        res.status(200).json({
+    success: true,
+    message: "Doctor retrieved successfully",
+    doctor
+});
 
     } catch (err) {
 
