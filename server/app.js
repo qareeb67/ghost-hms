@@ -16,6 +16,7 @@ const userRoutes = require("./routes/userRoutes");
 const dashboardRoutes = require("./routes/dashboardRoutes");
 const medicalRecordRoutes = require("./routes/medicalRecordRoutes");
 const emergencyRoutes = require("./routes/emergencyRoutes");
+const medicineRoutes = require("./routes/medicineRoutes");
 
 // Middleware
 app.use(express.json());
@@ -29,6 +30,8 @@ app.use("/dashboard", dashboardRoutes);
 app.use("/medical-records", medicalRecordRoutes);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use("/emergency", emergencyRoutes);
+app.use("/medicines", medicineRoutes);
+
 // Home Route
 app.get("/", (req, res) => {
     res.send("🔥 THIS IS THE NEW GHOST HMS SERVER 🔥");
