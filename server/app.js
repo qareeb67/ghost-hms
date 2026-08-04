@@ -19,6 +19,7 @@ const emergencyRoutes = require("./routes/emergencyRoutes");
 const medicineRoutes = require("./routes/medicineRoutes");
 const laboratoryRoutes = require("./routes/laboratoryRoutes");
 const billingRoutes = require("./routes/billingRoutes");
+const syncRoutes = require("./routes/syncRoutes");
 
 // Middleware
 app.use(express.json());
@@ -35,6 +36,8 @@ app.use("/emergency", emergencyRoutes);
 app.use("/medicines", medicineRoutes);
 app.use("/laboratory", laboratoryRoutes);
 app.use("/billing", billingRoutes);
+app.use("/sync", syncRoutes);
+
 
 
 // Home Route
