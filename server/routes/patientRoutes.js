@@ -203,6 +203,11 @@ router.put(
  *         description: Patient not found.
  */
 // Delete a patient
-router.delete("/:id", authenticateToken,authorizeRoles("admin"), deletePatient);
+router.delete(
+    "/:id",
+    authenticateToken,
+    authorizeRoles("admin"),
+    deletePatient
+);
 
 module.exports = router;
