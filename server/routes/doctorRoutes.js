@@ -107,7 +107,7 @@ router.post(
 /**
  * @swagger
  * /doctors/{id}:
- *   patch:
+ *   put:
  *     summary: Update doctor
  *     tags:
  *       - Doctors
@@ -150,7 +150,7 @@ router.post(
  *       404:
  *         description: Doctor not found.
  */
-router.patch(
+router.put(
     "/:id",
     authenticateToken,
     authorizeRoles("admin"),
