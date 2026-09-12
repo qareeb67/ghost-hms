@@ -19,11 +19,7 @@ import {
     useNavigate,
 } from "react-router-dom";
 
-import {
-    getCurrentUser,
-    updateCurrentUser,
-    changePassword,
-} from "../services/serservice";
+import { getCurrentUser, updateCurrentUser, changePassword } from "../services/serService";
 
 import "./Settings.css";
 
@@ -593,7 +589,7 @@ function Settings() {
     const displayRole =
         user.role
             ? user.role.charAt(0).toUpperCase() +
-              user.role.slice(1)
+            user.role.slice(1)
             : "Staff";
 
 
@@ -868,13 +864,12 @@ function Settings() {
                     {profileMessage.text && (
 
                         <div
-                            className={`settings-message ${
-                                profileMessage.type
-                            }`}
+                            className={`settings-message ${profileMessage.type
+                                }`}
                         >
 
                             {profileMessage.type ===
-                            "success" ? (
+                                "success" ? (
 
                                 <CheckCircle2
                                     size={17}
@@ -1097,13 +1092,12 @@ function Settings() {
                     {passwordMessage.text && (
 
                         <div
-                            className={`settings-message ${
-                                passwordMessage.type
-                            }`}
+                            className={`settings-message ${passwordMessage.type
+                                }`}
                         >
 
                             {passwordMessage.type ===
-                            "success" ? (
+                                "success" ? (
 
                                 <CheckCircle2
                                     size={17}

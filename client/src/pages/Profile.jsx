@@ -5,9 +5,10 @@ import {
     UserRound,
     ArrowLeft,
 } from "lucide-react";
-import {
-    getCurrentUser,
-} from "../services/serservice";
+
+
+import { getCurrentUser } from "../services/serService";
+
 import {
     useNavigate,
 } from "react-router-dom";
