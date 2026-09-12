@@ -16,19 +16,25 @@ const validateAppointment = [
         .withMessage("Please provide a valid appointment date"),
 
     body("appointment_time")
-        .notEmpty()
-        .withMessage("Appointment time is required"),
+        .matches(/^([01]\d|2[0-3]):([0-5]\d)$/)
+        .withMessage("Appointment time must be in HH:MM format"),
 
     body("reason")
-        .notEmpty()
-        .withMessage("Reason for appointment is required"),
+        .optional({ values: "falsy" })
+        .isString()
+        .withMessage("Reason must be a valid text"),
 
     body("status")
-        .isIn(["Scheduled", "Completed", "Cancelled"])
-        .withMessage("Status must be Scheduled, Completed, or Cancelled"),
+        .isIn([
+            "Scheduled",
+            "Completed",
+            "Cancelled"
+        ])
+        .withMessage(
+            "Status must be Scheduled, Completed, or Cancelled"
+        ),
 
     validateRequest
-
 ];
 
 module.exports = validateAppointment;

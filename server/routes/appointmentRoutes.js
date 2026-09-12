@@ -57,12 +57,16 @@ router.get(
  *                 example: "2026-08-10"
  *               appointment_time:
  *                 type: string
- *                 example: "10:30:00"
+ *                 example: "10:30"
  *               reason:
  *                 type: string
- *                 example: Routine checkup
+ *                 example: "Routine checkup"
  *               status:
  *                 type: string
+ *                 enum:
+ *                   - Scheduled
+ *                   - Completed
+ *                   - Cancelled
  *                 example: Scheduled
  *     responses:
  *       201:
@@ -108,7 +112,7 @@ router.get(
 /**
  * @swagger
  * /appointments/{id}:
- *   patch:
+ *   put:
  *     summary: Update appointment
  *     tags:
  *       - Appointments
@@ -138,12 +142,16 @@ router.get(
  *                 example: "2026-08-10"
  *               appointment_time:
  *                 type: string
- *                 example: "10:30:00"
+ *                 example: "10:30"
  *               reason:
  *                 type: string
  *                 example: Routine checkup
  *               status:
  *                 type: string
+ *                 enum:
+ *                   - Scheduled
+ *                   - Completed
+ *                   - Cancelled
  *                 example: Scheduled
  *     responses:
  *       200:
@@ -152,7 +160,7 @@ router.get(
  *         description: Appointment not found.
  */
 // Update appointment
-router.patch(
+router.put(
     "/:id",
     authenticateToken,
     authorizeRoles("admin", "receptionist"),
@@ -169,17 +177,17 @@ router.patch(
  *       - Appointments
  *     parameters:
  *       - in: path
-*         name: id
-*         required: true
-*         schema:
-*           type: integer
-*         description: Appointment ID
-*     responses:
-*       200:
-*         description: Appointment deleted successfully.
-*       404:
-*         description: Appointment not found.
-*/
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: Appointment ID
+ *     responses:
+ *       200:
+ *         description: Appointment deleted successfully.
+ *       404:
+ *         description: Appointment not found.
+ */
 // Delete appointment
 router.delete(
     "/:id",
@@ -188,6 +196,27 @@ router.delete(
     deleteAppointment
 );
 
+/**
+ * @swagger
+ * /appointments/{id}/complete:
+ *   patch:
+ *     summary: Complete an appointment
+ *     description: Mark an appointment as completed.
+ *     tags:
+ *       - Appointments
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: Appointment ID
+ *     responses:
+ *       200:
+ *         description: Appointment completed successfully.
+ *       404:
+ *         description: Appointment not found.
+ */
 // Complete appointment
 router.patch(
     "/:id/complete",

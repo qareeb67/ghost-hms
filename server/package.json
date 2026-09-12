@@ -1,7 +1,7 @@
 {
   "name": "server",
   "version": "1.0.0",
-  "description": "Ghost HMS Backend",
+  "description": "Hospital Management System Backend",
   "main": "app.js",
   "scripts": {
     "start": "node app.js",

@@ -1,0 +1,183 @@
+.ghost-confirm-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 11000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: rgba(15, 23, 42, 0.38);
+    backdrop-filter: blur(4px);
+    animation: ghost-confirm-fade-in 0.18s ease-out;
+}
+
+.ghost-confirm-dialog {
+    position: relative;
+    width: min(430px, 100%);
+    padding: 26px;
+    border: 1px solid #e5e7eb;
+    border-radius: 18px;
+    background: #ffffff;
+    box-shadow: 0 24px 70px rgba(15, 23, 42, 0.2);
+    outline: none;
+    animation: ghost-confirm-slide-in 0.2s ease-out;
+}
+
+.ghost-confirm-close {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    width: 34px;
+    height: 34px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #edf0f2;
+    border-radius: 9px;
+    background: #f8fafc;
+    color: #667085;
+    cursor: pointer;
+}
+
+.ghost-confirm-close:hover {
+    background: #f1f5f9;
+    color: #111827;
+}
+
+.ghost-confirm-icon {
+    width: 48px;
+    height: 48px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+    border-radius: 14px;
+    background: #e8f5ef;
+    color: #0f6b4d;
+}
+
+.ghost-confirm-icon.is-danger {
+    background: #fff1f2;
+    color: #dc2626;
+}
+
+.ghost-confirm-copy {
+    padding-right: 22px;
+}
+
+.ghost-confirm-eyebrow {
+    display: block;
+    margin-bottom: 4px;
+    color: #0f766e;
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.ghost-confirm-copy h2 {
+    margin: 0;
+    color: #111827;
+    font-size: 19px;
+    line-height: 1.25;
+    font-weight: 750;
+}
+
+.ghost-confirm-copy p {
+    margin: 8px 0 0;
+    color: #667085;
+    font-size: 12px;
+    line-height: 1.55;
+}
+
+.ghost-confirm-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 24px;
+}
+
+.ghost-confirm-actions button {
+    min-height: 40px;
+    padding: 0 15px;
+    border-radius: 9px;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.ghost-confirm-cancel {
+    border: 1px solid #e2e8f0;
+    background: #ffffff;
+    color: #475569;
+}
+
+.ghost-confirm-cancel:hover {
+    background: #f8fafc;
+}
+
+.ghost-confirm-submit {
+    border: 1px solid #0f6b4d;
+    background: #0f6b4d;
+    color: #ffffff;
+    box-shadow: 0 5px 14px rgba(15, 107, 77, 0.16);
+}
+
+.ghost-confirm-submit:hover {
+    background: #0a523a;
+}
+
+.ghost-confirm-submit.is-danger {
+    border-color: #dc2626;
+    background: #dc2626;
+    box-shadow: 0 5px 14px rgba(220, 38, 38, 0.16);
+}
+
+.ghost-confirm-submit.is-danger:hover {
+    background: #b91c1c;
+}
+
+@keyframes ghost-confirm-fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes ghost-confirm-slide-in {
+    from {
+        opacity: 0;
+        transform: translateY(8px) scale(0.985);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@media (max-width: 520px) {
+    .ghost-confirm-overlay {
+        align-items: flex-end;
+        padding: 12px;
+    }
+
+    .ghost-confirm-dialog {
+        padding: 22px;
+        border-radius: 16px;
+    }
+
+    .ghost-confirm-actions {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .ghost-confirm-actions button {
+        width: 100%;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .ghost-confirm-overlay,
+    .ghost-confirm-dialog {
+        animation: none;
+    }
+}

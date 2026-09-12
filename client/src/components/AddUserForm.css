@@ -1,0 +1,265 @@
+/* =========================================================
+   HOSPITAL MANAGEMENT SYSTEM
+   ADD USER FORM
+========================================================= */
+
+.add-user-form {
+    width: 100%;
+
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 20px 22px;
+
+    padding-top: 24px;
+}
+
+
+/* =========================================================
+   FORM GROUP
+========================================================= */
+
+.add-user-form .form-group {
+    display: flex;
+    flex-direction: column;
+
+    gap: 8px;
+}
+
+
+/* =========================================================
+   LABEL
+========================================================= */
+
+.add-user-form .form-group label {
+    color: #374151;
+
+    font-size: 13px;
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   INPUT + SELECT
+========================================================= */
+
+.add-user-form .form-group input,
+.add-user-form .form-group select {
+    width: 100%;
+
+    min-height: 46px;
+
+    padding: 12px 14px;
+
+    border: 1px solid #d9e1df;
+    border-radius: 9px;
+
+    background: #fbfdfc;
+
+    color: #1f2937;
+
+    font-family: inherit;
+    font-size: 14px;
+
+    outline: none;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+}
+
+
+/* =========================================================
+   PLACEHOLDER
+========================================================= */
+
+.add-user-form .form-group input::placeholder {
+    color: #9ca3af;
+}
+
+
+/* =========================================================
+   HOVER
+========================================================= */
+
+.add-user-form .form-group input:hover,
+.add-user-form .form-group select:hover {
+    border-color: #b8cbc4;
+
+    background: #ffffff;
+}
+
+
+/* =========================================================
+   FOCUS
+========================================================= */
+
+.add-user-form .form-group input:focus,
+.add-user-form .form-group select:focus {
+    border-color: #0f766e;
+
+    background: #ffffff;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(15, 118, 110, 0.10);
+}
+
+
+/* =========================================================
+   SELECT
+========================================================= */
+
+.add-user-form .form-group select {
+    cursor: pointer;
+
+    appearance: auto;
+}
+
+
+/* =========================================================
+   ACTION BUTTONS
+========================================================= */
+
+.add-user-form-actions {
+    grid-column: 1 / -1;
+
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+    gap: 10px;
+
+    padding-top: 6px;
+
+    margin-top: 2px;
+
+    border-top: 1px solid #eef1f0;
+}
+
+
+/* =========================================================
+   CANCEL BUTTON
+========================================================= */
+
+.cancel-user-btn {
+    min-width: 100px;
+
+    padding: 11px 18px;
+
+    border: 1px solid #d9e1df;
+    border-radius: 9px;
+
+    background: #ffffff;
+
+    color: #6b7280;
+
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: all 0.2s ease;
+}
+
+
+.cancel-user-btn:hover:not(:disabled) {
+    background: #f9fafb;
+
+    border-color: #cbd5d1;
+
+    color: #374151;
+}
+
+
+/* =========================================================
+   CREATE USER BUTTON
+========================================================= */
+
+.add-user-btn {
+    min-width: 130px;
+
+    padding: 11px 20px;
+
+    border: none;
+    border-radius: 9px;
+
+    background: #0f766e;
+
+    color: #ffffff;
+
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 4px 10px
+        rgba(15, 118, 110, 0.16);
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+.add-user-btn:hover:not(:disabled) {
+    background: #0d6b64;
+
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 7px 16px
+        rgba(15, 118, 110, 0.20);
+}
+
+
+.add-user-btn:active:not(:disabled) {
+    transform: translateY(0);
+}
+
+
+/* =========================================================
+   DISABLED
+========================================================= */
+
+.cancel-user-btn:disabled,
+.add-user-btn:disabled {
+    opacity: 0.6;
+
+    cursor: not-allowed;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 700px) {
+
+    .add-user-form {
+        grid-template-columns: 1fr;
+
+        gap: 18px;
+    }
+
+
+    .add-user-form-actions {
+        grid-column: auto;
+
+        justify-content: stretch;
+
+        flex-direction: column-reverse;
+    }
+
+
+    .cancel-user-btn,
+    .add-user-btn {
+        width: 100%;
+    }
+
+}

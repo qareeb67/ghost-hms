@@ -1,0 +1,1279 @@
+
+/* =========================================================
+   GHOST HMS
+   PATIENT MANAGEMENT
+   FINAL PATIENTS PAGE STYLES
+   ========================================================= */
+
+
+/* =========================================================
+   PAGE
+   ========================================================= */
+
+.patients-page {
+    width: 100%;
+    min-width: 0;
+    padding: 2px 0;
+}
+
+
+/* =========================================================
+   PAGE HEADER
+   ========================================================= */
+
+.patients-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 24px;
+    margin-bottom: 22px;
+}
+
+.patients-heading {
+    display: flex;
+    align-items: center;
+
+    gap: 13px;
+    min-width: 0;
+}
+
+.patients-heading-icon {
+    width: 46px;
+    height: 46px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border: 1px solid #dcebe5;
+    border-radius: 12px;
+
+    background: #eaf6f0;
+    color: #0f6b4d;
+
+    box-shadow:
+        0 2px 7px rgba(15, 107, 77, 0.05);
+}
+
+.patients-eyebrow {
+    display: block;
+
+    margin-bottom: 3px;
+
+    color: #0f766e;
+
+    font-size: 9px;
+    font-weight: 800;
+
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.patients-heading h1 {
+    margin: 0;
+
+    color: #111827;
+
+    font-size: 24px;
+    line-height: 1.2;
+    font-weight: 750;
+
+    letter-spacing: -0.02em;
+}
+
+.patients-heading p {
+    margin: 5px 0 0;
+
+    color: #8b949e;
+
+    font-size: 11px;
+    line-height: 1.4;
+}
+
+
+/* =========================================================
+   HEADER BUTTON
+   ========================================================= */
+
+.patients-add-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 7px;
+
+    min-height: 38px;
+    padding: 9px 14px;
+
+    border: 1px solid transparent;
+    border-radius: 8px;
+
+    background: #0f6b4d;
+    color: #ffffff;
+
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 4px 10px rgba(15, 107, 77, 0.14);
+
+    transition:
+        background 0.18s ease,
+        border-color 0.18s ease,
+        transform 0.15s ease,
+        box-shadow 0.18s ease;
+}
+
+.patients-add-button:hover {
+    background: #0a523a;
+
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 5px 14px rgba(15, 107, 77, 0.2);
+}
+
+.patients-add-button:active {
+    transform: translateY(0);
+}
+
+.patients-add-button svg {
+    flex-shrink: 0;
+}
+
+
+/* =========================================================
+   PATIENT SUMMARY
+   ========================================================= */
+
+.patient-summary {
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    width: 100%;
+
+    margin-bottom: 18px;
+    padding: 14px 16px;
+
+    border: 1px solid #dfe9e4;
+    border-radius: 11px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ffffff 0%,
+            #f8fcfa 100%
+        );
+
+    box-shadow:
+        0 2px 8px rgba(0, 0, 0, 0.025);
+}
+
+.patient-summary-icon {
+    width: 38px;
+    height: 38px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border: 1px solid #d7e9e0;
+    border-radius: 9px;
+
+    background: #eaf6f0;
+    color: #0f6b4d;
+}
+
+.patient-summary > div:last-child {
+    display: flex;
+    flex-direction: column;
+
+    min-width: 0;
+
+    gap: 3px;
+}
+
+.patient-summary > div:last-child span {
+    color: #8b949e;
+
+    font-size: 9px;
+    font-weight: 700;
+
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.patient-summary > div:last-child strong {
+    color: #1f2937;
+
+    font-size: 19px;
+    line-height: 1;
+
+    font-weight: 750;
+}
+
+
+/* =========================================================
+   SEARCH
+   ========================================================= */
+
+.patient-search {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+
+    width: 100%;
+    height: 39px;
+
+    margin-bottom: 18px;
+
+    border: 1px solid #e1e6e3;
+    border-radius: 9px;
+
+    background: #ffffff;
+
+    box-shadow:
+        0 1px 5px rgba(0, 0, 0, 0.02);
+
+    transition:
+        border-color 0.18s ease,
+        box-shadow 0.18s ease,
+        background 0.18s ease;
+}
+
+.patient-search:focus-within {
+    border-color: #0f6b4d;
+
+    background: #ffffff;
+
+    box-shadow:
+        0 0 0 3px rgba(15, 107, 77, 0.07);
+}
+
+.patient-search > svg {
+    margin-left: 12px;
+
+    flex-shrink: 0;
+
+    color: #9aa1a9;
+}
+
+.patient-search input {
+    width: 100%;
+
+    min-width: 0;
+
+    margin: 0;
+    padding: 9px 11px;
+
+    border: none;
+    outline: none;
+
+    background: transparent;
+    color: #27313b;
+
+    font-family: inherit;
+    font-size: 11px;
+}
+
+.patient-search input::placeholder {
+    color: #a2a8ae;
+}
+
+
+/* =========================================================
+   CLEAR SEARCH
+   ========================================================= */
+
+.clear-search {
+    width: 28px;
+    height: 28px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    margin-right: 5px;
+    padding: 0;
+
+    border: none;
+    border-radius: 6px;
+
+    background: transparent;
+    color: #9aa1a9;
+
+    cursor: pointer;
+
+    transition:
+        background 0.16s ease,
+        color 0.16s ease;
+}
+
+.clear-search:hover {
+    background: #f1f3f2;
+    color: #4b5563;
+}
+
+
+/* =========================================================
+   PATIENT FORM WRAPPER
+   ========================================================= */
+
+.patient-form-wrapper {
+    width: 100%;
+
+    margin-bottom: 20px;
+
+    overflow: hidden;
+
+    border: 1px solid #dcebe5;
+    border-radius: 12px;
+
+    background: #ffffff;
+
+    box-shadow:
+        0 4px 14px rgba(0, 0, 0, 0.035);
+}
+
+.patient-form-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    padding: 18px 20px 16px;
+
+    border-bottom: 1px solid #eef1ef;
+
+    background:
+        linear-gradient(
+            135deg,
+            #f8fcfa 0%,
+            #ffffff 100%
+        );
+}
+
+.patient-form-header > div:first-child {
+    min-width: 0;
+}
+
+.patient-form-header > div:first-child > span {
+    display: block;
+
+    margin-bottom: 3px;
+
+    color: #0f766e;
+
+    font-size: 9px;
+    font-weight: 800;
+
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.patient-form-header h2 {
+    margin: 0;
+
+    color: #1f2937;
+
+    font-size: 16px;
+    font-weight: 750;
+}
+
+.form-close-button {
+    width: 32px;
+    height: 32px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    padding: 0;
+
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+
+    background: #f8faf9;
+    color: #6b7280;
+
+    cursor: pointer;
+
+    transition:
+        background 0.18s ease,
+        color 0.18s ease,
+        border-color 0.18s ease,
+        transform 0.15s ease;
+}
+
+.form-close-button:hover {
+    border-color: #d9dfdc;
+
+    background: #eef2f0;
+    color: #1f2937;
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   PATIENT TABLE CARD
+   ========================================================= */
+
+.patients-table-card {
+    width: 100%;
+
+    overflow: hidden;
+
+    border: 1px solid #e4e8e6;
+    border-radius: 13px;
+
+    background: #ffffff;
+
+    box-shadow:
+        0 3px 12px rgba(0, 0, 0, 0.035);
+}
+
+
+/* =========================================================
+   TABLE HEADER
+   ========================================================= */
+
+.table-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    padding: 17px 19px;
+
+    border-bottom: 1px solid #edf0ef;
+
+    background: #ffffff;
+}
+
+.table-header > div {
+    min-width: 0;
+}
+
+.table-header h2 {
+    margin: 0;
+
+    color: #27313b;
+
+    font-size: 14px;
+    line-height: 1.25;
+
+    font-weight: 750;
+}
+
+.table-header p {
+    margin: 4px 0 0;
+
+    color: #9aa1a9;
+
+    font-size: 9px;
+}
+
+
+/* =========================================================
+   TABLE WRAPPER
+   ========================================================= */
+
+.patients-table-wrapper {
+    width: 100%;
+
+    overflow-x: auto;
+    overflow-y: hidden;
+
+    scrollbar-width: thin;
+    scrollbar-color: #d2dbd6 #ffffff;
+}
+
+.patients-table-wrapper::-webkit-scrollbar {
+    height: 7px;
+}
+
+.patients-table-wrapper::-webkit-scrollbar-track {
+    background: #ffffff;
+}
+
+.patients-table-wrapper::-webkit-scrollbar-thumb {
+    background: #d2dbd6;
+    border-radius: 20px;
+}
+
+.patients-table-wrapper::-webkit-scrollbar-thumb:hover {
+    background: #bcc9c2;
+}
+
+
+/* =========================================================
+   TABLE
+   ========================================================= */
+
+.patients-table {
+    width: 100%;
+
+    min-width: 1120px;
+
+    border-collapse: collapse;
+
+    table-layout: auto;
+}
+
+.patients-table th {
+    padding: 11px 15px;
+
+    border-bottom: 1px solid #e6eae8;
+
+    background: #fafcfb;
+
+    color: #727b85;
+
+    font-size: 9px;
+    font-weight: 800;
+
+    text-align: left;
+
+    text-transform: uppercase;
+    letter-spacing: 0.045em;
+
+    white-space: nowrap;
+}
+
+.patients-table td {
+    padding: 12px 15px;
+
+    border-bottom: 1px solid #f0f2f1;
+
+    color: #4b5563;
+
+    font-size: 11px;
+
+    vertical-align: middle;
+}
+
+.patients-table tbody tr {
+    transition:
+        background 0.15s ease;
+}
+
+.patients-table tbody tr:hover {
+    background: #fbfdfc;
+}
+
+.patients-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+
+/* =========================================================
+   PATIENT NAME
+   ========================================================= */
+
+.patient-name-cell {
+    display: flex;
+    align-items: center;
+
+    gap: 9px;
+
+    min-width: 190px;
+}
+
+.patient-avatar {
+    width: 35px;
+    height: 35px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border: 1px solid #d8ebe2;
+    border-radius: 9px;
+
+    background: #eaf6f0;
+    color: #0f6b4d;
+
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.patient-name-cell > div:last-child {
+    display: flex;
+    flex-direction: column;
+
+    min-width: 0;
+
+    gap: 2px;
+}
+
+.patient-name-cell > div:last-child strong {
+    max-width: 180px;
+
+    overflow: hidden;
+
+    color: #303945;
+
+    font-size: 11px;
+    font-weight: 700;
+
+    line-height: 1.25;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.patient-name-cell > div:last-child span {
+    max-width: 175px;
+
+    overflow: hidden;
+
+    color: #9aa1a9;
+
+    font-size: 9px;
+
+    line-height: 1.2;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   HOSPITAL ID
+   PAT-000014
+   ========================================================= */
+
+.patient-number-cell {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    gap: 4px;
+
+    min-width: 105px;
+}
+
+.patient-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: fit-content;
+    min-height: 24px;
+
+    padding: 5px 9px;
+
+    border: 1px solid #cfe6dc;
+    border-radius: 6px;
+
+    background: #edf7f3;
+    color: #0f6b4d;
+
+    font-size: 10px;
+    line-height: 1;
+
+    font-weight: 800;
+
+    letter-spacing: 0.03em;
+
+    white-space: nowrap;
+
+    box-shadow:
+        0 1px 2px rgba(15, 107, 77, 0.04);
+}
+
+.patient-number-cell small {
+    margin: 0;
+
+    color: #a0a7ae;
+
+    font-size: 8px;
+    line-height: 1.2;
+
+    font-weight: 500;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   GENDER
+   ========================================================= */
+
+.gender-badge {
+    display: inline-flex;
+    align-items: center;
+
+    width: fit-content;
+
+    gap: 4px;
+
+    padding: 4px 7px;
+
+    border: 1px solid #d8efea;
+    border-radius: 6px;
+
+    background: #f0fdfa;
+    color: #0f766e;
+
+    font-size: 9px;
+    font-weight: 700;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   NATIONALITY
+   ========================================================= */
+
+.nationality-text {
+    color: #5f6872;
+
+    font-size: 10px;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   LOCATION
+   ========================================================= */
+
+.patient-location {
+    display: flex;
+    flex-direction: column;
+
+    gap: 2px;
+
+    min-width: 105px;
+}
+
+.patient-location strong {
+    overflow: hidden;
+
+    color: #3c4651;
+
+    font-size: 10px;
+    font-weight: 700;
+
+    line-height: 1.2;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.patient-location span {
+    color: #9aa1a9;
+
+    font-size: 8px;
+
+    line-height: 1.2;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   CONTACT
+   ========================================================= */
+
+.table-contact {
+    display: flex;
+    align-items: center;
+
+    gap: 6px;
+
+    color: #5f6872;
+
+    font-size: 10px;
+
+    white-space: nowrap;
+}
+
+.table-contact svg {
+    flex-shrink: 0;
+
+    color: #4d83c4;
+}
+
+
+/* =========================================================
+   DATE
+   ========================================================= */
+
+.patients-table td:nth-child(7) {
+    color: #626c76;
+
+    font-size: 9px;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   ACTIONS
+   ========================================================= */
+
+.patient-actions {
+    display: flex;
+    align-items: center;
+
+    gap: 5px;
+
+    white-space: nowrap;
+}
+
+.action-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 5px;
+
+    min-height: 30px;
+
+    padding: 5px 9px;
+
+    border: none;
+    border-radius: 7px;
+
+    font-family: inherit;
+    font-size: 9px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        background 0.16s ease,
+        color 0.16s ease,
+        transform 0.12s ease,
+        box-shadow 0.16s ease;
+}
+
+.action-button:hover {
+    transform: translateY(-1px);
+}
+
+.action-button:active {
+    transform: translateY(0);
+}
+
+.action-button svg {
+    flex-shrink: 0;
+}
+
+
+/* VIEW */
+
+.action-button.view {
+    background: #eff6ff;
+    color: #2563eb;
+}
+
+.action-button.view:hover {
+    background: #dbeafe;
+
+    box-shadow:
+        0 2px 5px rgba(37, 99, 235, 0.08);
+}
+
+
+/* EDIT */
+
+.action-button.edit {
+    background: #eaf6f0;
+    color: #0f6b4d;
+}
+
+.action-button.edit:hover {
+    background: #d9eee5;
+
+    box-shadow:
+        0 2px 5px rgba(15, 107, 77, 0.08);
+}
+
+
+/* DELETE */
+
+.action-button.delete {
+    width: 30px;
+
+    padding: 0;
+
+    background: #fff0f0;
+    color: #c93535;
+}
+
+.action-button.delete:hover {
+    background: #fce0e0;
+
+    box-shadow:
+        0 2px 5px rgba(201, 53, 53, 0.08);
+}
+
+
+/* =========================================================
+   EMPTY STATE
+   ========================================================= */
+
+.patients-empty {
+    height: 275px;
+
+    padding: 0 !important;
+
+    text-align: center;
+}
+
+.patients-empty > div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 275px;
+
+    padding: 30px;
+}
+
+.patients-empty svg {
+    margin-bottom: 10px;
+
+    color: #8bb9a7;
+}
+
+.patients-empty h3 {
+    margin: 0;
+
+    color: #4b5563;
+
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.patients-empty p {
+    max-width: 400px;
+
+    margin: 5px 0 0;
+
+    color: #9ca3af;
+
+    font-size: 10px;
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   FORM / PAGE STATES
+   ========================================================= */
+
+.patients-page button:focus-visible,
+.patient-search input:focus-visible {
+    outline: 2px solid rgba(15, 107, 77, 0.22);
+    outline-offset: 2px;
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+    .patients-header {
+        align-items: flex-start;
+    }
+
+    .patients-heading h1 {
+        font-size: 22px;
+    }
+
+}
+
+
+/* =========================================================
+   SMALL TABLET
+   ========================================================= */
+
+@media (max-width: 700px) {
+
+    .patients-header {
+        flex-direction: column;
+        align-items: stretch;
+
+        gap: 14px;
+    }
+
+    .patients-add-button {
+        width: 100%;
+    }
+
+    .patient-summary {
+        margin-bottom: 15px;
+    }
+
+    .patient-search {
+        margin-bottom: 15px;
+    }
+
+    .patients-table-card {
+        border-radius: 11px;
+    }
+
+    .table-header {
+        padding: 15px;
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 520px) {
+
+    .patients-page {
+        padding: 0;
+    }
+
+    .patients-heading {
+        gap: 10px;
+    }
+
+    .patients-heading-icon {
+        width: 42px;
+        height: 42px;
+
+        border-radius: 10px;
+    }
+
+    .patients-heading h1 {
+        font-size: 21px;
+    }
+
+    .patients-heading p {
+        font-size: 10px;
+    }
+
+    .patient-summary {
+        padding: 13px 14px;
+    }
+
+    .patient-summary-icon {
+        width: 35px;
+        height: 35px;
+    }
+
+    .patient-summary > div:last-child strong {
+        font-size: 18px;
+    }
+
+    .patient-search {
+        height: 37px;
+    }
+
+    .patient-form-header {
+        padding: 16px;
+    }
+
+    .table-header {
+        padding: 14px;
+    }
+
+}
+
+
+/* =========================================================
+   VERY SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 400px) {
+
+    .patients-heading {
+        align-items: flex-start;
+    }
+
+    .patients-heading h1 {
+        font-size: 20px;
+    }
+
+    .patients-heading p {
+        font-size: 9px;
+    }
+
+    .patient-summary {
+        gap: 10px;
+    }
+
+}
+
+
+/* =========================================================
+   FINAL HMS CONSISTENCY PASS
+   Match the current shared clinical workspace rhythm.
+   ========================================================= */
+
+.patients-page {
+    width: 100%;
+    max-width: 1600px;
+    margin: 0 auto;
+    min-width: 0;
+    padding: 28px 30px 40px;
+}
+
+.patients-header {
+    gap: 24px;
+    margin-bottom: 28px;
+}
+
+.patients-heading {
+    gap: 16px;
+}
+
+.patients-heading-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 16px;
+    background: rgba(16, 185, 129, 0.12);
+    color: #10b981;
+    border: 1px solid transparent;
+    box-shadow: none;
+}
+
+.patients-heading h1 {
+    font-size: clamp(22px, 1.9vw, 28px);
+    line-height: 1.2;
+    font-weight: 750;
+    letter-spacing: -0.02em;
+}
+
+.patients-heading p {
+    margin-top: 5px;
+    color: #6b7280;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.patients-add-button {
+    min-height: 42px;
+    padding: 0 16px;
+    border-radius: 10px;
+    background: #10b981;
+    font-size: 12px;
+    font-weight: 650;
+    box-shadow: 0 8px 18px rgba(16, 185, 129, 0.18);
+}
+
+.patients-add-button:hover {
+    background: #059669;
+    box-shadow: 0 12px 24px rgba(16, 185, 129, 0.24);
+}
+
+.patient-summary {
+    min-height: 76px;
+    margin-bottom: 20px;
+    padding: 16px 18px;
+    border-color: #e5e7eb;
+    border-radius: 12px;
+    background: #ffffff;
+    box-shadow: 0 2px 12px rgba(15, 23, 42, 0.04);
+}
+
+.patient-summary-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 11px;
+    background: rgba(16, 185, 129, 0.1);
+    color: #10b981;
+    border-color: transparent;
+}
+
+.patient-search {
+    height: 42px;
+    margin-bottom: 20px;
+    border-color: #e2e8f0;
+    border-radius: 10px;
+    box-shadow: 0 1px 4px rgba(15, 23, 42, 0.025);
+}
+
+.patient-search:focus-within {
+    border-color: #10b981;
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.09);
+}
+
+.patients-table-card {
+    border-color: #e5e7eb;
+    border-radius: 16px;
+    box-shadow: 0 2px 12px rgba(15, 23, 42, 0.04);
+}
+
+.table-header {
+    padding: 18px 20px;
+}
+
+.table-header h2 {
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.table-header p {
+    margin-top: 4px;
+    font-size: 10px;
+}
+
+@media (max-width: 1100px) {
+    .patients-page {
+        padding-left: 24px;
+        padding-right: 24px;
+    }
+}
+
+@media (max-width: 768px) {
+    .patients-page {
+        padding: 20px 18px 32px;
+    }
+
+    .patients-header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 14px;
+    }
+
+    .patients-add-button {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .patients-page {
+        padding-left: 14px;
+        padding-right: 14px;
+    }
+
+    .patients-heading-icon {
+        width: 46px;
+        height: 46px;
+        border-radius: 14px;
+    }
+}

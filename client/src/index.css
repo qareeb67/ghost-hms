@@ -1,0 +1,1209 @@
+/* ==========================================
+   HOSPITAL MANAGEMENT SYSTEM - GLOBAL DESIGN SYSTEM
+========================================== */
+
+:root {
+  --primary: #0f6b4d;
+  --primary-dark: #0a523a;
+  --primary-light: #e8f5ef;
+
+  --secondary: #1f2937;
+
+  --background: #f4f7f6;
+  --surface: #ffffff;
+
+  --text-primary: #1f2937;
+  --text-secondary: #6b7280;
+  --text-light: #9ca3af;
+
+  --border: #e5e7eb;
+
+  --danger: #dc3545;
+  --danger-light: #fdeaea;
+
+  --warning: #f59e0b;
+  --warning-light: #fff7e6;
+
+  --success: #16a34a;
+  --success-light: #eaf8ef;
+
+  --info: #2563eb;
+  --info-light: #eff6ff;
+
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+
+/* ==========================================
+   RESET
+========================================== */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+
+html,
+body,
+#root {
+  min-height: 100vh;
+}
+
+
+body {
+  font-family:
+    Inter,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    Arial,
+    sans-serif;
+
+  background: var(--background);
+
+  color: var(--text-primary);
+
+  -webkit-font-smoothing: antialiased;
+}
+
+
+/* ==========================================
+   GLOBAL BUTTONS
+========================================== */
+
+/* ==========================================
+   GLOBAL BUTTON FOUNDATION
+========================================== */
+
+button {
+    font-family: inherit;
+}
+
+
+button {
+  border: none;
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    transform 0.15s ease,
+    box-shadow 0.2s ease;
+}
+
+
+button:active {
+  transform: scale(0.98);
+}
+
+
+/* ==========================================
+   GLOBAL FORM ELEMENTS
+========================================== */
+
+input,
+select,
+textarea {
+  font-family: inherit;
+  font-size: 14px;
+
+  color: var(--text-primary);
+
+  border: 1px solid var(--border);
+
+  border-radius: var(--radius-sm);
+
+  padding: 10px 12px;
+
+  background: var(--surface);
+
+  outline: none;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: var(--primary);
+
+  box-shadow:
+    0 0 0 3px
+    rgba(15, 107, 77, 0.12);
+}
+
+
+textarea {
+  resize: vertical;
+}
+
+
+/* ==========================================
+   LINKS
+========================================== */
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+
+/* ==========================================
+   SCROLLBAR
+========================================== */
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5d1;
+
+  border-radius: 10px;
+}
+
+
+::-webkit-scrollbar-thumb:hover {
+  background: #9ca3af;
+}
+
+
+/* ==========================================
+   APP LAYOUT
+========================================== */
+
+
+
+/* ==========================================
+   RESPONSIVE FOUNDATION
+========================================== */
+
+
+/* =========================================================
+   FINAL HMS PAGE FOUNDATION
+   Shared rhythm for clinical/admin workspaces
+   ========================================================= */
+
+.hms-page {
+    width: 100%;
+    max-width: 1600px;
+    margin: 0 auto;
+    min-width: 0;
+    padding: 28px 30px 40px;
+}
+
+.hms-page h1,
+.hms-page h2,
+.hms-page h3,
+.hms-page p {
+    overflow-wrap: anywhere;
+}
+
+.hms-page :is(input, select, textarea) {
+    max-width: 100%;
+}
+
+.hms-page :is(button, input, select, textarea) {
+    min-width: 0;
+}
+
+/* Align pages that previously carried their own outer padding. */
+.hms-page.appointments-page,
+.hms-page.billing-page,
+.hms-page.payments-page {
+    padding: 28px 30px 40px !important;
+}
+
+/* Consistent clinical heading scale without flattening page-specific identity. */
+.hms-page :is(.patients-heading h1, .doctors-page-heading .page-title,
+    .appointments-page-header h1, .billing-page-title,
+    .payments-page-title, .medical-records-header h1) {
+    font-size: clamp(22px, 2vw, 28px);
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+}
+
+.hms-page :is(.patients-heading p, .doctors-page-subtitle,
+    .appointments-page-header p, .billing-page-subtitle,
+    .payments-page-subtitle, .medical-records-header p,
+    .emergency-subtitle) {
+    line-height: 1.5;
+}
+
+/* Shared card/data-surface language. */
+.hms-page :is(.users-card, .users-table-wrapper, .doctors-table-wrapper,
+    .appointments-card, .billing-table-card, .emergency-table-wrapper,
+    .medical-records-table-wrapper, .laboratory-table-wrapper,
+    .medicines-table-wrapper, .payments-table-wrapper) {
+    border-color: #e5e7eb;
+    box-shadow: 0 2px 12px rgba(15, 23, 42, 0.04);
+}
+
+
+
+/* =========================================================
+   HMS CONSISTENCY LAYER
+   Shared shell for every authenticated workspace page.
+   ========================================================= */
+
+.hms-page {
+  width: 100%;
+  max-width: 1600px;
+  margin: 0 auto;
+  min-width: 0;
+  padding: 28px 30px 40px;
+}
+
+.hms-page :is(h1, h2, h3, p) {
+  overflow-wrap: anywhere;
+}
+
+.hms-page > * {
+  min-width: 0;
+}
+
+.hms-page :is(input, select, textarea) {
+  width: 100%;
+  max-width: 100%;
+}
+
+.hms-page :is(button, input, select, textarea) {
+  min-height: 40px;
+}
+
+.hms-page .page-title,
+.hms-page :is(.patients-heading h1, .doctors-page-heading .page-title,
+  .appointments-page-header h1, .billing-page-title,
+  .payments-page-title, .medical-records-header h1,
+  .laboratory-title, .medicines-title,
+  .settings-page-header h1, .profile-page-header h1) {
+  color: #111827;
+  font-size: clamp(22px, 1.9vw, 28px);
+  line-height: 1.2;
+  font-weight: 750;
+  letter-spacing: -0.02em;
+}
+
+.hms-page :is(.patients-heading p, .doctors-page-subtitle,
+  .appointments-page-header p, .billing-page-subtitle,
+  .payments-page-subtitle, .medical-records-header p,
+  .laboratory-subtitle, .medicines-subtitle,
+  .settings-page-header > div > p:last-child,
+  .profile-page-header p:last-child, .emergency-subtitle) {
+  color: #6b7280;
+  line-height: 1.5;
+}
+
+.hms-page :is(.patients-header, .doctors-page-header,
+  .appointments-page-header, .billing-top-bar, .payments-top-bar,
+  .medical-records-header, .laboratory-header, .medicines-header,
+  .settings-page-header, .profile-page-header,
+  .emergency-page .top-bar, .users-page .top-bar) {
+  min-width: 0;
+}
+
+.hms-page :is(.patients-header-actions, .doctors-header-actions,
+  .payments-header-actions, .billing-header-actions,
+  .settings-page-header > button, .profile-page-header > button) {
+  flex-shrink: 0;
+}
+
+/* Keep data surfaces visually related across modules. */
+.hms-page :is(
+  .patients-table-wrapper,
+  .doctors-table-wrapper,
+  .appointments-card,
+  .laboratory-table-wrapper,
+  .billing-table-card,
+  .payments-table-wrapper,
+  .medicines-table-wrapper,
+  .medical-records-table-wrapper,
+  .emergency-table-wrapper,
+  .users-card
+) {
+  border-color: #e5e7eb;
+  box-shadow: 0 2px 12px rgba(15, 23, 42, 0.04);
+}
+
+@media (max-width: 1100px) {
+  .hms-page {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+}
+
+@media (max-width: 768px) {
+  .hms-page {
+    padding: 20px 18px 32px !important;
+  }
+
+  .hms-page :is(.patients-header, .doctors-page-header,
+    .appointments-page-header, .billing-top-bar, .payments-top-bar,
+    .medical-records-header, .laboratory-header, .medicines-header,
+    .settings-page-header, .profile-page-header,
+    .emergency-page .top-bar, .users-page .top-bar) {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 14px;
+  }
+
+  .hms-page :is(.patients-header-actions, .doctors-header-actions,
+    .payments-header-actions, .billing-header-actions) {
+    width: 100%;
+    flex-wrap: wrap;
+  }
+
+  .hms-page :is(.patients-header-actions button, .doctors-header-actions button,
+    .payments-header-actions button, .billing-header-actions button,
+    .add-appointment-btn, .billing-add-btn, .emergency-add-btn,
+    .medicine-add-btn, .medical-records-add-btn, .create-user-top-btn,
+    .settings-page-header > button, .profile-page-header > button) {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .hms-page {
+    padding-left: 14px !important;
+    padding-right: 14px !important;
+  }
+
+  .hms-page :is(.patients-heading, .doctors-page-heading,
+    .laboratory-title-row, .medicines-title-row,
+    .emergency-title-row) {
+    align-items: flex-start;
+  }
+}
+
+/* =========================================================
+   USERS — bring legacy page into the same clinical system
+   ========================================================= */
+
+.hms-page.users-page {
+    max-width: 1600px;
+}
+
+.users-page .top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 22px;
+}
+
+.users-page .page-title {
+    margin: 0;
+    color: #111827;
+    font-size: clamp(22px, 2vw, 28px);
+    line-height: 1.2;
+    font-weight: 750;
+    letter-spacing: -0.02em;
+}
+
+.users-page .top-bar p {
+    margin: 6px 0 0;
+    color: #6b7280;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.users-page .create-user-top-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 40px;
+    padding: 0 15px;
+    border: 1px solid #0f6b4d;
+    border-radius: 9px;
+    background: #0f6b4d;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 700;
+    box-shadow: 0 4px 12px rgba(15, 107, 77, 0.14);
+}
+
+.users-page .create-user-top-btn:hover {
+    background: #0a523a;
+    border-color: #0a523a;
+    transform: translateY(-1px);
+}
+
+.users-page .users-card,
+.users-page .user-form-card {
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(15, 23, 42, 0.04);
+}
+
+.users-page .users-card-header {
+    padding: 18px 20px;
+}
+
+.users-page .users-card-header h2 {
+    font-size: 16px;
+}
+
+.users-page .users-card-header p {
+    font-size: 12px;
+}
+
+.users-page .users-table-wrapper th {
+    padding: 12px 18px;
+    background: #f8fafb;
+}
+
+.users-page .users-table-wrapper td {
+    padding: 14px 18px;
+    font-size: 13px;
+}
+
+@media (max-width: 1100px) {
+    .hms-page {
+        padding-left: 24px;
+        padding-right: 24px;
+    }
+
+    .users-page .top-bar {
+        align-items: flex-start;
+    }
+}
+
+@media (max-width: 768px) {
+    .hms-page,
+    .hms-page.appointments-page,
+    .hms-page.billing-page,
+    .hms-page.payments-page {
+        padding: 20px 18px 32px !important;
+    }
+
+    .users-page .top-bar {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 14px;
+    }
+
+    .users-page .create-user-top-btn {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .hms-page,
+    .hms-page.appointments-page,
+    .hms-page.billing-page,
+    .hms-page.payments-page {
+        padding-left: 14px !important;
+        padding-right: 14px !important;
+    }
+}
+
+/* Responsive summary-grid rhythm shared by all operational modules. */
+.hms-page :is(
+    .patient-stats-grid,
+    .doctors-summary-grid,
+    .emergency-summary-grid,
+    .laboratory-summary,
+    .medicines-summary,
+    .medical-records-summary,
+    .billing-summary,
+    .payments-summary
+) {
+    min-width: 0;
+}
+
+@media (max-width: 1100px) {
+    .hms-page :is(.doctors-summary-grid, .medical-records-summary) {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .hms-page :is(.patient-stats-grid, .emergency-summary-grid, .laboratory-summary, .medicines-summary, .billing-summary, .payments-summary) {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 620px) {
+    .hms-page :is(
+        .patient-stats-grid,
+        .doctors-summary-grid,
+        .emergency-summary-grid,
+        .laboratory-summary,
+        .medicines-summary,
+        .medical-records-summary,
+        .billing-summary,
+        .payments-summary
+    ) {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .hms-page :is(.patients-header, .doctors-page-header, .appointments-page-header, .medical-records-header, .payments-top-bar, .billing-top-bar, .emergency-page .top-bar, .medicines-header, .laboratory-header) {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .hms-page :is(.patients-header-actions, .doctors-header-actions) {
+        width: 100%;
+    }
+
+    .hms-page :is(.patients-refresh-button, .patients-add-button, .add-doctor-btn, .doctors-refresh-btn, .medical-records-add-btn, .emergency-add-btn) {
+        min-height: 42px;
+    }
+}
+
+
+/* =========================================================
+   FINAL RESPONSIVE SHELL HARDENING
+   Prevent authenticated workspace pages from creating
+   accidental viewport overflow on phones/tablets.
+   ========================================================= */
+html,
+body,
+#root {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+.main-area,
+.content,
+.hms-page {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.hms-page {
+  overflow-x: clip;
+}
+
+.hms-page :is(
+  .patients-table-wrapper,
+  .doctors-table-wrapper,
+  .appointments-card,
+  .laboratory-table-wrapper,
+  .billing-table-card,
+  .payments-table-wrapper,
+  .medicines-table-wrapper,
+  .medical-records-table-wrapper,
+  .emergency-table-wrapper,
+  .users-card
+) {
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.hms-page :is(
+  .patients-header,
+  .doctors-page-header,
+  .appointments-page-header,
+  .billing-top-bar,
+  .payments-top-bar,
+  .medical-records-header,
+  .laboratory-header,
+  .medicines-header,
+  .emergency-page .top-bar,
+  .users-page .top-bar
+) > * {
+  min-width: 0;
+}
+
+@media (max-width: 900px) {
+  .hms-page {
+    width: 100%;
+  }
+
+  .hms-page :is(
+    .dashboard-grid,
+    .stats-grid,
+    .patient-stats-grid,
+    .doctors-summary-grid,
+    .emergency-summary-grid,
+    .laboratory-summary,
+    .medicines-summary,
+    .medical-records-summary,
+    .billing-summary,
+    .payments-summary
+  ) {
+    width: 100%;
+    min-width: 0;
+  }
+}
+
+@media (max-width: 620px) {
+  .top-header {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .header-left {
+    min-width: 0;
+    flex: 1 1 auto;
+  }
+
+  .page-context {
+    min-width: 0;
+    max-width: calc(100vw - 160px);
+  }
+
+  .page-context strong {
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .header-right {
+    flex: 0 0 auto;
+  }
+
+  .hms-page :is(
+    .patients-header-actions,
+    .doctors-header-actions,
+    .payments-header-actions,
+    .billing-header-actions
+  ) {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .hms-page :is(
+    .patients-header-actions button,
+    .doctors-header-actions button,
+    .payments-header-actions button,
+    .billing-header-actions button
+  ) {
+    width: 100%;
+  }
+}
+
+/* =========================================================
+   FINAL RESPONSIVE + CLINICAL DENSITY FOUNDATION
+   ========================================================= */
+.hms-page,
+.hms-page * {
+    min-width: 0;
+}
+
+.hms-page table {
+    font-variant-numeric: tabular-nums;
+}
+
+.hms-page :is(input, select, textarea) {
+    line-height: 1.4;
+}
+
+.hms-page :is(button, input, select, textarea):focus-visible {
+    outline: 3px solid rgba(15, 107, 77, 0.16);
+    outline-offset: 2px;
+}
+
+@media (max-width: 900px) {
+    .hms-page {
+        padding-top: 22px;
+    }
+}
+
+@media (max-width: 620px) {
+    .hms-page {
+        padding-top: 18px;
+        padding-bottom: 28px;
+    }
+
+    .hms-page :is(.patients-header, .doctors-page-header, .appointments-page-header,
+        .medical-records-header, .payments-top-bar, .billing-top-bar,
+        .emergency-page .top-bar, .medicines-header, .laboratory-header) {
+        align-items: stretch;
+        gap: 14px;
+        margin-bottom: 18px;
+    }
+
+    .hms-page :is(.patients-header-actions, .doctors-header-actions,
+        .payments-header-actions, .billing-header-actions) {
+        width: 100%;
+        flex-wrap: wrap;
+    }
+
+    .hms-page :is(.patients-header-actions button, .doctors-header-actions button,
+        .payments-header-actions button, .billing-header-actions button) {
+        flex: 1 1 140px;
+    }
+
+    .hms-page :is(.search-bar, .doctors-toolbar, .appointments-toolbar,
+        .billing-toolbar, .payments-toolbar, .medicines-toolbar,
+        .laboratory-toolbar) {
+        min-width: 0;
+    }
+}
+
+/* =========================================================
+   HMS FINAL VISUAL SYSTEM — MANUAL SURGERY LAYER
+   One shared visual language for every authenticated module.
+   ========================================================= */
+
+:root {
+  --hms-primary: #0f6b4d;
+  --hms-primary-hover: #0a523a;
+  --hms-primary-soft: #e8f5ef;
+  --hms-page-bg: #f4f7f6;
+  --hms-surface: #ffffff;
+  --hms-text: #1f2937;
+  --hms-muted: #6b7280;
+  --hms-subtle: #9ca3af;
+  --hms-border: #e5e7eb;
+  --hms-radius: 12px;
+  --hms-shadow: 0 3px 14px rgba(15, 23, 42, 0.05);
+}
+
+html {
+  overflow-x: hidden;
+}
+
+body {
+  overflow-x: hidden;
+  background: var(--hms-page-bg);
+}
+
+/* Every authenticated page gets the same canvas and rhythm. */
+.hms-page {
+  width: 100%;
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 28px 30px 40px !important;
+  min-width: 0;
+}
+
+.hms-page .top-bar,
+.hms-page > .patients-header,
+.hms-page > .doctors-page-header,
+.hms-page > .appointments-page-header,
+.hms-page > .laboratory-header,
+.hms-page > .billing-top-bar,
+.hms-page > .payments-top-bar,
+.hms-page > .medicines-header,
+.hms-page > .medical-records-header {
+  min-width: 0;
+}
+
+/* Shared page heading language. */
+.hms-page :is(
+  .page-title,
+  .patients-heading h1,
+  .doctors-page-heading .page-title,
+  .appointments-page-header h1,
+  .laboratory-title,
+  .billing-page-title,
+  .payments-page-title,
+  .medicines-title,
+  .medical-records-header h1
+) {
+  color: var(--hms-text);
+  font-size: clamp(23px, 1.9vw, 28px);
+  line-height: 1.2;
+  font-weight: 750;
+  letter-spacing: -0.02em;
+}
+
+.hms-page :is(
+  .patients-heading p,
+  .doctors-page-subtitle,
+  .appointments-page-header p,
+  .laboratory-subtitle,
+  .billing-page-subtitle,
+  .payments-page-subtitle,
+  .medicines-subtitle,
+  .medical-records-header p,
+  .emergency-subtitle
+) {
+  color: var(--hms-muted);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+/* Shared primary/secondary action language. Semantic danger actions remain red. */
+.hms-page :is(
+  .patients-add-button,
+  .add-doctor-btn,
+  .add-appointment-btn,
+  .laboratory-add-btn,
+  .billing-add-btn,
+  .medicine-add-btn,
+  .medical-records-add-btn
+) {
+  min-height: 42px;
+  border: 1px solid var(--hms-primary);
+  border-radius: 9px;
+  background: var(--hms-primary);
+  color: #fff;
+  padding: 0 16px;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 650;
+  box-shadow: 0 4px 12px rgba(15, 107, 77, 0.12);
+}
+
+.hms-page :is(
+  .patients-add-button,
+  .add-doctor-btn,
+  .add-appointment-btn,
+  .laboratory-add-btn,
+  .billing-add-btn,
+  .medicine-add-btn,
+  .medical-records-add-btn
+):hover:not(:disabled) {
+  background: var(--hms-primary-hover);
+  border-color: var(--hms-primary-hover);
+  transform: translateY(-1px);
+}
+
+.hms-page :is(
+  .patients-refresh-button,
+  .doctors-refresh-btn,
+  .doctors-secondary-btn,
+  .patients-refresh-button,
+  .payments-refresh-btn
+) {
+  min-height: 42px;
+  border-radius: 9px;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 650;
+}
+
+/* Shared data surfaces. */
+.hms-page :is(
+  .patients-directory-card,
+  .doctors-table-wrapper,
+  .appointments-card,
+  .laboratory-table-wrapper,
+  .billing-table-card,
+  .payments-table-card,
+  .medicines-table-wrapper,
+  .medical-records-table-card,
+  .emergency-table-wrapper,
+  .users-card
+) {
+  border: 1px solid var(--hms-border);
+  border-radius: var(--hms-radius);
+  box-shadow: var(--hms-shadow);
+  background: var(--hms-surface);
+}
+
+/* Tables use one readable density everywhere. */
+.hms-page :is(
+  .patients-table,
+  .doctors-table,
+  .appointments-table,
+  .laboratory-table,
+  .billing-table,
+  .payments-table,
+  .medicines-table,
+  .medical-records-table,
+  .emergency-table,
+  .users-table-wrapper table
+) {
+  font-family: inherit;
+}
+
+.hms-page :is(
+  .patients-table th,
+  .doctors-table th,
+  .appointments-table th,
+  .laboratory-table th,
+  .billing-table th,
+  .payments-table th,
+  .medicines-table th,
+  .medical-records-table th,
+  .emergency-table th,
+  .users-table-wrapper th
+) {
+  color: #64748b;
+  font-size: 11px;
+  font-weight: 750;
+  letter-spacing: 0.06em;
+}
+
+/* Prevent long Nigerian names/emails from forcing the page wider. */
+.hms-page :is(
+  .patient-name-cell,
+  .doctor-identity-cell,
+  .laboratory-patient,
+  .billing-patient,
+  .payment-patient,
+  .medical-record-patient,
+  .emergency-patient-cell,
+  .user-table-name,
+  .email-cell
+) {
+  min-width: 0;
+}
+
+/* Consistent form control scale. */
+.hms-page :is(input, select, textarea) {
+  max-width: 100%;
+  min-width: 0;
+}
+
+/* Dashboard is a primary workspace, so use the same canvas rules. */
+.dashboard-page {
+  width: 100%;
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
+.dashboard-welcome h1 {
+  font-size: clamp(24px, 2vw, 30px);
+}
+
+/* =========================================================
+   RESPONSIVE PAGE RULES
+   ========================================================= */
+@media (max-width: 900px) {
+  .hms-page {
+    padding: 24px 22px 32px !important;
+  }
+}
+
+@media (max-width: 700px) {
+  .hms-page {
+    padding: 20px 16px 28px !important;
+  }
+
+  .hms-page :is(
+    .patients-header,
+    .doctors-page-header,
+    .appointments-page-header,
+    .laboratory-header,
+    .billing-top-bar,
+    .payments-top-bar,
+    .medicines-header,
+    .medical-records-header,
+    .emergency-page .top-bar,
+    .users-page .top-bar
+  ) {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+  }
+
+  .hms-page :is(
+    .patients-header-actions,
+    .doctors-header-actions,
+    .appointments-page-header > *,
+    .laboratory-header > *,
+    .billing-top-bar > *,
+    .payments-top-bar > *,
+    .medicines-header > *,
+    .medical-records-header > *,
+    .emergency-page .top-bar > *,
+    .users-page .top-bar > *
+  ) {
+    min-width: 0;
+  }
+
+  .hms-page :is(
+    .patients-header-actions,
+    .doctors-header-actions
+  ) {
+    width: 100%;
+    flex-wrap: wrap;
+  }
+
+  .hms-page :is(
+    .patients-header-actions > *,
+    .doctors-header-actions > *,
+    .patients-add-button,
+    .add-doctor-btn,
+    .add-appointment-btn,
+    .laboratory-add-btn,
+    .billing-add-btn,
+    .medicine-add-btn,
+    .medical-records-add-btn,
+    .emergency-add-btn,
+    .create-user-top-btn
+  ) {
+    max-width: 100%;
+  }
+
+  .hms-page :is(
+    .patients-add-button,
+    .add-doctor-btn,
+    .add-appointment-btn,
+    .laboratory-add-btn,
+    .billing-add-btn,
+    .medicine-add-btn,
+    .medical-records-add-btn,
+    .emergency-add-btn,
+    .create-user-top-btn
+  ) {
+    width: 100%;
+  }
+
+  .hms-page :is(
+    .patient-stats-grid,
+    .doctors-summary-grid,
+    .appointment-stats,
+    .emergency-summary-grid,
+    .medicines-summary,
+    .medical-records-summary,
+    .billing-summary,
+    .payments-summary
+  ) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 520px) {
+  .hms-page {
+    padding: 18px 12px 24px !important;
+  }
+
+  .hms-page :is(
+    .patient-stats-grid,
+    .doctors-summary-grid,
+    .appointment-stats,
+    .emergency-summary-grid,
+    .medicines-summary,
+    .medical-records-summary,
+    .billing-summary,
+    .payments-summary
+  ) {
+    grid-template-columns: 1fr;
+  }
+
+  .hms-page :is(
+    .patients-heading,
+    .doctors-page-heading,
+    .laboratory-title-row,
+    .medicines-title-row,
+    .medical-records-header-left,
+    .emergency-title-row
+  ) {
+    align-items: flex-start;
+  }
+
+  .hms-page :is(
+    .patients-heading-icon,
+    .doctors-page-icon,
+    .laboratory-title-icon,
+    .medicines-title-icon,
+    .medical-records-title-icon,
+    .emergency-title-icon
+  ) {
+    width: 42px;
+    height: 42px;
+    flex: 0 0 42px;
+  }
+
+  .hms-page :is(
+    .patients-heading h1,
+    .doctors-page-heading .page-title,
+    .appointments-page-header h1,
+    .laboratory-title,
+    .billing-page-title,
+    .payments-page-title,
+    .medicines-title,
+    .medical-records-header h1,
+    .page-title
+  ) {
+    font-size: 22px;
+  }
+}
+
+@media (max-width: 380px) {
+  .hms-page {
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+  }
+}
+
+/* =========================================================
+   ACTION + CARD NORMALIZATION
+   ========================================================= */
+
+.hms-page :is(
+  .action-button,
+  .doctor-actions button,
+  .appointment-actions button,
+  .laboratory-action-btn,
+  .billing-action-btn,
+  .medicine-action-btn,
+  .medical-record-actions button,
+  .emergency-action-btn
+) {
+  min-width: 34px;
+  min-height: 34px;
+  padding: 7px 9px;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 650;
+  line-height: 1;
+}
+
+.hms-page :is(
+  .patient-stat-card,
+  .doctor-summary-card,
+  .appointment-stat-card,
+  .laboratory-summary-card,
+  .billing-summary-card,
+  .payments-summary-card,
+  .medicine-summary-card,
+  .medical-record-summary-card,
+  .emergency-summary-card
+) {
+  border-radius: 12px;
+  box-shadow: var(--hms-shadow);
+}
+
+.hms-page :is(
+  .patients-directory-header,
+  .appointments-card-header,
+  .laboratory-header,
+  .billing-table-header,
+  .payments-table-header,
+  .emergency-table-header,
+  .users-card-header
+) {
+  min-width: 0;
+}
+
+/* Shared empty/loading state proportions. */
+.hms-page :is(
+  .loading-state,
+  .patients-loading,
+  .doctors-loading-spinner,
+  .appointments-loading,
+  .laboratory-loading,
+  .billing-loading,
+  .payments-loading,
+  .medicines-loading,
+  .medical-records-loading,
+  .emergency-loading-card,
+  .users-state
+) {
+  min-width: 0;
+}

@@ -1,0 +1,607 @@
+
+/* ==================================================
+   MEDICINE FORM
+   ================================================== */
+
+.medicine-form-card {
+
+    width: 100%;
+    margin-top: 24px;
+    margin-bottom: 24px;
+
+    background: #ffffff;
+
+    border: 1px solid #e1e7ef;
+    border-radius: 14px;
+
+    box-shadow:
+        0 4px 14px rgba(15, 23, 42, 0.05);
+
+    overflow: hidden;
+
+}
+
+
+/* ==================================================
+   HEADER
+   ================================================== */
+
+.medicine-form-header {
+
+    padding: 22px 24px;
+
+    border-bottom: 1px solid #e8edf3;
+
+    background:
+        linear-gradient(
+            180deg,
+            #ffffff 0%,
+            #fbfcfe 100%
+        );
+
+}
+
+.medicine-form-title-row {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 13px;
+
+}
+
+.medicine-form-icon {
+
+    width: 44px;
+    height: 44px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border-radius: 11px;
+
+    background: #eef5ff;
+
+    color: #0d6efd;
+
+}
+
+.medicine-form-header h2 {
+
+    margin: 0 0 4px;
+
+    color: #202833;
+
+    font-size: 18px;
+
+    font-weight: 700;
+
+}
+
+.medicine-form-header p {
+
+    margin: 0;
+
+    color: #7a8492;
+
+    font-size: 13px;
+
+    line-height: 1.5;
+
+}
+
+
+/* ==================================================
+   ERROR
+   ================================================== */
+
+.medicine-form-error {
+
+    margin: 18px 24px 0;
+
+    padding: 11px 13px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    border: 1px solid #f1c7cc;
+
+    border-radius: 9px;
+
+    background: #fff5f6;
+
+    color: #b4232f;
+
+    font-size: 13px;
+
+    font-weight: 500;
+
+}
+
+.medicine-form-error > span:first-child {
+
+    width: 18px;
+    height: 18px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+}
+
+
+/* ==================================================
+   FORM
+   ================================================== */
+
+.medicine-form {
+
+    padding: 24px;
+
+}
+
+
+/* ==================================================
+   FORM SECTION
+   ================================================== */
+
+.medicine-form-section {
+
+    padding-bottom: 24px;
+
+    margin-bottom: 24px;
+
+    border-bottom: 1px solid #edf0f4;
+
+}
+
+.medicine-form-section:last-of-type {
+
+    padding-bottom: 0;
+
+    margin-bottom: 0;
+
+    border-bottom: none;
+
+}
+
+.medicine-form-section-title {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    margin-bottom: 18px;
+
+    color: #303946;
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+}
+
+.medicine-form-section-title svg {
+
+    color: #0d6efd;
+
+}
+
+
+/* ==================================================
+   FORM GRID
+   ================================================== */
+
+.medicine-form-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 20px;
+
+}
+
+
+/* ==================================================
+   FORM GROUP
+   ================================================== */
+
+.medicine-form-group {
+
+    min-width: 0;
+
+}
+
+.medicine-form-group label {
+
+    display: block;
+
+    margin-bottom: 7px;
+
+    color: #303946;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+}
+
+.medicine-form-group label span {
+
+    margin-left: 3px;
+
+    color: #dc3545;
+
+}
+
+.medicine-form-group small {
+
+    display: block;
+
+    margin-top: 6px;
+
+    color: #8993a1;
+
+    font-size: 11px;
+
+    line-height: 1.45;
+
+}
+
+
+/* ==================================================
+   INPUT WRAPPER
+   ================================================== */
+
+.medicine-input-wrapper {
+
+    position: relative;
+
+    display: flex;
+
+    align-items: center;
+
+}
+
+.medicine-input-wrapper > svg {
+
+    position: absolute;
+
+    left: 13px;
+
+    color: #8a94a3;
+
+    pointer-events: none;
+
+    z-index: 1;
+
+}
+
+
+/* ==================================================
+   INPUTS / SELECT
+   ================================================== */
+
+.medicine-input-wrapper input,
+.medicine-input-wrapper select {
+
+    width: 100%;
+
+    height: 44px;
+
+    padding: 0 13px 0 40px;
+
+    border: 1px solid #d7dee7;
+
+    border-radius: 9px;
+
+    background: #ffffff;
+
+    color: #303946;
+
+    font-family: inherit;
+
+    font-size: 14px;
+
+    outline: none;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+
+}
+
+.medicine-input-wrapper select {
+
+    appearance: auto;
+
+}
+
+.medicine-input-wrapper input::placeholder {
+
+    color: #a0a8b3;
+
+}
+
+.medicine-input-wrapper input:hover,
+.medicine-input-wrapper select:hover {
+
+    border-color: #c5ced9;
+
+}
+
+.medicine-input-wrapper input:focus,
+.medicine-input-wrapper select:focus {
+
+    border-color: #0d6efd;
+
+    box-shadow:
+        0 0 0 3px rgba(13, 110, 253, 0.08);
+
+}
+
+.medicine-input-wrapper input:disabled,
+.medicine-input-wrapper select:disabled {
+
+    background: #f5f7fa;
+
+    color: #8993a1;
+
+    cursor: not-allowed;
+
+}
+
+
+/* ==================================================
+   CURRENCY
+   ================================================== */
+
+.medicine-currency {
+
+    position: absolute;
+
+    left: 39px;
+
+    color: #687384;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    pointer-events: none;
+
+    z-index: 2;
+
+}
+
+.medicine-input-wrapper
+input[name="unit_price"] {
+
+    padding-left: 58px;
+
+}
+
+
+/* ==================================================
+   DATE INPUT
+   ================================================== */
+
+.medicine-input-wrapper
+input[type="date"] {
+
+    color-scheme: light;
+
+}
+
+
+/* ==================================================
+   ACTIONS
+   ================================================== */
+
+.medicine-form-actions {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: flex-end;
+
+    gap: 10px;
+
+    margin-top: 24px;
+
+    padding-top: 20px;
+
+    border-top: 1px solid #edf0f4;
+
+}
+
+.medicine-form-cancel,
+.medicine-form-save {
+
+    min-height: 42px;
+
+    padding: 0 17px;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 8px;
+
+    border-radius: 8px;
+
+    font-family: inherit;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
+
+}
+
+.medicine-form-cancel {
+
+    border: 1px solid #d7dee7;
+
+    background: #ffffff;
+
+    color: #596575;
+
+}
+
+.medicine-form-cancel:hover:not(:disabled) {
+
+    background: #f7f9fc;
+
+    border-color: #c5ced9;
+
+}
+
+.medicine-form-save {
+
+    border: 1px solid #0d6efd;
+
+    background: #0d6efd;
+
+    color: #ffffff;
+
+    box-shadow:
+        0 2px 5px rgba(13, 110, 253, 0.14);
+
+}
+
+.medicine-form-save:hover:not(:disabled) {
+
+    background: #0b5ed7;
+
+    border-color: #0b5ed7;
+
+    transform: translateY(-1px);
+
+}
+
+.medicine-form-cancel:disabled,
+.medicine-form-save:disabled {
+
+    opacity: 0.65;
+
+    cursor: not-allowed;
+
+    transform: none;
+
+}
+
+
+/* ==================================================
+   BUTTON SPINNER
+   ================================================== */
+
+.medicine-button-spinner {
+
+    width: 14px;
+    height: 14px;
+
+    border: 2px solid rgba(255, 255, 255, 0.4);
+
+    border-top-color: #ffffff;
+
+    border-radius: 50%;
+
+    animation:
+        medicine-button-spin 0.7s linear infinite;
+
+}
+
+@keyframes medicine-button-spin {
+
+    to {
+
+        transform: rotate(360deg);
+
+    }
+
+}
+
+
+/* ==================================================
+   RESPONSIVE
+   ================================================== */
+
+@media (max-width: 760px) {
+
+    .medicine-form-card {
+
+        border-radius: 11px;
+
+    }
+
+    .medicine-form-header {
+
+        padding: 18px;
+
+    }
+
+    .medicine-form {
+
+        padding: 18px;
+
+    }
+
+    .medicine-form-error {
+
+        margin-left: 18px;
+        margin-right: 18px;
+
+    }
+
+    .medicine-form-grid {
+
+        grid-template-columns: 1fr;
+
+        gap: 17px;
+
+    }
+
+    .medicine-form-actions {
+
+        flex-direction: column-reverse;
+
+        align-items: stretch;
+
+    }
+
+    .medicine-form-cancel,
+    .medicine-form-save {
+
+        width: 100%;
+
+    }
+
+}
+

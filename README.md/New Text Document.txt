@@ -1,11 +1,215 @@
-# Ghost HMS
+# 🏥 Ghost HMS (Hospital Management System)
 
-An offline-first Hospital Management System built specifically for Nigerian hospitals.
+Ghost HMS is a secure, scalable Hospital Management System backend built with Node.js, Express.js, PostgreSQL, and JWT Authentication.
 
-## Built With
+The system is designed to help hospitals manage patients, doctors, appointments, medical records, emergency cases, laboratory requests, billing, medicines, and offline synchronization through a RESTful API.
 
-- React
+---
+
+# ✨ Features
+
+- JWT Authentication
+- Role-Based Access Control (RBAC)
+- Patient Management
+- Doctor Management
+- Appointment Scheduling
+- Medical Records
+- Emergency Case Management
+- Laboratory Test Requests
+- Medicine Inventory
+- Billing System
+- Dashboard Statistics
+- Offline Synchronization Queue
+- Request Validation
+- Global Error Handling
+- Swagger API Documentation
+
+---
+
+# 🛠 Tech Stack
+
+Backend
+
 - Node.js
-- Express
+- Express.js
+
+Database
+
 - PostgreSQL
-- Prisma
+
+Authentication
+
+- JWT
+- bcrypt
+
+Documentation
+
+- Swagger
+
+Validation
+
+- express-validator
+
+---
+
+# 📁 Project Structure
+
+```
+Ghost-HMS
+│
+├── assets
+├── client
+├── database
+│   ├── schema.sql
+│   └── seed.sql
+│
+├── design
+│   ├── architecture.png
+│   └── er-diagram.png
+│
+├── docs
+│   ├── api.md
+│   └── deployment.md
+│
+├── server
+│   ├── config
+│   ├── controllers
+│   ├── middlewares
+│   ├── models
+│   ├── routes
+│   ├── app.js
+│   └── package.json
+│
+└── README.md
+```
+
+---
+
+# 🔐 Authentication
+
+Ghost HMS uses JWT Authentication.
+
+Every protected endpoint requires a valid Bearer Token.
+
+Example
+
+Authorization:
+
+Bearer YOUR_TOKEN
+
+---
+
+# 👥 User Roles
+
+- Admin
+- Doctor
+- Receptionist
+- Staff
+
+Role-Based Access Control protects every endpoint.
+
+---
+
+# 📦 Main Modules
+
+- Patients
+- Doctors
+- Appointments
+- Medical Records
+- Emergency Cases
+- Laboratory
+- Medicines
+- Billing
+- Dashboard
+- Offline Sync
+
+---
+
+# 🚀 Installation
+
+Clone the repository
+
+```bash
+git clone https://github.com/YOUR_USERNAME/Ghost-HMS.git
+```
+
+Install dependencies
+
+```bash
+cd server
+npm install
+```
+
+Create your environment file
+
+```
+PORT=5000
+DATABASE_URL=your_database_url
+JWT_SECRET=your_secret
+```
+
+Run the server
+
+```bash
+npm start
+```
+
+---
+
+# 📖 API Documentation
+
+Swagger documentation is available after running the server.
+
+```
+http://localhost:5000/api-docs
+```
+
+---
+
+# 📊 Database
+
+The SQL schema can be found inside
+
+```
+database/schema.sql
+```
+
+Sample data
+
+```
+database/seed.sql
+```
+
+---
+
+# 🔄 Offline Synchronization
+
+Ghost HMS includes an Offline Sync Queue.
+
+Operations performed while offline are stored and synchronized once connectivity is restored.
+
+---
+
+# 🚧 Future Improvements
+
+- React Frontend
+- Docker Support
+- Notifications
+- File Uploads
+- Audit Logs
+- Analytics Dashboard
+- Mobile Application
+
+---
+
+# 👨‍💻 Author
+
+Built by Qareeb Sadi
+
+Software Engineer
+
+---
+
+# 📄 License
+
+This project is licensed under the MIT License.

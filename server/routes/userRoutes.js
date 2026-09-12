@@ -1,25 +1,150 @@
 const express = require("express");
+
 const router = express.Router();
 
-const validateUser = require("../middlewares/userValidation");
-const authenticateToken = require("../middlewares/authMiddleware");
-const authorizeRoles = require("../middlewares/roleMiddleware");
+const {
+    validateUser,
+    validateAdminUserUpdate,
+    validateProfileUpdate,
+    validatePasswordChange,
+    validateLogin
+} = require("../middlewares/userValidation");
+
+const authenticateToken =
+    require("../middlewares/authMiddleware");
+
+const authorizeRoles =
+    require("../middlewares/roleMiddleware");
 
 const {
+    authRateLimiter,
+    registerRateLimiter
+} = require("../middlewares/security");
+
+
+const {
+
     registerUser,
-    loginUser
+
+    adminCreateUser,
+
+    updateUserByAdmin,
+
+    getUsers,
+
+    loginUser,
+
+    getCurrentUser,
+
+    updateCurrentUser,
+
+    changePassword
+
 } = require("../controllers/userController");
 
-// Only admin can register users
+
+// ==================================================
+// PUBLIC REGISTRATION
+// ==================================================
+
 router.post(
     "/register",
-    authenticateToken,
-    authorizeRoles("admin"),
+    registerRateLimiter,
     validateUser,
     registerUser
 );
 
-// Login is public
-router.post("/login", loginUser);
+
+// ==================================================
+// LOGIN
+// ==================================================
+
+router.post(
+    "/login",
+    authRateLimiter,
+    validateLogin,
+    loginUser
+);
+
+
+// ==================================================
+// CURRENT USER
+// ==================================================
+
+// GET /users/me
+
+router.get(
+    "/me",
+    authenticateToken,
+    getCurrentUser
+);
+
+
+// ==================================================
+// UPDATE CURRENT USER
+// ==================================================
+
+// PUT /users/me
+
+router.put(
+    "/me",
+    authenticateToken,
+    validateProfileUpdate,
+    updateCurrentUser
+);
+
+
+// ==================================================
+// CHANGE CURRENT USER PASSWORD
+// ==================================================
+
+// PUT /users/me/password
+
+router.put(
+    "/me/password",
+    authenticateToken,
+    validatePasswordChange,
+    changePassword
+);
+
+
+// ==================================================
+// GET ALL USERS
+// ADMIN ONLY
+// ==================================================
+
+router.get(
+    "/",
+    authenticateToken,
+    authorizeRoles("admin"),
+    getUsers
+);
+router.put(
+
+    "/:id",
+
+    authenticateToken,
+
+    authorizeRoles("admin"),
+
+    validateAdminUserUpdate,
+
+    updateUserByAdmin
+
+);
+
+// ==================================================
+// ADMIN CREATE USER
+// ADMIN ONLY
+// ==================================================
+
+router.post(
+    "/admin-create",
+    authenticateToken,
+    authorizeRoles("admin"),
+    validateUser,
+    adminCreateUser
+);
+
 
 module.exports = router;

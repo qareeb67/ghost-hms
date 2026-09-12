@@ -1,0 +1,752 @@
+/* ==================================================
+   USERS PAGE
+================================================== */
+
+.users-card {
+    background: #ffffff;
+    border: 1px solid #e8edf2;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 8px 30px rgba(20, 40, 60, 0.04);
+}
+
+
+/* ==================================================
+   USERS CARD HEADER
+================================================== */
+
+.users-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+
+    padding: 24px 26px;
+
+    border-bottom: 1px solid #edf1f4;
+}
+
+
+.users-card-header h2 {
+    margin: 0;
+
+    font-size: 19px;
+    font-weight: 700;
+
+    color: #1f2937;
+}
+
+
+.users-card-header p {
+    margin: 6px 0 0;
+
+    font-size: 14px;
+
+    color: #7b8794;
+}
+
+
+/* ==================================================
+   USER COUNT
+================================================== */
+
+.user-count {
+    display: inline-flex;
+    align-items: center;
+
+    padding: 8px 14px;
+
+    border-radius: 999px;
+
+    background: #eef8f4;
+
+    color: #18865b;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    white-space: nowrap;
+}
+
+
+/* ==================================================
+   TABLE
+================================================== */
+
+.users-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+
+
+.users-table-wrapper table {
+    width: 100%;
+
+    border-collapse: collapse;
+
+    min-width: 850px;
+}
+
+
+.users-table-wrapper th {
+    padding: 15px 20px;
+
+    background: #f8fafb;
+
+    color: #7b8794;
+
+    font-size: 11px;
+    font-weight: 700;
+
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+
+    text-align: left;
+
+    border-bottom: 1px solid #e9eef2;
+}
+
+
+.users-table-wrapper td {
+    padding: 17px 20px;
+
+    color: #374151;
+
+    font-size: 14px;
+
+    border-bottom: 1px solid #eef2f4;
+}
+
+
+.users-table-wrapper tbody tr {
+    transition: background 0.2s ease;
+}
+
+
+.users-table-wrapper tbody tr:hover {
+    background: #fafdfb;
+}
+
+
+.users-table-wrapper tbody tr:last-child td {
+    border-bottom: none;
+}
+
+
+/* ==================================================
+   ID CELL
+================================================== */
+
+.id-cell {
+    font-weight: 700;
+
+    color: #8b95a1;
+}
+
+
+/* ==================================================
+   USER PROFILE
+================================================== */
+
+.user-table-profile {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+
+.user-table-avatar {
+    width: 38px;
+    height: 38px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    background: #e8f6ef;
+
+    color: #198754;
+
+    font-size: 14px;
+    font-weight: 800;
+}
+
+
+.user-table-name strong {
+    display: block;
+
+    color: #263238;
+
+    font-size: 14px;
+    font-weight: 700;
+}
+
+
+/* ==================================================
+   EMAIL
+================================================== */
+
+.email-cell {
+    color: #667085;
+
+    font-size: 13px;
+}
+
+
+/* ==================================================
+   ROLE BADGES
+================================================== */
+
+.role-badge {
+    display: inline-flex;
+    align-items: center;
+
+    padding: 6px 11px;
+
+    border-radius: 999px;
+
+    font-size: 12px;
+    font-weight: 700;
+
+    white-space: nowrap;
+}
+
+
+/* ADMIN */
+
+.role-badge.admin {
+    background: #f3e8ff;
+    color: #7e22ce;
+}
+
+
+/* DOCTOR */
+
+.role-badge.doctor {
+    background: #e8f1ff;
+    color: #2563eb;
+}
+
+
+/* NURSE */
+
+.role-badge.nurse {
+    background: #fce7f3;
+    color: #be185d;
+}
+
+
+/* RECEPTIONIST */
+
+.role-badge.receptionist {
+    background: #fff7e6;
+    color: #c26b00;
+}
+
+
+/* CASHIER */
+
+.role-badge.cashier {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+
+/* ACCOUNTANT */
+
+.role-badge.accountant {
+    background: #e0f2fe;
+    color: #0369a1;
+}
+
+
+/* PHARMACIST */
+
+.role-badge.pharmacist {
+    background: #ecfdf5;
+    color: #047857;
+}
+
+
+/* LAB TECHNICIAN */
+
+.role-badge.lab_technician {
+    background: #fef3c7;
+    color: #b45309;
+}
+
+
+/* STAFF */
+
+.role-badge.staff {
+    background: #f1f5f9;
+    color: #64748b;
+}
+
+
+/* ==================================================
+   ACTIONS
+================================================== */
+
+.actions-header {
+    text-align: right;
+}
+
+
+.edit-user-btn {
+    border: 1px solid #dbe5df;
+
+    background: #ffffff;
+
+    color: #198754;
+
+    padding: 8px 14px;
+
+    border-radius: 8px;
+
+    font-size: 12px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.edit-user-btn:hover {
+    background: #effaf4;
+
+    border-color: #198754;
+
+    transform: translateY(-1px);
+}
+
+
+/* ==================================================
+   LOADING / EMPTY STATE
+================================================== */
+
+.users-state {
+    min-height: 280px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    padding: 40px;
+
+    text-align: center;
+}
+
+
+.users-state h3 {
+    margin: 12px 0 6px;
+
+    color: #2f3a45;
+
+    font-size: 18px;
+}
+
+
+.users-state p {
+    margin: 0;
+
+    color: #8b95a1;
+}
+
+
+.empty-users-icon {
+    width: 60px;
+    height: 60px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 18px;
+
+    background: #f2f6f4;
+
+    font-size: 28px;
+}
+
+
+/* ==================================================
+   LOADING SPINNER
+================================================== */
+
+.state-spinner {
+    width: 34px;
+    height: 34px;
+
+    border: 3px solid #e6eee9;
+    border-top-color: #198754;
+
+    border-radius: 50%;
+
+    animation: users-spin 0.8s linear infinite;
+}
+
+
+@keyframes users-spin {
+
+    to {
+        transform: rotate(360deg);
+    }
+
+}
+
+
+/* ==================================================
+   CREATE USER CARD
+================================================== */
+
+.user-form-card {
+    margin-bottom: 24px;
+
+    padding: 26px;
+
+    background: #ffffff;
+
+    border: 1px solid #e8edf2;
+
+    border-radius: 18px;
+
+    box-shadow: 0 8px 30px rgba(20, 40, 60, 0.04);
+}
+
+
+.form-card-header {
+    margin-bottom: 24px;
+}
+
+
+.form-card-header h2 {
+    margin: 0;
+
+    color: #263238;
+
+    font-size: 20px;
+}
+
+
+.form-card-header p {
+    margin: 7px 0 0;
+
+    color: #7b8794;
+
+    font-size: 14px;
+}
+
+
+/* ==================================================
+   EDIT USER MODAL OVERLAY
+================================================== */
+
+.edit-user-overlay {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 1000;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+
+    background: rgba(15, 23, 42, 0.48);
+
+    backdrop-filter: blur(4px);
+}
+
+
+/* ==================================================
+   EDIT USER MODAL
+================================================== */
+
+.edit-user-modal {
+    width: 100%;
+    max-width: 500px;
+
+    background: #ffffff;
+
+    border-radius: 20px;
+
+    padding: 28px;
+
+    box-shadow:
+        0 24px 80px
+        rgba(15, 23, 42, 0.25);
+
+    animation:
+        edit-user-enter
+        0.2s ease;
+}
+
+
+@keyframes edit-user-enter {
+
+    from {
+        opacity: 0;
+        transform: translateY(10px) scale(0.98);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+
+}
+
+
+/* ==================================================
+   EDIT USER HEADER
+================================================== */
+
+.edit-user-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+
+    gap: 20px;
+
+    margin-bottom: 26px;
+}
+
+
+.edit-user-eyebrow {
+    display: block;
+
+    margin-bottom: 7px;
+
+    color: #198754;
+
+    font-size: 11px;
+    font-weight: 800;
+
+    letter-spacing: 0.1em;
+}
+
+
+.edit-user-header h2 {
+    margin: 0;
+
+    color: #1f2937;
+
+    font-size: 24px;
+}
+
+
+.edit-user-header p {
+    margin: 7px 0 0;
+
+    color: #7b8794;
+
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+
+.edit-user-close {
+    width: 36px;
+    height: 36px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+
+    border-radius: 10px;
+
+    background: #f4f6f8;
+
+    color: #667085;
+
+    font-size: 24px;
+
+    cursor: pointer;
+}
+
+
+.edit-user-close:hover {
+    background: #edf1f3;
+
+    color: #1f2937;
+}
+
+
+/* ==================================================
+   EDIT FORM
+================================================== */
+
+.edit-user-group {
+    display: flex;
+    flex-direction: column;
+
+    margin-bottom: 18px;
+}
+
+
+.edit-user-group label {
+    margin-bottom: 8px;
+
+    color: #344054;
+
+    font-size: 13px;
+    font-weight: 700;
+}
+
+
+.edit-user-group input,
+.edit-user-group select {
+    width: 100%;
+
+    height: 46px;
+
+    padding: 0 13px;
+
+    border: 1px solid #d9e1e7;
+
+    border-radius: 10px;
+
+    outline: none;
+
+    background: #ffffff;
+
+    color: #344054;
+
+    font-size: 14px;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+.edit-user-group input:focus,
+.edit-user-group select:focus {
+    border-color: #198754;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(25, 135, 84, 0.1);
+}
+
+
+/* ==================================================
+   EDIT ACTIONS
+================================================== */
+
+.edit-user-actions {
+    display: flex;
+    justify-content: flex-end;
+
+    gap: 12px;
+
+    margin-top: 28px;
+}
+
+
+.edit-user-cancel,
+.edit-user-save {
+    min-height: 44px;
+
+    padding: 0 18px;
+
+    border-radius: 10px;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s ease,
+        opacity 0.2s ease;
+}
+
+
+.edit-user-cancel {
+    border: 1px solid #d9e1e7;
+
+    background: #ffffff;
+
+    color: #667085;
+}
+
+
+.edit-user-save {
+    border: none;
+
+    background: #198754;
+
+    color: #ffffff;
+}
+
+
+.edit-user-cancel:hover,
+.edit-user-save:hover {
+    transform: translateY(-1px);
+}
+
+
+.edit-user-save:disabled,
+.edit-user-cancel:disabled,
+.edit-user-close:disabled {
+    opacity: 0.6;
+
+    cursor: not-allowed;
+
+    transform: none;
+}
+
+
+/* ==================================================
+   RESPONSIVE
+================================================== */
+
+@media (max-width: 700px) {
+
+    .users-card-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+
+    .user-form-card {
+        padding: 20px;
+    }
+
+
+    .edit-user-modal {
+        padding: 22px;
+    }
+
+
+    .edit-user-header h2 {
+        font-size: 21px;
+    }
+
+
+    .edit-user-actions {
+        flex-direction: column-reverse;
+    }
+
+
+    .edit-user-cancel,
+    .edit-user-save {
+        width: 100%;
+    }
+
+}

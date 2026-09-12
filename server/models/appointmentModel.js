@@ -1,6 +1,10 @@
 const pool = require("../config/db");
 
-// Create Appointment
+
+// ==================================================
+// CREATE APPOINTMENT
+// ==================================================
+
 const createAppointment = async (
     patient_id,
     doctor_id,
@@ -11,7 +15,8 @@ const createAppointment = async (
 ) => {
 
     const result = await pool.query(
-        `INSERT INTO appointments
+        `
+        INSERT INTO appointments
         (
             patient_id,
             doctor_id,
@@ -20,8 +25,9 @@ const createAppointment = async (
             reason,
             status
         )
-        VALUES ($1,$2,$3,$4,$5,$6)
-        RETURNING *`,
+        VALUES ($1, $2, $3, $4, $5, $6)
+        RETURNING *
+        `,
         [
             patient_id,
             doctor_id,
@@ -32,10 +38,94 @@ const createAppointment = async (
         ]
     );
 
-    return result.rows[0];
+
+    const appointment = result.rows[0];
+
+
+    // ==================================================
+    // GET PATIENT AND DOCTOR INFORMATION
+    // ==================================================
+
+    const details = await pool.query(
+        `
+        SELECT
+
+            p.first_name || ' ' || p.last_name
+                AS patient_name,
+
+            p.first_name AS patient_first_name,
+
+            p.last_name AS patient_last_name,
+
+            d.first_name || ' ' || d.last_name
+                AS doctor_name,
+
+            d.first_name AS doctor_first_name,
+
+            d.last_name AS doctor_last_name,
+
+            d.specialization,
+
+            d.email AS doctor_email
+
+        FROM patients p
+
+        JOIN doctors d
+            ON d.doctor_id = $2
+
+        WHERE p.patient_id = $1
+        `,
+        [
+            patient_id,
+            doctor_id
+        ]
+    );
+
+
+    if (details.rows.length > 0) {
+
+        return {
+
+            ...appointment,
+
+            patient_name:
+                details.rows[0].patient_name,
+
+            patient_first_name:
+                details.rows[0].patient_first_name,
+
+            patient_last_name:
+                details.rows[0].patient_last_name,
+
+            doctor_name:
+                details.rows[0].doctor_name,
+
+            doctor_first_name:
+                details.rows[0].doctor_first_name,
+
+            doctor_last_name:
+                details.rows[0].doctor_last_name,
+
+            specialization:
+                details.rows[0].specialization,
+
+            doctor_email:
+                details.rows[0].doctor_email
+
+        };
+
+    }
+
+
+    return appointment;
+
 };
 
-// Get All Appointments
+
+// ==================================================
+// GET ALL APPOINTMENTS
+// ==================================================
+
 const getAllAppointments = async () => {
 
     const result = await pool.query(
@@ -43,9 +133,15 @@ const getAllAppointments = async () => {
         SELECT
             a.appointment_id,
 
-            p.first_name || ' ' || p.last_name AS patient_name,
+            a.patient_id,
 
-            d.first_name || ' ' || d.last_name AS doctor_name,
+            a.doctor_id,
+
+            p.first_name || ' ' || p.last_name
+                AS patient_name,
+
+            d.first_name || ' ' || d.last_name
+                AS doctor_name,
 
             d.specialization,
 
@@ -65,24 +161,40 @@ const getAllAppointments = async () => {
         JOIN doctors d
             ON a.doctor_id = d.doctor_id
 
-        ORDER BY a.appointment_date,
-                 a.appointment_time
+        ORDER BY
+            a.appointment_date,
+            a.appointment_time
         `
     );
 
     return result.rows;
+
 };
-// Get Appointment By ID
-const getAppointmentById = async (appointment_id) => {
+
+
+// ==================================================
+// GET APPOINTMENT BY ID
+// ==================================================
+
+const getAppointmentById = async (
+    appointment_id
+) => {
 
     const result = await pool.query(
         `
         SELECT
+
             a.appointment_id,
 
-            p.first_name || ' ' || p.last_name AS patient_name,
+            a.patient_id,
 
-            d.first_name || ' ' || d.last_name AS doctor_name,
+            a.doctor_id,
+
+            p.first_name || ' ' || p.last_name
+                AS patient_name,
+
+            d.first_name || ' ' || d.last_name
+                AS doctor_name,
 
             d.specialization,
 
@@ -108,9 +220,14 @@ const getAppointmentById = async (appointment_id) => {
     );
 
     return result.rows[0];
+
 };
 
-// Update Appointment
+
+// ==================================================
+// UPDATE APPOINTMENT
+// ==================================================
+
 const updateAppointment = async (
     appointment_id,
     patient_id,
@@ -124,14 +241,23 @@ const updateAppointment = async (
     const result = await pool.query(
         `
         UPDATE appointments
+
         SET
+
             patient_id = $1,
+
             doctor_id = $2,
+
             appointment_date = $3,
+
             appointment_time = $4,
+
             reason = $5,
+
             status = $6
+
         WHERE appointment_id = $7
+
         RETURNING *
         `,
         [
@@ -146,12 +272,26 @@ const updateAppointment = async (
     );
 
     return result.rows[0];
+
 };
 
-const deleteAppointment = async (id) => {
+
+// ==================================================
+// DELETE APPOINTMENT
+// ==================================================
+
+const deleteAppointment = async (
+    id
+) => {
 
     const result = await pool.query(
-        "DELETE FROM appointments WHERE appointment_id = $1 RETURNING *",
+        `
+        DELETE FROM appointments
+
+        WHERE appointment_id = $1
+
+        RETURNING *
+        `,
         [id]
     );
 
@@ -159,27 +299,49 @@ const deleteAppointment = async (id) => {
 
 };
 
-// Complete Appointment
-const completeAppointment = async (appointment_id) => {
+
+// ==================================================
+// COMPLETE APPOINTMENT
+// ==================================================
+
+const completeAppointment = async (
+    appointment_id
+) => {
 
     const result = await pool.query(
         `
         UPDATE appointments
+
         SET status = 'Completed'
+
         WHERE appointment_id = $1
+
         RETURNING *
         `,
         [appointment_id]
     );
 
     return result.rows[0];
+
 };
 
+
+// ==================================================
+// EXPORTS
+// ==================================================
+
 module.exports = {
+
     createAppointment,
+
     getAllAppointments,
+
     getAppointmentById,
+
     updateAppointment,
+
     deleteAppointment,
+
     completeAppointment
+
 };

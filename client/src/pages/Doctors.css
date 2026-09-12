@@ -1,0 +1,1014 @@
+/* ==================================================
+   HOSPITAL MANAGEMENT SYSTEM — DOCTORS PAGE
+================================================== */
+
+.doctors-page {
+    width: 100%;
+}
+
+
+/* ==================================================
+   PAGE HEADER
+================================================== */
+
+.doctors-page-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 28px;
+}
+
+.doctors-page-heading {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.doctors-page-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 16px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: rgba(16, 185, 129, 0.12);
+    color: #10b981;
+
+    flex-shrink: 0;
+}
+
+.doctors-page-heading .page-title {
+    margin: 0;
+}
+
+.doctors-page-subtitle {
+    margin-top: 5px;
+    color: #64748b;
+    font-size: 0.92rem;
+    line-height: 1.5;
+}
+
+
+/* ==================================================
+   HEADER ACTIONS
+================================================== */
+
+.doctors-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.doctors-refresh-btn,
+.add-doctor-btn,
+.doctors-secondary-btn {
+    border: none;
+    border-radius: 10px;
+
+    min-height: 42px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    padding: 0 16px;
+
+    font-size: 0.88rem;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.doctors-refresh-btn {
+    background: #ffffff;
+    color: #475569;
+
+    border: 1px solid #e2e8f0;
+}
+
+.doctors-refresh-btn:hover:not(:disabled) {
+    background: #f8fafc;
+    border-color: #cbd5e1;
+
+    transform: translateY(-1px);
+}
+
+.doctors-refresh-btn:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+}
+
+.add-doctor-btn {
+    background: #10b981;
+    color: #ffffff;
+
+    box-shadow:
+        0 8px 18px rgba(16, 185, 129, 0.18);
+}
+
+.add-doctor-btn:hover {
+    background: #059669;
+
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 12px 24px rgba(16, 185, 129, 0.24);
+}
+
+.doctors-secondary-btn {
+    background: #f1f5f9;
+    color: #475569;
+
+    border: 1px solid #e2e8f0;
+}
+
+.doctors-secondary-btn:hover {
+    background: #e2e8f0;
+}
+
+
+/* ==================================================
+   SUMMARY CARDS
+================================================== */
+
+.doctors-summary-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+
+    gap: 18px;
+
+    margin-bottom: 24px;
+}
+
+.doctor-summary-card {
+    background: #ffffff;
+
+    border: 1px solid #e8edf3;
+
+    border-radius: 16px;
+
+    padding: 20px;
+
+    display: flex;
+    align-items: center;
+    gap: 14px;
+
+    min-height: 104px;
+
+    box-shadow:
+        0 4px 16px rgba(15, 23, 42, 0.035);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.doctor-summary-card:hover {
+    transform: translateY(-2px);
+
+    border-color: #dbe5ec;
+
+    box-shadow:
+        0 10px 24px rgba(15, 23, 42, 0.07);
+}
+
+.doctor-summary-icon {
+    width: 44px;
+    height: 44px;
+
+    border-radius: 13px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    background:
+        rgba(16, 185, 129, 0.1);
+
+    color: #10b981;
+}
+
+.doctor-summary-card:nth-child(2)
+.doctor-summary-icon {
+    background: rgba(59, 130, 246, 0.1);
+    color: #3b82f6;
+}
+
+.doctor-summary-card:nth-child(3)
+.doctor-summary-icon {
+    background: rgba(139, 92, 246, 0.1);
+    color: #8b5cf6;
+}
+
+.doctor-summary-card:nth-child(4)
+.doctor-summary-icon {
+    background: rgba(245, 158, 11, 0.12);
+    color: #d97706;
+}
+
+.doctor-summary-card div:last-child {
+    min-width: 0;
+}
+
+.doctor-summary-card span {
+    display: block;
+
+    color: #64748b;
+
+    font-size: 0.78rem;
+    font-weight: 500;
+
+    margin-bottom: 5px;
+}
+
+.doctor-summary-card strong {
+    display: block;
+
+    color: #0f172a;
+
+    font-size: 1.45rem;
+    font-weight: 700;
+
+    line-height: 1;
+}
+
+
+/* ==================================================
+   TOOLBAR
+================================================== */
+
+.doctors-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 16px;
+
+    margin-bottom: 20px;
+}
+
+.doctors-search-wrapper {
+    width: 100%;
+    max-width: 650px;
+
+    min-height: 46px;
+
+    display: flex;
+    align-items: center;
+
+    position: relative;
+
+    background: #ffffff;
+
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+
+    padding: 0 14px;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.doctors-search-wrapper > svg {
+    flex-shrink: 0;
+
+    color: #94a3b8;
+}
+
+.doctors-search-wrapper:focus-within {
+    border-color: #10b981;
+
+    box-shadow:
+        0 0 0 4px rgba(16, 185, 129, 0.09);
+}
+
+.doctors-search {
+    width: 100%;
+
+    height: 44px;
+
+    border: none;
+    outline: none;
+
+    background: transparent;
+
+    padding: 0 38px 0 11px;
+
+    color: #0f172a;
+
+    font-size: 0.9rem;
+}
+
+.doctors-search::placeholder {
+    color: #94a3b8;
+}
+
+.doctors-search-clear {
+    position: absolute;
+
+    right: 10px;
+
+    width: 28px;
+    height: 28px;
+
+    border: none;
+    border-radius: 8px;
+
+    background: transparent;
+
+    color: #94a3b8;
+
+    font-size: 1.35rem;
+    line-height: 1;
+
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.doctors-search-clear:hover {
+    background: #f1f5f9;
+    color: #475569;
+}
+
+.doctors-result-count {
+    white-space: nowrap;
+
+    padding: 9px 13px;
+
+    border-radius: 9px;
+
+    background: #f1f5f9;
+
+    color: #64748b;
+
+    font-size: 0.82rem;
+    font-weight: 600;
+}
+
+
+/* ==================================================
+   TABLE
+================================================== */
+
+.doctors-table-wrapper {
+    width: 100%;
+
+    overflow-x: auto;
+
+    background: #ffffff;
+
+    border: 1px solid #e8edf3;
+
+    border-radius: 16px;
+
+    box-shadow:
+        0 4px 18px rgba(15, 23, 42, 0.035);
+}
+
+.doctors-table {
+    width: 100%;
+
+    min-width: 1420px;
+
+    border-collapse: collapse;
+}
+
+.doctors-table thead {
+    background: #f8fafc;
+}
+
+.doctors-table th {
+    padding: 15px 18px;
+
+    text-align: left;
+
+    color: #64748b;
+
+    font-size: 0.72rem;
+    font-weight: 700;
+
+    text-transform: uppercase;
+    letter-spacing: 0.045em;
+
+    white-space: nowrap;
+
+    border-bottom: 1px solid #e8edf3;
+}
+
+.doctors-table td {
+    padding: 16px 18px;
+
+    color: #334155;
+
+    font-size: 0.86rem;
+
+    vertical-align: middle;
+
+    border-bottom: 1px solid #edf1f5;
+}
+
+.doctors-table tbody tr {
+    transition:
+        background 0.18s ease;
+}
+
+.doctors-table tbody tr:hover {
+    background: #f8fafc;
+}
+
+.doctors-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+
+/* ==================================================
+   DOCTOR IDENTITY
+================================================== */
+
+.doctor-identity-cell {
+    min-width: 220px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+}
+
+.doctor-avatar {
+    width: 40px;
+    height: 40px;
+
+    flex-shrink: 0;
+
+    border-radius: 12px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(16, 185, 129, 0.15),
+            rgba(5, 150, 105, 0.08)
+        );
+
+    color: #059669;
+}
+
+.doctor-identity-cell > div:last-child {
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 4px;
+}
+
+.doctor-identity-cell strong {
+    color: #1e293b;
+
+    font-size: 0.88rem;
+    font-weight: 650;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    max-width: 210px;
+}
+
+.doctor-identity-cell span {
+    display: flex;
+    align-items: center;
+
+    gap: 5px;
+
+    color: #94a3b8;
+
+    font-size: 0.74rem;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    max-width: 210px;
+}
+
+
+/* ==================================================
+   DOCTOR NUMBER
+================================================== */
+
+.doctor-number {
+    display: inline-flex;
+    align-items: center;
+
+    padding: 6px 9px;
+
+    border-radius: 7px;
+
+    background: #f1f5f9;
+
+    color: #475569;
+
+    font-size: 0.76rem;
+    font-weight: 700;
+
+    white-space: nowrap;
+}
+
+
+/* ==================================================
+   SPECIALIZATION / DEPARTMENT / QUALIFICATION
+================================================== */
+
+.doctor-specialization-cell,
+.doctor-department-cell,
+.doctor-qualification-cell,
+.doctor-experience-cell,
+.doctor-mdcn-cell {
+    display: flex;
+    align-items: center;
+
+    gap: 7px;
+
+    color: #475569;
+
+    line-height: 1.4;
+}
+
+.doctor-specialization-cell {
+    min-width: 160px;
+}
+
+.doctor-department-cell {
+    min-width: 150px;
+}
+
+.doctor-qualification-cell {
+    min-width: 170px;
+    max-width: 240px;
+}
+
+.doctor-specialization-cell svg {
+    color: #10b981;
+    flex-shrink: 0;
+}
+
+.doctor-department-cell svg {
+    color: #3b82f6;
+    flex-shrink: 0;
+}
+
+.doctor-qualification-cell svg {
+    color: #8b5cf6;
+    flex-shrink: 0;
+}
+
+.doctor-experience-cell svg {
+    color: #f59e0b;
+    flex-shrink: 0;
+}
+
+
+/* ==================================================
+   MDCN
+================================================== */
+
+.doctor-mdcn-cell {
+    min-width: 115px;
+}
+
+.doctor-mdcn-cell svg {
+    flex-shrink: 0;
+}
+
+.doctor-mdcn-cell:has(svg[data-lucide="shield-check"]) {
+    color: #059669;
+}
+
+.doctor-mdcn-cell:has(svg[data-lucide="shield-alert"]) {
+    color: #d97706;
+}
+
+
+/* ==================================================
+   EMPLOYMENT STATUS
+================================================== */
+
+.doctor-employment-status {
+    display: inline-flex;
+    align-items: center;
+
+    padding: 6px 10px;
+
+    border-radius: 999px;
+
+    font-size: 0.74rem;
+    font-weight: 700;
+
+    white-space: nowrap;
+
+    background: #f1f5f9;
+    color: #64748b;
+}
+
+.doctor-employment-status.active {
+    background: rgba(16, 185, 129, 0.11);
+    color: #059669;
+}
+
+.doctor-employment-status.inactive {
+    background: rgba(100, 116, 139, 0.12);
+    color: #64748b;
+}
+
+.doctor-employment-status.on-leave {
+    background: rgba(245, 158, 11, 0.12);
+    color: #b45309;
+}
+
+.doctor-employment-status.suspended {
+    background: rgba(239, 68, 68, 0.1);
+    color: #dc2626;
+}
+
+.doctor-employment-status.retired {
+    background: rgba(139, 92, 246, 0.1);
+    color: #7c3aed;
+}
+
+
+/* ==================================================
+   SYNC STATUS
+================================================== */
+
+.doctor-status {
+    display: inline-flex;
+    align-items: center;
+
+    gap: 6px;
+
+    padding: 6px 10px;
+
+    border-radius: 999px;
+
+    font-size: 0.73rem;
+    font-weight: 700;
+
+    white-space: nowrap;
+}
+
+.doctor-status.synced {
+    background: rgba(16, 185, 129, 0.1);
+    color: #059669;
+}
+
+.doctor-status.pending {
+    background: rgba(245, 158, 11, 0.12);
+    color: #b45309;
+}
+
+.doctor-status.pending svg {
+    animation:
+        doctorsPendingPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes doctorsPendingPulse {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.45;
+    }
+
+}
+
+
+/* ==================================================
+   ACTIONS
+================================================== */
+
+.doctor-actions {
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+}
+
+.doctor-action-btn {
+    height: 34px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 6px;
+
+    padding: 0 10px;
+
+    border-radius: 8px;
+
+    font-size: 0.76rem;
+    font-weight: 650;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.18s ease,
+        background 0.18s ease,
+        border-color 0.18s ease,
+        opacity 0.18s ease;
+}
+
+.doctor-edit-btn {
+    background: #ffffff;
+
+    color: #2563eb;
+
+    border: 1px solid #dbeafe;
+}
+
+.doctor-edit-btn:hover {
+    background: #eff6ff;
+
+    border-color: #bfdbfe;
+
+    transform: translateY(-1px);
+}
+
+.doctor-delete-btn {
+    background: #ffffff;
+
+    color: #dc2626;
+
+    border: 1px solid #fee2e2;
+}
+
+.doctor-delete-btn:hover {
+    background: #fef2f2;
+
+    border-color: #fecaca;
+
+    transform: translateY(-1px);
+}
+
+.doctor-action-disabled {
+    opacity: 0.55;
+}
+
+.doctor-action-disabled:hover {
+    transform: none;
+}
+
+
+/* ==================================================
+   LOADING / EMPTY STATE
+================================================== */
+
+.doctors-state-card {
+    width: 100%;
+
+    min-height: 330px;
+
+    background: #ffffff;
+
+    border: 1px solid #e8edf3;
+
+    border-radius: 16px;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+
+    padding: 40px 24px;
+
+    box-shadow:
+        0 4px 18px rgba(15, 23, 42, 0.035);
+}
+
+.doctors-loading-spinner,
+.doctors-empty-icon {
+    width: 58px;
+    height: 58px;
+
+    border-radius: 18px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-bottom: 16px;
+}
+
+.doctors-loading-spinner {
+    background: rgba(16, 185, 129, 0.1);
+    color: #10b981;
+}
+
+.doctors-loading-spinner svg {
+    animation:
+        doctorsSpin 1s linear infinite;
+}
+
+.doctors-empty-icon {
+    background: #f1f5f9;
+    color: #94a3b8;
+}
+
+.doctors-state-card h3 {
+    margin: 0 0 7px;
+
+    color: #1e293b;
+
+    font-size: 1rem;
+}
+
+.doctors-state-card p {
+    max-width: 460px;
+
+    margin: 0 0 20px;
+
+    color: #64748b;
+
+    font-size: 0.88rem;
+
+    line-height: 1.6;
+}
+
+@keyframes doctorsSpin {
+
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+
+}
+
+.doctors-spin {
+    animation:
+        doctorsSpin 1s linear infinite;
+}
+
+
+/* ==================================================
+   SCROLLBAR
+================================================== */
+
+.doctors-table-wrapper::-webkit-scrollbar {
+    height: 8px;
+}
+
+.doctors-table-wrapper::-webkit-scrollbar-track {
+    background: #f8fafc;
+}
+
+.doctors-table-wrapper::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+
+    border-radius: 999px;
+}
+
+.doctors-table-wrapper::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+
+
+/* ==================================================
+   TABLET
+================================================== */
+
+@media (max-width: 1100px) {
+
+    .doctors-summary-grid {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+}
+
+
+/* ==================================================
+   MOBILE
+================================================== */
+
+@media (max-width: 768px) {
+
+    .doctors-page-header {
+        flex-direction: column;
+
+        align-items: stretch;
+    }
+
+    .doctors-header-actions {
+        width: 100%;
+
+        flex-wrap: wrap;
+    }
+
+    .doctors-header-actions button {
+        flex: 1;
+    }
+
+    .doctors-summary-grid {
+        grid-template-columns: 1fr;
+
+        gap: 12px;
+    }
+
+    .doctor-summary-card {
+        min-height: 90px;
+    }
+
+    .doctors-toolbar {
+        flex-direction: column;
+
+        align-items: stretch;
+    }
+
+    .doctors-search-wrapper {
+        max-width: none;
+    }
+
+    .doctors-result-count {
+        align-self: flex-start;
+    }
+
+}
+
+
+/* ==================================================
+   SMALL MOBILE
+================================================== */
+
+@media (max-width: 520px) {
+
+    .doctors-page-heading {
+        align-items: flex-start;
+    }
+
+    .doctors-page-icon {
+        width: 46px;
+        height: 46px;
+
+        border-radius: 14px;
+    }
+
+    .doctors-page-subtitle {
+        font-size: 0.84rem;
+    }
+
+    .doctors-header-actions {
+        flex-direction: column;
+    }
+
+    .doctors-header-actions button {
+        width: 100%;
+        flex: none;
+    }
+
+    .doctor-summary-card {
+        padding: 16px;
+    }
+
+    .doctors-search-wrapper {
+        padding: 0 12px;
+    }
+
+    .doctors-search {
+        font-size: 0.82rem;
+    }
+
+}

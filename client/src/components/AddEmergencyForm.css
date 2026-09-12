@@ -1,0 +1,449 @@
+
+/* ==========================================
+   EMERGENCY FORM
+========================================== */
+
+.emergency-form {
+    width: 100%;
+    margin-bottom: 28px;
+    overflow: hidden;
+    background: #ffffff;
+    border: 1px solid #eef2f7;
+    border-radius: 16px;
+    box-shadow:
+        0 8px 30px rgba(15, 23, 42, 0.06);
+}
+
+
+/* ==========================================
+   FORM HEADER
+========================================== */
+
+.emergency-form-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 24px 28px;
+    background:
+        linear-gradient(
+            135deg,
+            #fff5f5 0%,
+            #ffffff 100%
+        );
+    border-bottom: 1px solid #fee2e2;
+}
+
+.emergency-form-header-icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    border-radius: 13px;
+    background: #fee2e2;
+    font-size: 22px;
+}
+
+.emergency-form-kicker {
+    display: block;
+    margin-bottom: 5px;
+    color: #dc3545;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1px;
+}
+
+.emergency-form-header h2 {
+    margin: 0;
+    color: #991b1b;
+    font-size: 21px;
+    font-weight: 750;
+}
+
+.emergency-form-header p {
+    margin: 6px 0 0;
+    color: #6b7280;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+
+/* ==========================================
+   FORM SECTIONS
+========================================== */
+
+.emergency-form-section {
+    padding: 26px 28px;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.emergency-section-heading {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    margin-bottom: 20px;
+}
+
+.emergency-section-icon {
+    width: 34px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    border-radius: 9px;
+    background: #f8fafc;
+    font-size: 15px;
+}
+
+.emergency-section-heading h3 {
+    margin: 0;
+    color: #1f2937;
+    font-size: 15px;
+    font-weight: 750;
+}
+
+.emergency-section-heading p {
+    margin: 3px 0 0;
+    color: #94a3b8;
+    font-size: 12px;
+}
+
+
+/* ==========================================
+   FORM GRID
+========================================== */
+
+.emergency-form-grid {
+    display: grid;
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+    gap: 20px;
+}
+
+.emergency-form-grid-three {
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+}
+
+
+/* ==========================================
+   FORM GROUP
+========================================== */
+
+.emergency-form-group {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    gap: 8px;
+}
+
+.emergency-form-group label {
+    color: #374151;
+    font-size: 13px;
+    font-weight: 650;
+}
+
+.required-mark {
+    margin-left: 3px;
+    color: #dc3545;
+    font-weight: 800;
+}
+
+
+/* ==========================================
+   INPUTS
+========================================== */
+
+.emergency-form-group input,
+.emergency-form-group select,
+.emergency-form-group textarea {
+    width: 100%;
+    padding: 11px 13px;
+    border: 1px solid #d1d5db;
+    border-radius: 9px;
+    outline: none;
+    color: #374151;
+    background: #ffffff;
+    font-family: inherit;
+    font-size: 14px;
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+}
+
+.emergency-form-group input::placeholder,
+.emergency-form-group textarea::placeholder {
+    color: #a1aab8;
+}
+
+.emergency-form-group input:focus,
+.emergency-form-group select:focus,
+.emergency-form-group textarea:focus {
+    border-color: #dc3545;
+    box-shadow:
+        0 0 0 3px
+        rgba(220, 53, 69, 0.10);
+}
+
+.emergency-form-group input:hover:not(:disabled),
+.emergency-form-group select:hover:not(:disabled),
+.emergency-form-group textarea:hover:not(:disabled) {
+    border-color: #b8c0cc;
+}
+
+.emergency-form-group input:disabled,
+.emergency-form-group select:disabled {
+    color: #9ca3af;
+    background: #f8fafc;
+    cursor: not-allowed;
+}
+
+.emergency-form-group textarea {
+    min-height: 140px;
+    resize: vertical;
+    line-height: 1.6;
+}
+
+
+/* ==========================================
+   FIELD HELP
+========================================== */
+
+.emergency-field-help {
+    color: #94a3b8;
+    font-size: 11px;
+    line-height: 1.4;
+}
+
+
+/* ==========================================
+   TRIAGE GUIDE
+========================================== */
+
+.emergency-triage-guide {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-top: 20px;
+    padding: 12px 14px;
+    border: 1px solid #eef2f7;
+    border-radius: 9px;
+    background: #f8fafc;
+}
+
+.emergency-triage-guide-title {
+    color: #64748b;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+}
+
+.emergency-triage-guide-items {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 14px;
+}
+
+.emergency-triage-guide-items span {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: #64748b;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.guide-dot {
+    width: 7px;
+    height: 7px;
+    display: inline-block;
+    border-radius: 50%;
+}
+
+.guide-critical {
+    background: #dc2626;
+}
+
+.guide-high {
+    background: #ea580c;
+}
+
+.guide-medium {
+    background: #d97706;
+}
+
+.guide-low {
+    background: #16a34a;
+}
+
+
+/* ==========================================
+   NOTES
+========================================== */
+
+.emergency-notes-group {
+    width: 100%;
+}
+
+
+/* ==========================================
+   FORM ACTIONS
+========================================== */
+
+.emergency-form-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+    padding: 20px 28px;
+    background: #fafafa;
+}
+
+
+/* ==========================================
+   SAVE BUTTON
+========================================== */
+
+.emergency-save-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-width: 190px;
+    border: none;
+    border-radius: 9px;
+    padding: 11px 20px;
+    background: #dc3545;
+    color: #ffffff;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition:
+        background 0.2s ease,
+        box-shadow 0.2s ease,
+        transform 0.2s ease;
+}
+
+.emergency-save-btn span {
+    font-size: 16px;
+    line-height: 1;
+}
+
+.emergency-save-btn:hover {
+    background: #c82333;
+    box-shadow:
+        0 6px 16px
+        rgba(220, 53, 69, 0.22);
+    transform: translateY(-1px);
+}
+
+.emergency-save-btn:active {
+    transform: translateY(0);
+}
+
+
+/* ==========================================
+   CANCEL BUTTON
+========================================== */
+
+.emergency-cancel-btn {
+    min-width: 100px;
+    padding: 11px 18px;
+    border: 1px solid #d1d5db;
+    border-radius: 9px;
+    background: #ffffff;
+    color: #4b5563;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 650;
+    cursor: pointer;
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.emergency-cancel-btn:hover {
+    border-color: #cbd5e1;
+    background: #f8fafc;
+    transform: translateY(-1px);
+}
+
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media (max-width: 900px) {
+
+    .emergency-form-grid-three {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+    .emergency-triage-guide {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+}
+
+
+@media (max-width: 768px) {
+
+    .emergency-form-header {
+        align-items: flex-start;
+        padding: 20px;
+    }
+
+    .emergency-form-section {
+        padding: 22px 20px;
+    }
+
+    .emergency-form-grid,
+    .emergency-form-grid-three {
+        grid-template-columns: 1fr;
+    }
+
+    .emergency-form-actions {
+        flex-direction: column-reverse;
+        padding: 18px 20px;
+    }
+
+    .emergency-save-btn,
+    .emergency-cancel-btn {
+        width: 100%;
+    }
+
+}
+
+
+@media (max-width: 480px) {
+
+    .emergency-form-header-icon {
+        width: 42px;
+        height: 42px;
+        font-size: 19px;
+    }
+
+    .emergency-form-header h2 {
+        font-size: 18px;
+    }
+
+    .emergency-section-heading {
+        align-items: flex-start;
+    }
+
+    .emergency-triage-guide-items {
+        gap: 9px 12px;
+    }
+
+
+}

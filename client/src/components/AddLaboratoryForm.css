@@ -1,0 +1,937 @@
+/* ==================================================
+   HOSPITAL MANAGEMENT SYSTEM
+   LABORATORY REQUEST FORM
+================================================== */
+
+.laboratory-form {
+    width: 100%;
+    margin-bottom: 24px;
+    overflow: hidden;
+
+    background: var(--surface, #ffffff);
+
+    border: 1px solid #dfe7e4;
+    border-radius: 18px;
+
+    box-shadow:
+        0 10px 30px rgba(15, 23, 42, 0.07),
+        0 2px 8px rgba(15, 23, 42, 0.03);
+}
+
+
+/* ==================================================
+   TOP BAR
+================================================== */
+
+.laboratory-form-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 24px 28px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #f4fbf8 0%,
+            #ffffff 65%
+        );
+
+    border-bottom: 1px solid #e3ebe8;
+}
+
+
+.laboratory-form-brand {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+
+.laboratory-form-icon {
+    width: 48px;
+    height: 48px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    color: #198754;
+
+    background: #e8f5ef;
+
+    border: 1px solid #cce8da;
+    border-radius: 13px;
+
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.8);
+}
+
+
+.laboratory-form-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+
+    margin-bottom: 3px;
+
+    color: #198754;
+
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+
+.laboratory-live-dot {
+    width: 6px;
+    height: 6px;
+
+    border-radius: 50%;
+
+    background: #198754;
+}
+
+
+.laboratory-form-top h2 {
+    margin: 0;
+
+    color: #17211d;
+
+    font-size: 20px;
+    font-weight: 750;
+    letter-spacing: -0.02em;
+}
+
+
+.laboratory-form-reference {
+    padding: 7px 10px;
+
+    color: #64746d;
+
+    background: #f5f8f7;
+
+    border: 1px solid #dfe8e4;
+    border-radius: 7px;
+
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+}
+
+
+/* ==================================================
+   INTRO
+================================================== */
+
+.laboratory-form-intro {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+
+    padding: 15px 28px;
+
+    color: #66756f;
+
+    background: #fbfcfc;
+
+    border-bottom: 1px solid #edf1ef;
+
+    font-size: 13px;
+}
+
+
+.laboratory-form-intro svg {
+    flex-shrink: 0;
+    color: #198754;
+}
+
+
+.laboratory-form-intro p {
+    margin: 0;
+}
+
+
+/* ==================================================
+   ERROR
+================================================== */
+
+.laboratory-form-error {
+    display: flex;
+    align-items: flex-start;
+    gap: 11px;
+
+    margin: 20px 28px 0;
+    padding: 13px 15px;
+
+    color: #991b1b;
+
+    background: #fff7f7;
+
+    border: 1px solid #f3caca;
+    border-left: 3px solid #dc3545;
+
+    border-radius: 9px;
+}
+
+
+.laboratory-error-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    margin-top: 1px;
+}
+
+
+.laboratory-form-error div:last-child {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+
+.laboratory-form-error strong {
+    font-size: 12px;
+    font-weight: 700;
+}
+
+
+.laboratory-form-error span {
+    font-size: 12px;
+}
+
+
+/* ==================================================
+   FORM SECTION
+================================================== */
+
+.laboratory-form-section {
+    padding: 26px 28px 28px;
+}
+
+
+.laboratory-form-section + .laboratory-form-section {
+    padding-top: 25px;
+
+    border-top: 1px solid #edf1ef;
+}
+
+
+.laboratory-section-heading {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+
+    margin-bottom: 21px;
+}
+
+
+.laboratory-section-number {
+    width: 30px;
+    height: 30px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    color: #198754;
+
+    background: #edf8f3;
+
+    border: 1px solid #d5eee1;
+    border-radius: 8px;
+
+    font-size: 10px;
+    font-weight: 800;
+}
+
+
+.laboratory-section-heading h3 {
+    margin: 0 0 3px;
+
+    color: #1d2924;
+
+    font-size: 14px;
+    font-weight: 700;
+}
+
+
+.laboratory-section-heading p {
+    margin: 0;
+
+    color: #7a8782;
+
+    font-size: 12px;
+}
+
+
+/* ==================================================
+   FORM GRID
+================================================== */
+
+.laboratory-form-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 20px;
+}
+
+
+/* ==================================================
+   FORM GROUP
+================================================== */
+
+.laboratory-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+
+.laboratory-form-group-full {
+    grid-column: 1 / -1;
+}
+
+
+/* ==================================================
+   LABEL
+================================================== */
+
+.laboratory-form-group label,
+.laboratory-investigation-content label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    color: #26332e;
+
+    font-size: 12px;
+    font-weight: 700;
+}
+
+
+.laboratory-label-icon {
+    display: flex;
+    align-items: center;
+
+    color: #198754;
+}
+
+
+.required {
+    color: #dc3545;
+    font-weight: 800;
+}
+
+
+/* ==================================================
+   SELECT
+================================================== */
+
+.laboratory-select-wrapper {
+    position: relative;
+}
+
+
+.laboratory-select-wrapper select {
+    appearance: none;
+
+    width: 100%;
+    height: 46px;
+
+    padding:
+        0 40px
+        0 14px;
+
+    color: #26332e;
+
+    background: #ffffff;
+
+    border: 1px solid #d4dfda;
+    border-radius: 9px;
+
+    outline: none;
+
+    font-family: inherit;
+    font-size: 13px;
+
+    cursor: pointer;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+}
+
+
+.laboratory-select-wrapper select:hover {
+    border-color: #aebeb7;
+}
+
+
+.laboratory-select-wrapper select:focus {
+    border-color: #198754;
+
+    box-shadow:
+        0 0 0 3px rgba(25, 135, 84, 0.09);
+}
+
+
+.laboratory-select-icon {
+    position: absolute;
+
+    right: 13px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    color: #77857f;
+
+    pointer-events: none;
+}
+
+
+/* ==================================================
+   SELECTED CONTEXT
+================================================== */
+
+.laboratory-selected-context {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+
+    color: #198754;
+
+    font-size: 11px;
+    font-weight: 600;
+}
+
+
+.laboratory-selected-context svg {
+    flex-shrink: 0;
+}
+
+
+/* ==================================================
+   INVESTIGATION CARD
+================================================== */
+
+.laboratory-investigation-section {
+    background: #fcfdfd;
+}
+
+
+.laboratory-investigation-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+
+    padding: 17px;
+
+    background: #ffffff;
+
+    border: 1px solid #dce7e2;
+    border-radius: 12px;
+
+    box-shadow:
+        0 3px 12px rgba(15, 23, 42, 0.035);
+}
+
+
+.laboratory-investigation-icon {
+    width: 40px;
+    height: 40px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    color: #198754;
+
+    background: #edf8f3;
+
+    border: 1px solid #d5eee1;
+    border-radius: 10px;
+}
+
+
+.laboratory-investigation-content {
+    position: relative;
+
+    flex: 1;
+
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+
+.laboratory-investigation-content input {
+    width: 100%;
+    height: 46px;
+
+    padding: 0 60px 0 13px;
+
+    color: #1f2b26;
+
+    background: #ffffff;
+
+    border: 1px solid #d4dfda;
+    border-radius: 9px;
+
+    outline: none;
+
+    font-family: inherit;
+    font-size: 13px;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+.laboratory-investigation-content input::placeholder {
+    color: #9aa6a1;
+}
+
+
+.laboratory-investigation-content input:hover {
+    border-color: #aebeb7;
+}
+
+
+.laboratory-investigation-content input:focus {
+    border-color: #198754;
+
+    box-shadow:
+        0 0 0 3px rgba(25, 135, 84, 0.09);
+}
+
+
+.laboratory-character-count {
+    position: absolute;
+
+    right: 13px;
+    bottom: 13px;
+
+    color: #9aa6a1;
+
+    font-size: 10px;
+}
+
+
+/* ==================================================
+   COMMON TESTS
+================================================== */
+
+.laboratory-common-tests {
+    margin-top: 17px;
+}
+
+
+.laboratory-common-tests-title {
+    margin-bottom: 9px;
+
+    color: #66756f;
+
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+
+.laboratory-test-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+}
+
+
+.laboratory-test-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+
+    min-height: 30px;
+
+    padding: 0 10px;
+
+    color: #56655f;
+
+    background: #ffffff;
+
+    border: 1px solid #dbe5e1;
+    border-radius: 7px;
+
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        color 0.18s ease,
+        background 0.18s ease,
+        border-color 0.18s ease,
+        transform 0.18s ease;
+}
+
+
+.laboratory-test-chip:hover:not(:disabled) {
+    color: #198754;
+
+    background: #f1faf6;
+
+    border-color: #a9d8c0;
+
+    transform: translateY(-1px);
+}
+
+
+.laboratory-test-chip.active {
+    color: #167247;
+
+    background: #e9f7f0;
+
+    border-color: #9ed3b8;
+}
+
+
+.laboratory-test-chip:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+
+
+/* ==================================================
+   HINT
+================================================== */
+
+.laboratory-form-hint {
+    color: #89958f;
+
+    font-size: 11px;
+}
+
+
+/* ==================================================
+   LOADING
+================================================== */
+
+.laboratory-form-loading {
+    min-height: 250px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    gap: 6px;
+
+    color: #64746d;
+}
+
+
+.laboratory-form-loading strong {
+    color: #33423c;
+
+    font-size: 13px;
+}
+
+
+.laboratory-form-loading p {
+    margin: 0;
+
+    font-size: 11px;
+}
+
+
+.laboratory-form-spinner {
+    width: 30px;
+    height: 30px;
+
+    margin-bottom: 8px;
+
+    border: 3px solid #e2ebe7;
+    border-top-color: #198754;
+
+    border-radius: 50%;
+
+    animation:
+        laboratoryFormSpin 0.8s linear infinite;
+}
+
+
+/* ==================================================
+   FOOTER
+================================================== */
+
+.laboratory-form-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 15px;
+
+    padding: 18px 28px;
+
+    background: #fafcfb;
+
+    border-top: 1px solid #e4ebe8;
+}
+
+
+.laboratory-required-note {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+
+    color: #89958f;
+
+    font-size: 11px;
+}
+
+
+.laboratory-required-note span {
+    color: #dc3545;
+    font-weight: 800;
+}
+
+
+.laboratory-form-buttons {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+}
+
+
+/* ==================================================
+   BUTTONS
+================================================== */
+
+.laboratory-cancel-btn,
+.laboratory-save-btn {
+    height: 40px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 7px;
+
+    padding: 0 16px;
+
+    border-radius: 8px;
+
+    font-family: inherit;
+
+    font-size: 12px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        background 0.18s ease,
+        border-color 0.18s ease,
+        box-shadow 0.18s ease,
+        transform 0.18s ease;
+}
+
+
+.laboratory-cancel-btn {
+    color: #53615b;
+
+    background: #ffffff;
+
+    border: 1px solid #d5dfdb;
+}
+
+
+.laboratory-cancel-btn:hover:not(:disabled) {
+    background: #f5f8f7;
+
+    border-color: #bcc9c4;
+}
+
+
+.laboratory-save-btn {
+    min-width: 174px;
+
+    color: #ffffff;
+
+    background: #198754;
+
+    border: 1px solid #198754;
+
+    box-shadow:
+        0 4px 10px rgba(25, 135, 84, 0.16);
+}
+
+
+.laboratory-save-btn:hover:not(:disabled) {
+    background: #146c43;
+
+    border-color: #146c43;
+
+    box-shadow:
+        0 5px 14px rgba(25, 135, 84, 0.22);
+
+    transform: translateY(-1px);
+}
+
+
+.laboratory-cancel-btn:disabled,
+.laboratory-save-btn:disabled {
+    opacity: 0.55;
+
+    cursor: not-allowed;
+
+    transform: none;
+}
+
+
+/* ==================================================
+   BUTTON SPINNER
+================================================== */
+
+.laboratory-button-spinner {
+    width: 14px;
+    height: 14px;
+
+    border: 2px solid rgba(255,255,255,0.4);
+    border-top-color: #ffffff;
+
+    border-radius: 50%;
+
+    animation:
+        laboratoryFormSpin 0.7s linear infinite;
+}
+
+
+/* ==================================================
+   ANIMATION
+================================================== */
+
+@keyframes laboratoryFormSpin {
+
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+
+}
+
+
+/* ==================================================
+   RESPONSIVE
+================================================== */
+
+@media (max-width: 768px) {
+
+    .laboratory-form-top {
+        padding: 20px;
+    }
+
+
+    .laboratory-form-intro {
+        padding: 13px 20px;
+    }
+
+
+    .laboratory-form-section {
+        padding: 22px 20px;
+    }
+
+
+    .laboratory-form-grid {
+        grid-template-columns: 1fr;
+    }
+
+
+    .laboratory-form-actions {
+        padding: 16px 20px;
+
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+
+    .laboratory-form-buttons {
+        width: 100%;
+    }
+
+
+    .laboratory-cancel-btn,
+    .laboratory-save-btn {
+        flex: 1;
+    }
+
+}
+
+
+@media (max-width: 520px) {
+
+    .laboratory-form-top {
+        align-items: flex-start;
+    }
+
+
+    .laboratory-form-reference {
+        display: none;
+    }
+
+
+    .laboratory-form-brand {
+        align-items: flex-start;
+    }
+
+
+    .laboratory-form-icon {
+        width: 42px;
+        height: 42px;
+    }
+
+
+    .laboratory-form-top h2 {
+        font-size: 17px;
+    }
+
+
+    .laboratory-investigation-card {
+        padding: 13px;
+    }
+
+
+    .laboratory-investigation-icon {
+        width: 34px;
+        height: 34px;
+    }
+
+
+    .laboratory-form-buttons {
+        flex-direction: column-reverse;
+    }
+
+
+    .laboratory-cancel-btn,
+    .laboratory-save-btn {
+        width: 100%;
+    }
+
+}
