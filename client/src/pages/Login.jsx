@@ -122,14 +122,23 @@ function Login() {
                 onSubmit={handleSubmit}
             >
 
-                <h1>
-                    Hospital Management System
-                </h1>
+                <div className="login-brand">
+                    <img
+                        src="/logo.png"
+                        alt="Hospital Management System logo"
+                        className="login-logo"
+                    />
 
+                    <div className="login-brand-text">
+                        <h1>
+                            Hospital Management System
+                        </h1>
 
-                <p>
-                    Hospital Management System
-                </p>
+                        <p>
+                            Secure • Offline-ready healthcare management
+                        </p>
+                    </div>
+                </div>
 
 
                 {/* EMAIL */}
