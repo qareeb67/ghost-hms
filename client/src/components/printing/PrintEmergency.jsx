@@ -1,4 +1,4 @@
-import PrintHeader from "./PrintHeader";
+import PrintHeader from "../Printing/PrintHeader";
 import {
     formatEmergencyId,
     formatPatientId,
@@ -228,7 +228,7 @@ function PrintEmergency({
                         </span>
 
                         <strong>
-                            #{emergencyId}
+                            #{emergencyNumber}
                         </strong>
                     </div>
 
@@ -469,76 +469,76 @@ function PrintEmergency({
                 patient?.blood_group ||
                 patient?.genotype) && (
 
-                <section className="print-section">
+                    <section className="print-section">
 
-                    <div className="print-section-heading">
+                        <div className="print-section-heading">
 
-                        <h3>
-                            Relevant Clinical Background
-                        </h3>
+                            <h3>
+                                Relevant Clinical Background
+                            </h3>
 
-                    </div>
-
-                    <div className="print-info-grid">
-
-                        <div className="print-info-item">
-                            <span>
-                                Blood Group
-                            </span>
-
-                            <strong>
-                                {displayValue(
-                                    patient?.blood_group
-                                )}
-                            </strong>
                         </div>
 
-                        <div className="print-info-item">
-                            <span>
-                                Genotype
-                            </span>
+                        <div className="print-info-grid">
 
-                            <strong>
-                                {displayValue(
-                                    patient?.genotype
-                                )}
-                            </strong>
+                            <div className="print-info-item">
+                                <span>
+                                    Blood Group
+                                </span>
+
+                                <strong>
+                                    {displayValue(
+                                        patient?.blood_group
+                                    )}
+                                </strong>
+                            </div>
+
+                            <div className="print-info-item">
+                                <span>
+                                    Genotype
+                                </span>
+
+                                <strong>
+                                    {displayValue(
+                                        patient?.genotype
+                                    )}
+                                </strong>
+                            </div>
+
                         </div>
 
-                    </div>
+                        <div className="print-detail-box">
 
-                    <div className="print-detail-box">
+                            <span>
+                                Allergies
+                            </span>
 
-                        <span>
-                            Allergies
-                        </span>
+                            <p className="print-preserve-text">
+                                {displayValue(
+                                    patient?.allergies,
+                                    "No allergies recorded."
+                                )}
+                            </p>
 
-                        <p className="print-preserve-text">
-                            {displayValue(
-                                patient?.allergies,
-                                "No allergies recorded."
-                            )}
-                        </p>
+                        </div>
 
-                    </div>
+                        <div className="print-detail-box">
 
-                    <div className="print-detail-box">
+                            <span>
+                                Medical History
+                            </span>
 
-                        <span>
-                            Medical History
-                        </span>
+                            <p className="print-preserve-text">
+                                {displayValue(
+                                    patient?.medical_history,
+                                    "No medical history recorded."
+                                )}
+                            </p>
 
-                        <p className="print-preserve-text">
-                            {displayValue(
-                                patient?.medical_history,
-                                "No medical history recorded."
-                            )}
-                        </p>
+                        </div>
 
-                    </div>
-
-                </section>
-            )}
+                    </section>
+                )}
 
 
             {/* =====================================================
@@ -563,7 +563,7 @@ function PrintEmergency({
                         </span>
 
                         <strong>
-                            #{emergencyId}
+                            #{emergencyNumber}
                         </strong>
                     </div>
 

@@ -37,6 +37,7 @@ import {
 
 
 import AddMedicalRecordForm from "./AddMedicalRecordForm";
+import PrescriptionForm from "./PrescriptionForm";
 
 import "./PatientProfileModal.css";
 import { formatPatientId } from "../utils/hospitalIds";
@@ -97,6 +98,23 @@ function PatientProfileModal({
         showMedicalRecordForm,
         setShowMedicalRecordForm
     ] = useState(false);
+
+
+    /*
+    =====================================================
+    PRESCRIPTION STATE
+    =====================================================
+    */
+
+    const [
+        showPrescriptionForm,
+        setShowPrescriptionForm
+    ] = useState(false);
+
+    const [
+        prescriptionRecord,
+        setPrescriptionRecord
+    ] = useState(null);
 
 
     /*
@@ -778,6 +796,83 @@ function PatientProfileModal({
 
     };
 
+
+    /*
+    =====================================================
+    OPEN PRESCRIPTION
+    =====================================================
+    */
+
+    const handleOpenPrescriptionForm = (
+        record = null
+    ) => {
+
+        const selectedRecord =
+            record || medicalRecords[0];
+
+
+        if (!selectedRecord) {
+
+            showToast(
+                "Create a medical record before adding a prescription."
+            );
+
+            return;
+
+        }
+
+
+        setPrescriptionRecord(
+            selectedRecord
+        );
+
+        setShowPrescriptionForm(true);
+
+    };
+
+
+    /*
+    =====================================================
+    CLOSE PRESCRIPTION
+    =====================================================
+    */
+
+    const handleClosePrescriptionForm = () => {
+
+        setShowPrescriptionForm(false);
+
+        setPrescriptionRecord(null);
+
+    };
+
+
+    /*
+    =====================================================
+    PRESCRIPTION SUCCESS
+    =====================================================
+    */
+
+    const handlePrescriptionSuccess = async () => {
+
+        const patientId =
+            patient?.patient_id ??
+            patient?.id;
+
+
+        if (!patientId) {
+
+            return;
+
+        }
+
+
+        await loadMedicalRecords(
+            patientId,
+            true
+        );
+
+    };
+
     /*
     =====================================================
     PRINT MEDICAL RECORD
@@ -874,7 +969,10 @@ function PatientProfileModal({
         the medical record form.
         */
 
-        if (showMedicalRecordForm) {
+        if (
+            showMedicalRecordForm ||
+            showPrescriptionForm
+        ) {
 
             return;
 
@@ -908,6 +1006,55 @@ function PatientProfileModal({
     const patientId =
         patient?.patient_id ??
         patient?.id;
+
+
+    /*
+    =====================================================
+    PRESCRIPTION FORM
+    =====================================================
+    */
+
+    if (showPrescriptionForm) {
+
+        return (
+
+            <div
+                className="patient-profile-overlay"
+                onClick={handleOverlayClick}
+            >
+
+                <div
+                    className="patient-profile-modal"
+                    role="dialog"
+                    aria-modal="true"
+                    aria-labelledby="prescription-form-title"
+                >
+
+                    <PrescriptionForm
+
+                        patient={patient}
+
+                        record={
+                            prescriptionRecord
+                        }
+
+                        onClose={
+                            handleClosePrescriptionForm
+                        }
+
+                        onSuccess={
+                            handlePrescriptionSuccess
+                        }
+
+                    />
+
+                </div>
+
+            </div>
+
+        );
+
+    }
 
 
     /*
@@ -1580,20 +1727,43 @@ function PatientProfileModal({
                         </div>
 
 
-                        <button
-                            type="button"
-                            className="clinical-history-add-btn"
-                            onClick={
-                                handleOpenMedicalRecordForm
-                            }
-                            disabled={!patientId}
-                        >
+                        <div className="clinical-history-header-actions">
 
-                            <Plus size={15} />
+                            <button
+                                type="button"
+                                className="clinical-history-prescription-btn"
+                                onClick={() =>
+                                    handleOpenPrescriptionForm()
+                                }
+                                disabled={
+                                    !patientId ||
+                                    medicalRecords.length === 0
+                                }
+                            >
 
-                            Add Medical Record
+                                <Pill size={15} />
 
-                        </button>
+                                Add Prescription
+
+                            </button>
+
+
+                            <button
+                                type="button"
+                                className="clinical-history-add-btn"
+                                onClick={
+                                    handleOpenMedicalRecordForm
+                                }
+                                disabled={!patientId}
+                            >
+
+                                <Plus size={15} />
+
+                                Add Medical Record
+
+                            </button>
+
+                        </div>
 
                     </div>
 
@@ -2249,6 +2419,30 @@ function PatientProfileModal({
 
 
     <div className="clinical-record-print-actions">
+
+        <button
+            type="button"
+            className="clinical-print-button prescription-add"
+            onClick={(event) => {
+
+                event.stopPropagation();
+
+                handleOpenPrescriptionForm(
+                    record
+                );
+
+            }}
+            title="Add prescription for this record"
+        >
+
+            <Pill size={14} />
+
+            <span>
+                Add Prescription
+            </span>
+
+        </button>
+
 
         <button
             type="button"

@@ -1,52 +1,74 @@
 import PrintHeader from "./PrintHeader";
+
 import {
     formatAppointmentId,
     formatPatientId,
     formatDoctorId,
 } from "../../utils/hospitalIds";
 
+
 function PrintAppointment({
     appointment = {},
+
     hospitalName = "Hospital Management System",
     hospitalAddress = "Nigeria",
     hospitalPhone = "",
     hospitalEmail = "",
 }) {
-    /* ==========================================
+
+    /* =========================================================
        FORMAT DATE
-    ========================================== */
+    ========================================================= */
 
     const formatDate = (date) => {
-        if (!date) return "N/A";
 
-        const cleanDate = String(date).split("T")[0];
+        if (!date) {
+            return "N/A";
+        }
 
-        const parsedDate = new Date(`${cleanDate}T00:00:00`);
+        const cleanDate =
+            String(date).split("T")[0];
 
-        if (Number.isNaN(parsedDate.getTime())) {
+        const parsedDate =
+            new Date(`${cleanDate}T00:00:00`);
+
+        if (
+            Number.isNaN(
+                parsedDate.getTime()
+            )
+        ) {
             return cleanDate;
         }
 
-        return parsedDate.toLocaleDateString("en-NG", {
-            day: "2-digit",
-            month: "long",
-            year: "numeric",
-        });
+        return parsedDate.toLocaleDateString(
+            "en-NG",
+            {
+                day: "2-digit",
+                month: "long",
+                year: "numeric",
+            }
+        );
     };
 
 
-    /* ==========================================
+    /* =========================================================
        FORMAT TIME
-    ========================================== */
+    ========================================================= */
 
     const formatTime = (time) => {
-        if (!time) return "N/A";
 
-        const cleanTime = String(time).slice(0, 5);
+        if (!time) {
+            return "N/A";
+        }
 
-        const [hours, minutes] = cleanTime.split(":");
+        const cleanTime =
+            String(time).slice(0, 5);
 
-        const hour = Number(hours);
+        const [hours, minutes] =
+            cleanTime.split(":");
+
+        const hour =
+            Number(hours);
 
         if (
             Number.isNaN(hour) ||
@@ -55,19 +77,24 @@ function PrintAppointment({
             return String(time);
         }
 
-        const suffix = hour >= 12 ? "PM" : "AM";
+        const suffix =
+            hour >= 12
+                ? "PM"
+                : "AM";
 
-        const displayHour = hour % 12 || 12;
+        const displayHour =
+            hour % 12 || 12;
 
         return `${displayHour}:${minutes} ${suffix}`;
     };
 
 
-    /* ==========================================
-       GET PATIENT NAME
-    ========================================== */
+    /* =========================================================
+       PATIENT NAME
+    ========================================================= */
 
     const getPatientName = () => {
+
         if (appointment.patient_name) {
             return appointment.patient_name;
         }
@@ -88,11 +115,12 @@ function PrintAppointment({
     };
 
 
-    /* ==========================================
-       GET DOCTOR NAME
-    ========================================== */
+    /* =========================================================
+       DOCTOR NAME
+    ========================================================= */
 
     const getDoctorName = () => {
+
         if (appointment.doctor_name) {
             return appointment.doctor_name;
         }
@@ -113,22 +141,33 @@ function PrintAppointment({
     };
 
 
-    /* ==========================================
-       STATUS CLASS
-    ========================================== */
+    /* =========================================================
+       STATUS
+    ========================================================= */
 
     const getStatusClass = (status) => {
-        return String(status || "Scheduled")
+
+        return String(
+            status || "Scheduled"
+        )
             .toLowerCase()
             .replace(/\s+/g, "-");
     };
 
 
-    const patientName = getPatientName();
-    const doctorName = getDoctorName();
+    /* =========================================================
+       DATA
+    ========================================================= */
+
+    const patientName =
+        getPatientName();
+
+    const doctorName =
+        getDoctorName();
 
     const status =
-        appointment.status || "Scheduled";
+        appointment.status ||
+        "Scheduled";
 
     const appointmentNumber =
         formatAppointmentId(
@@ -138,23 +177,37 @@ function PrintAppointment({
 
     const patientNumber =
         appointment.patient_number ||
-        formatPatientId(appointment.patient_id);
+        formatPatientId(
+            appointment.patient_id
+        );
 
     const doctorNumber =
         appointment.doctor_number ||
-        formatDoctorId(appointment.doctor_id);
+        formatDoctorId(
+            appointment.doctor_id
+        );
+
+    const appointmentDate =
+        formatDate(
+            appointment.appointment_date
+        );
+
+    const appointmentTime =
+        formatTime(
+            appointment.appointment_time
+        );
 
 
-    /* ==========================================
+    /* =========================================================
        RENDER
-    ========================================== */
+    ========================================================= */
 
     return (
         <div className="print-document print-appointment">
 
-            {/* ======================================
-                DOCUMENT HEADER
-            ====================================== */}
+            {/* =================================================
+                HEADER
+            ================================================= */}
 
             <PrintHeader
                 hospitalName={hospitalName}
@@ -166,108 +219,180 @@ function PrintAppointment({
             />
 
 
-            {/* ======================================
-                APPOINTMENT OVERVIEW
-            ====================================== */}
+            {/* =================================================
+                CONFIRMATION BANNER
+            ================================================= */}
 
-            <section className="print-section">
+            <section className="appointment-confirmation-banner">
 
-                <div className="print-section-heading">
+                <div className="appointment-confirmation-icon">
+                    ✓
+                </div>
 
-                    <div>
-                        <span>
-                            Hospital Appointment
-                        </span>
+                <div className="appointment-confirmation-content">
 
-                        <h2>
-                            Appointment Details
-                        </h2>
-                    </div>
+                    <span>
+                        APPOINTMENT CONFIRMATION
+                    </span>
 
+                    <h2>
+                        Your appointment has been scheduled
+                    </h2>
 
-                    <div
-                        className={`print-status print-status-${getStatusClass(
-                            status
-                        )}`}
-                    >
-
-                        <span className="print-status-dot" />
-
-                        {status}
-
-                    </div>
+                    <p>
+                        Please keep this document for
+                        your hospital visit.
+                    </p>
 
                 </div>
 
 
-                <div className="print-info-grid">
+                <div
+                    className={`appointment-confirmation-status print-status print-status-${getStatusClass(
+                        status
+                    )}`}
+                >
+
+                    <span className="print-status-dot" />
+
+                    {status}
+
+                </div>
+
+            </section>
+
+
+            {/* =================================================
+                APPOINTMENT HERO
+            ================================================= */}
+
+            <section className="appointment-hero-card">
+
+                <div className="appointment-hero-main">
+
+                    <span>
+                        Appointment Date
+                    </span>
+
+                    <strong>
+                        {appointmentDate}
+                    </strong>
+
+                </div>
+
+
+                <div className="appointment-hero-divider" />
+
+
+                <div className="appointment-hero-main">
+
+                    <span>
+                        Appointment Time
+                    </span>
+
+                    <strong>
+                        {appointmentTime}
+                    </strong>
+
+                </div>
+
+
+                <div className="appointment-hero-number">
+
+                    <span>
+                        Appointment No.
+                    </span>
+
+                    <strong>
+                        {appointmentNumber}
+                    </strong>
+
+                </div>
+
+            </section>
+
+
+            {/* =================================================
+                PATIENT & DOCTOR
+            ================================================= */}
+
+            <section className="print-section">
+
+                <div className="print-section-title">
+
+                    <span>
+                        Visit Participants
+                    </span>
+
+                    <h3>
+                        Patient & Doctor
+                    </h3>
+
+                </div>
+
+
+                <div className="appointment-participants-grid">
 
                     {/* PATIENT */}
 
-                    <div className="print-info-card">
+                    <div className="appointment-participant-card">
 
-                        <span className="print-label">
-                            Patient
-                        </span>
+                        <div className="appointment-participant-icon patient">
+                            P
+                        </div>
 
-                        <strong>
-                            {patientName}
-                        </strong>
+                        <div>
+
+                            <span>
+                                Patient
+                            </span>
+
+                            <strong>
+                                {patientName}
+                            </strong>
+
+                            <small>
+                                Hospital No.{" "}
+                                {patientNumber}
+                            </small>
+
+                        </div>
 
                     </div>
 
 
                     {/* DOCTOR */}
 
-                    <div className="print-info-card">
+                    <div className="appointment-participant-card">
 
-                        <span className="print-label">
-                            Attending Doctor
-                        </span>
+                        <div className="appointment-participant-icon doctor">
+                            D
+                        </div>
 
-                        <strong>
-                            Dr. {doctorName}
-                        </strong>
+                        <div>
 
-                        {appointment.specialization && (
-                            <small>
-                                {appointment.specialization}
-                            </small>
-                        )}
+                            <span>
+                                Attending Doctor
+                            </span>
 
-                    </div>
+                            <strong>
+                                Dr. {doctorName}
+                            </strong>
 
-
-                    {/* DATE */}
-
-                    <div className="print-info-card">
-
-                        <span className="print-label">
-                            Appointment Date
-                        </span>
-
-                        <strong>
-                            {formatDate(
-                                appointment.appointment_date
+                            {appointment.specialization && (
+                                <small>
+                                    {appointment.specialization}
+                                </small>
                             )}
-                        </strong>
 
-                    </div>
-
-
-                    {/* TIME */}
-
-                    <div className="print-info-card">
-
-                        <span className="print-label">
-                            Appointment Time
-                        </span>
-
-                        <strong>
-                            {formatTime(
-                                appointment.appointment_time
+                            {doctorNumber && (
+                                <small>
+                                    Doctor No.{" "}
+                                    {doctorNumber}
+                                </small>
                             )}
-                        </strong>
+
+                        </div>
 
                     </div>
 
@@ -276,100 +401,57 @@ function PrintAppointment({
             </section>
 
 
-            {/* ======================================
-                APPOINTMENT RECORD
-            ====================================== */}
+            {/* =================================================
+                VISIT INFORMATION
+            ================================================= */}
 
             <section className="print-section">
 
                 <div className="print-section-title">
 
                     <span>
-                        Record Information
+                        Visit Information
                     </span>
 
                     <h3>
-                        Appointment Summary
+                        Appointment Details
                     </h3>
 
                 </div>
 
 
-                <div className="print-details-table">
+                <div className="appointment-details-grid">
 
-                    <div className="print-detail-row">
+                    <div className="appointment-detail-card">
 
                         <span>
-                            Appointment No.
+                            Date
                         </span>
 
                         <strong>
-                            {appointmentNumber}
+                            {appointmentDate}
                         </strong>
 
                     </div>
 
 
-                    <div className="print-detail-row">
+                    <div className="appointment-detail-card">
 
                         <span>
-                            Patient No.
+                            Time
                         </span>
 
                         <strong>
-                            {patientNumber}
+                            {appointmentTime}
                         </strong>
 
                     </div>
 
 
-                    <div className="print-detail-row">
+                    <div className="appointment-detail-card">
 
                         <span>
-                            Doctor No.
-                        </span>
-
-                        <strong>
-                            {doctorNumber}
-                        </strong>
-
-                    </div>
-
-
-                    <div className="print-detail-row">
-
-                        <span>
-                            Appointment Date
-                        </span>
-
-                        <strong>
-                            {formatDate(
-                                appointment.appointment_date
-                            )}
-                        </strong>
-
-                    </div>
-
-
-                    <div className="print-detail-row">
-
-                        <span>
-                            Appointment Time
-                        </span>
-
-                        <strong>
-                            {formatTime(
-                                appointment.appointment_time
-                            )}
-                        </strong>
-
-                    </div>
-
-
-                    <div className="print-detail-row">
-
-                        <span>
-                            Appointment Status
+                            Status
                         </span>
 
                         <strong>
@@ -379,10 +461,10 @@ function PrintAppointment({
                     </div>
 
 
-                    <div className="print-detail-row">
+                    <div className="appointment-detail-card">
 
                         <span>
-                            Record Created
+                            Created
                         </span>
 
                         <strong>
@@ -398,37 +480,147 @@ function PrintAppointment({
             </section>
 
 
-            {/* ======================================
-                IMPORTANT NOTICE
-            ====================================== */}
+            {/* =================================================
+                REASON
+            ================================================= */}
 
-            <section className="print-notice">
+            <section className="print-section">
 
-                <strong>
-                    Important Notice
-                </strong>
+                <div className="print-section-title">
 
-                <p>
-                    Please arrive at the hospital before
-                    your scheduled appointment time.
-                    Patients should bring any relevant
-                    medical records, prescriptions,
-                    laboratory results, or identification
-                    documents required for their visit.
-                </p>
+                    <span>
+                        Visit Information
+                    </span>
+
+                    <h3>
+                        Reason for Appointment
+                    </h3>
+
+                </div>
+
+
+                <div className="appointment-reason-box">
+
+                    <span>
+                        Purpose of Visit
+                    </span>
+
+                    <p>
+                        {appointment.reason
+                            ? appointment.reason
+                            : "No reason was provided for this appointment."
+                        }
+                    </p>
+
+                </div>
 
             </section>
 
 
-            {/* ======================================
+            {/* =================================================
+                RECORD IDENTIFICATION
+            ================================================= */}
+
+            <section className="print-section">
+
+                <div className="print-section-title">
+
+                    <span>
+                        Record Information
+                    </span>
+
+                    <h3>
+                        Hospital References
+                    </h3>
+
+                </div>
+
+
+                <div className="appointment-reference-grid">
+
+                    <div>
+
+                        <span>
+                            Appointment No.
+                        </span>
+
+                        <strong>
+                            {appointmentNumber}
+                        </strong>
+
+                    </div>
+
+
+                    <div>
+
+                        <span>
+                            Patient No.
+                        </span>
+
+                        <strong>
+                            {patientNumber}
+                        </strong>
+
+                    </div>
+
+
+                    <div>
+
+                        <span>
+                            Doctor No.
+                        </span>
+
+                        <strong>
+                            {doctorNumber}
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            {/* =================================================
+                IMPORTANT NOTICE
+            ================================================= */}
+
+            <section className="appointment-notice">
+
+                <div className="appointment-notice-icon">
+                    !
+                </div>
+
+                <div>
+
+                    <strong>
+                        Important Notice
+                    </strong>
+
+                    <p>
+                        Please arrive at the hospital
+                        before your scheduled appointment
+                        time. Bring your identification,
+                        relevant medical records,
+                        prescriptions, laboratory results,
+                        and any other documents required
+                        for your visit.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            {/* =================================================
                 SIGNATURES
-            ====================================== */}
+            ================================================= */}
 
-            <section className="print-signature-section">
+            <section className="appointment-signature-section">
 
-                <div className="print-signature-box">
+                <div className="appointment-signature-box">
 
-                    <div className="print-signature-line" />
+                    <div className="appointment-signature-line" />
 
                     <span>
                         Patient / Representative
@@ -437,9 +629,9 @@ function PrintAppointment({
                 </div>
 
 
-                <div className="print-signature-box">
+                <div className="appointment-signature-box">
 
-                    <div className="print-signature-line" />
+                    <div className="appointment-signature-line" />
 
                     <span>
                         Hospital Representative
@@ -450,21 +642,49 @@ function PrintAppointment({
             </section>
 
 
-            {/* ======================================
+            {/* =================================================
                 FOOTER
-            ====================================== */}
+            ================================================= */}
 
             <footer className="print-document-footer">
 
-                <span>
-                    This document was generated by{" "}
-                    {hospitalName}.
-                </span>
+                <div>
 
-                <span>
-                    Appointment record •{" "}
-                    {formatDate(new Date())}
-                </span>
+                    <strong>
+                        {hospitalName}
+                    </strong>
+
+                    <span>
+                        Appointment Confirmation
+                    </span>
+
+                </div>
+
+
+                <div>
+
+                    <span>
+                        Appointment No.
+                    </span>
+
+                    <strong>
+                        {appointmentNumber}
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <span>
+                        Printed
+                    </span>
+
+                    <strong>
+                        {formatDate(new Date())}
+                    </strong>
+
+                </div>
 
             </footer>
 

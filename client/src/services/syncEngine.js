@@ -271,7 +271,7 @@ const getStoreConfig = (
 
     const config =
         STORE_CONFIG[
-            storeName
+        storeName
         ];
 
 
@@ -332,6 +332,99 @@ const cleanPayload = (
     ].forEach((field) => {
         delete payload[field];
     });
+
+    const prepareCreatePayload = (
+        storeName,
+        payload
+    ) => {
+
+        if (storeName !== "appointments") {
+            return payload;
+        }
+
+        const patientId = Number(
+            payload?.patient_id
+        );
+
+        const doctorId = Number(
+            payload?.doctor_id
+        );
+
+        const appointmentDate =
+            typeof payload?.appointment_date === "string"
+                ? payload.appointment_date.split("T")[0]
+                : payload?.appointment_date;
+
+        const appointmentTime =
+            typeof payload?.appointment_time === "string"
+                ? payload.appointment_time.slice(0, 5)
+                : payload?.appointment_time;
+
+        const status =
+            payload?.status || "Scheduled";
+
+        if (!Number.isInteger(patientId) || patientId < 1) {
+            throw new Error(
+                "Cannot sync appointment: valid patient_id is required."
+            );
+        }
+
+        if (!Number.isInteger(doctorId) || doctorId < 1) {
+            throw new Error(
+                "Cannot sync appointment: valid doctor_id is required."
+            );
+        }
+
+        if (
+            typeof appointmentDate !== "string" ||
+            !/^\\d{4}-\\d{2}-\\d{2}$/.test(appointmentDate)
+        ) {
+            throw new Error(
+                "Cannot sync appointment: appointment_date must be YYYY-MM-DD."
+            );
+        }
+
+        if (
+            typeof appointmentTime !== "string" ||
+            !/^([01]\\d|2[0-3]):([0-5]\\d)$/.test(appointmentTime)
+        ) {
+            throw new Error(
+                "Cannot sync appointment: appointment_time must be HH:MM."
+            );
+        }
+
+        if (
+            ![
+                "Scheduled",
+                "Completed",
+                "Cancelled"
+            ].includes(status)
+        ) {
+            throw new Error(
+                "Cannot sync appointment: status must be Scheduled, Completed, or Cancelled."
+            );
+        }
+
+        const prepared = {
+            patient_id: patientId,
+            doctor_id: doctorId,
+            appointment_date: appointmentDate,
+            appointment_time: appointmentTime,
+            status
+        };
+
+        if (
+            payload?.reason !== undefined &&
+            payload?.reason !== null &&
+            String(payload.reason).trim() !== ""
+        ) {
+            prepared.reason = String(
+                payload.reason
+            );
+        }
+
+        return prepared;
+    };
 
 
     /*
@@ -457,7 +550,7 @@ const findLocalRecord = async (
 
                 const serverId =
                     record?.[
-                        config.idField
+                    config.idField
                     ];
 
 
@@ -471,13 +564,13 @@ const findLocalRecord = async (
 
                 ) || (
 
-                    serverId !== undefined &&
-                    serverId !== null &&
-                    String(
-                        serverId
-                    ) === identifierString
+                        serverId !== undefined &&
+                        serverId !== null &&
+                        String(
+                            serverId
+                        ) === identifierString
 
-                );
+                    );
 
             }
         );
@@ -656,6 +749,21 @@ const syncCreate = async (
         ...relationResult.payload
     };
 
+    /*
+    ----------------------------------------------
+    PREPARE RESOURCE-SPECIFIC CREATE PAYLOAD
+    ----------------------------------------------
+    
+    Appointments must reach the API using the exact
+    server contract. This also converts form/string IDs
+    into integers and guarantees valid date/time/status.
+    ----------------------------------------------
+    */
+
+    payload = prepareCreatePayload(
+        storeName,
+        payload
+    );
 
     /*
     ----------------------------------------------
@@ -670,6 +778,7 @@ const syncCreate = async (
     if (storeName === "medical_records") {
         delete payload.medical_record_id;
     }
+
 
 
     console.log(
@@ -717,7 +826,7 @@ const syncCreate = async (
 
     const serverRecord =
         response.data?.[
-            config.responseKey
+        config.responseKey
         ]
         ||
         response.data?.record;
@@ -774,7 +883,7 @@ const syncUpdate = async (
         recordId,
 
         serverId:
-            queuedServerId,
+        queuedServerId,
 
         data
 
@@ -825,7 +934,7 @@ const syncUpdate = async (
         queuedServerId
         ??
         localRecord?.[
-            config.idField
+        config.idField
         ];
 
 
@@ -953,7 +1062,7 @@ const syncUpdate = async (
     */
 
     switch (
-        config.updateMethod
+    config.updateMethod
     ) {
 
         case "put":
@@ -997,7 +1106,7 @@ const syncUpdate = async (
 
     const serverRecord =
         response.data?.[
-            config.responseKey
+        config.responseKey
         ]
         ||
         response.data?.record;
@@ -1054,7 +1163,7 @@ const syncComplete = async (
         recordId,
 
         serverId:
-            queuedServerId,
+        queuedServerId,
 
         data
 
@@ -1107,7 +1216,7 @@ const syncComplete = async (
         queuedServerId
         ??
         localRecord?.[
-            config.idField
+        config.idField
         ];
 
 
@@ -1166,7 +1275,7 @@ const syncComplete = async (
 
 
     switch (
-        config.completeMethod
+    config.completeMethod
     ) {
 
         case "patch":
@@ -1210,7 +1319,7 @@ const syncComplete = async (
 
     const serverRecord =
         response.data?.[
-            config.completeResponseKey
+        config.completeResponseKey
         ]
         ||
         response.data?.record;
@@ -1270,7 +1379,7 @@ const syncDelete = async (
         recordId,
 
         serverId:
-            queuedServerId
+        queuedServerId
 
     } = operation;
 
@@ -1310,7 +1419,7 @@ const syncDelete = async (
         queuedServerId
         ??
         localRecord?.[
-            config.idField
+        config.idField
         ]
         ??
         null;
@@ -1463,7 +1572,7 @@ const syncOperation = async (
 
 
     switch (
-        operation.type
+    operation.type
     ) {
 
         case "CREATE":
@@ -1760,7 +1869,7 @@ export const syncPendingOperations =
                 );
 
             } catch (
-                error
+            error
             ) {
 
                 failedCount++;
@@ -1988,7 +2097,7 @@ export const startSyncEngine = () => {
             return result;
 
         } catch (
-            error
+        error
         ) {
 
             console.error(
@@ -2097,7 +2206,7 @@ export const testHMSSync =
             return result;
 
         } catch (
-            error
+        error
         ) {
 
             console.error(

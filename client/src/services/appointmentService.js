@@ -12,6 +12,10 @@ import {
     queueOperation
 } from "./syncQueueService";
 
+import {
+    mergeServerWithLocal
+} from "./offlineDataService";
+
 
 /*
 ==================================================
@@ -376,12 +380,39 @@ export const getAppointments = async () => {
                 );
 
 
+            /*
+            ----------------------------------------------
+            MERGE SERVER DATA WITH PENDING LOCAL DATA
+            ----------------------------------------------
+
+            An appointment created offline must remain
+            visible while its CREATE operation is pending.
+            The server list cannot contain it yet.
+            ----------------------------------------------
+            */
+
+            const mergedAppointments =
+                await mergeServerWithLocal(
+                    "appointments",
+                    enrichedAppointments,
+                    "appointment_id"
+                );
+
+
+            const finalAppointments =
+                await Promise.all(
+                    mergedAppointments.map(
+                        enrichAppointment
+                    )
+                );
+
+
             return {
 
                 ...response.data,
 
                 appointments:
-                    enrichedAppointments
+                    finalAppointments
 
             };
 
