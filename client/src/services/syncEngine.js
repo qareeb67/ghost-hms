@@ -333,98 +333,148 @@ const cleanPayload = (
         delete payload[field];
     });
 
-    const prepareCreatePayload = (
-        storeName,
-        payload
-    ) => {
+    const cleanPayload = (record) => {
+    // clean metadata
+    // remove empty values
+    // normalize date_of_birth
 
-        if (storeName !== "appointments") {
-            return payload;
-        }
+    return payload;
+};
 
-        const patientId = Number(
-            payload?.patient_id
+
+/*
+==================================================
+PREPARE CREATE PAYLOAD
+==================================================
+Central CREATE payload preparation.
+
+All CREATE operations pass through this function.
+
+Only resources with a special server contract
+receive resource-specific transformation.
+
+Other resources safely receive the cleaned payload.
+==================================================
+*/
+
+const prepareCreatePayload = (
+    storeName,
+    payload
+) => {
+
+    /*
+    ----------------------------------------------
+    DEFAULT
+    ----------------------------------------------
+    Patients, doctors, medical records, laboratory,
+    billing, medicines and emergency currently use
+    the generic cleaned payload.
+    ----------------------------------------------
+    */
+
+    if (storeName !== "appointments") {
+        return payload;
+    }
+
+    /*
+    ----------------------------------------------
+    APPOINTMENTS
+    ----------------------------------------------
+    */
+
+    const patientId = Number(
+        payload?.patient_id
+    );
+
+    const doctorId = Number(
+        payload?.doctor_id
+    );
+
+    const appointmentDate =
+        typeof payload?.appointment_date === "string"
+            ? payload.appointment_date.split("T")[0]
+            : payload?.appointment_date;
+
+    const appointmentTime =
+        typeof payload?.appointment_time === "string"
+            ? payload.appointment_time.slice(0, 5)
+            : payload?.appointment_time;
+
+    const status =
+        payload?.status || "Scheduled";
+
+    if (
+        !Number.isInteger(patientId) ||
+        patientId < 1
+    ) {
+        throw new Error(
+            "Cannot sync appointment: valid patient_id is required."
         );
+    }
 
-        const doctorId = Number(
-            payload?.doctor_id
+    if (
+        !Number.isInteger(doctorId) ||
+        doctorId < 1
+    ) {
+        throw new Error(
+            "Cannot sync appointment: valid doctor_id is required."
         );
+    }
 
-        const appointmentDate =
-            typeof payload?.appointment_date === "string"
-                ? payload.appointment_date.split("T")[0]
-                : payload?.appointment_date;
+    if (
+        typeof appointmentDate !== "string" ||
+        !/^\d{4}-\d{2}-\d{2}$/.test(
+            appointmentDate
+        )
+    ) {
+        throw new Error(
+            "Cannot sync appointment: appointment_date must be YYYY-MM-DD."
+        );
+    }
 
-        const appointmentTime =
-            typeof payload?.appointment_time === "string"
-                ? payload.appointment_time.slice(0, 5)
-                : payload?.appointment_time;
+    if (
+        typeof appointmentTime !== "string" ||
+        !/^([01]\d|2[0-3]):([0-5]\d)$/.test(
+            appointmentTime
+        )
+    ) {
+        throw new Error(
+            "Cannot sync appointment: appointment_time must be HH:MM."
+        );
+    }
 
-        const status =
-            payload?.status || "Scheduled";
+    if (
+        ![
+            "Scheduled",
+            "Completed",
+            "Cancelled"
+        ].includes(status)
+    ) {
+        throw new Error(
+            "Cannot sync appointment: status must be Scheduled, Completed, or Cancelled."
+        );
+    }
 
-        if (!Number.isInteger(patientId) || patientId < 1) {
-            throw new Error(
-                "Cannot sync appointment: valid patient_id is required."
-            );
-        }
-
-        if (!Number.isInteger(doctorId) || doctorId < 1) {
-            throw new Error(
-                "Cannot sync appointment: valid doctor_id is required."
-            );
-        }
-
-        if (
-            typeof appointmentDate !== "string" ||
-            !/^\\d{4}-\\d{2}-\\d{2}$/.test(appointmentDate)
-        ) {
-            throw new Error(
-                "Cannot sync appointment: appointment_date must be YYYY-MM-DD."
-            );
-        }
-
-        if (
-            typeof appointmentTime !== "string" ||
-            !/^([01]\\d|2[0-3]):([0-5]\\d)$/.test(appointmentTime)
-        ) {
-            throw new Error(
-                "Cannot sync appointment: appointment_time must be HH:MM."
-            );
-        }
-
-        if (
-            ![
-                "Scheduled",
-                "Completed",
-                "Cancelled"
-            ].includes(status)
-        ) {
-            throw new Error(
-                "Cannot sync appointment: status must be Scheduled, Completed, or Cancelled."
-            );
-        }
-
-        const prepared = {
-            patient_id: patientId,
-            doctor_id: doctorId,
-            appointment_date: appointmentDate,
-            appointment_time: appointmentTime,
-            status
-        };
-
-        if (
-            payload?.reason !== undefined &&
-            payload?.reason !== null &&
-            String(payload.reason).trim() !== ""
-        ) {
-            prepared.reason = String(
-                payload.reason
-            );
-        }
-
-        return prepared;
+    const prepared = {
+        patient_id: patientId,
+        doctor_id: doctorId,
+        appointment_date: appointmentDate,
+        appointment_time: appointmentTime,
+        status
     };
+
+    if (
+        payload?.reason !== undefined &&
+        payload?.reason !== null &&
+        String(payload.reason).trim() !== ""
+    ) {
+        prepared.reason = String(
+            payload.reason
+        );
+    }
+
+    return prepared;
+};
 
 
     /*
