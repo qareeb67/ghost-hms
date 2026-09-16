@@ -1,4 +1,5 @@
-import PrintHeader from "../Printing/PrintHeader";
+
+import PrintHeader from "./PrintHeader";
 import {
     formatReceiptId,
     formatInvoiceId,

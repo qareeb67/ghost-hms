@@ -1,300 +1,117 @@
 import PrintHeader from "./PrintHeader";
 
-import {
-formatPatientId,
-formatDoctorId,
-} from "../../utils/hospitalIds";
-
 function PrintPrescription({
-patient = {},
-doctor = {},
-prescription = {},
-medicines = [],
-record = {},
-
-
 hospitalName = "Hospital Management System",
 hospitalAddress = "Nigeria",
 hospitalPhone = "",
 hospitalEmail = "",
 
 
+patient = {},
+doctor = {},
+prescription = {},
+medicines = [],
+
+
 }) {
+const formatDate = (value) => {
+if (!value) return "—";
 
+    
+    const date = new Date(value);
 
-/* =========================================================
-   HELPERS
-========================================================= */
-
-const displayValue = (
-    value,
-    fallback = "N/A"
-) => {
-
-    if (
-        value === null ||
-        value === undefined ||
-        String(value).trim() === ""
-    ) {
-        return fallback;
+    if (Number.isNaN(date.getTime())) {
+        return value;
     }
 
-    return String(value);
+    return date.toLocaleDateString("en-NG", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric",
+    });
 };
-
-
-const formatDate = (date) => {
-
-    if (!date) {
-        return "N/A";
-    }
-
-    const cleanDate =
-        String(date).split("T")[0];
-
-    const parsedDate =
-        new Date(`${cleanDate}T00:00:00`);
-
-    if (
-        Number.isNaN(
-            parsedDate.getTime()
-        )
-    ) {
-        return cleanDate;
-    }
-
-    return parsedDate.toLocaleDateString(
-        "en-NG",
-        {
-            day: "2-digit",
-            month: "long",
-            year: "numeric",
-        }
-    );
-};
-
-
-const getPatientName = () => {
-
-    if (patient?.patient_name) {
-        return patient.patient_name;
-    }
-
-    const name = [
-        patient?.first_name,
-        patient?.middle_name,
-        patient?.last_name,
-    ]
-        .filter(Boolean)
-        .join(" ");
-
-    return name || "Patient";
-};
-
-
-const getDoctorName = () => {
-
-    if (doctor?.doctor_name) {
-        return doctor.doctor_name;
-    }
-
-    if (doctor?.full_name) {
-        return doctor.full_name;
-    }
-
-    if (record?.doctor_name) {
-        return record.doctor_name;
-    }
-
-    const name = [
-        doctor?.first_name ??
-            record?.doctor_first_name,
-        doctor?.middle_name ??
-            record?.doctor_middle_name,
-        doctor?.last_name ??
-            record?.doctor_last_name,
-    ]
-        .filter(Boolean)
-        .join(" ");
-
-    return name || "Doctor";
-};
-
-
-/* =========================================================
-   PRESCRIPTION ITEMS
-========================================================= */
-
-const prescriptionItems =
-    Array.isArray(medicines) &&
-    medicines.length > 0
-        ? medicines
-        : Array.isArray(
-            prescription?.items
-        )
-            ? prescription.items
-            : Array.isArray(
-                prescription?.medicines
-            )
-                ? prescription.medicines
-                : [];
-
-
-/* =========================================================
-   DATA
-========================================================= */
 
 const patientName =
-    getPatientName();
+    patient.name ||
+    [patient.first_name, patient.last_name]
+        .filter(Boolean)
+        .join(" ") ||
+    "Patient";
 
 const doctorName =
-    getDoctorName();
-
-const patientNumber =
-    patient?.patient_number ||
-    "";
-
-const doctorNumber =
-    doctor?.doctor_number ||
-    record?.doctor_number ||
-    formatDoctorId(
-        doctor?.doctor_id ??
-        record?.doctor_id
-    );
-
-const specialization =
-    doctor?.specialization ||
-    record?.specialization ||
-    "";
-
-const prescriptionNumber =
-    prescription?.prescription_number ||
-    prescription?.prescription_id ||
-    prescription?.id ||
-    "N/A";
+    doctor.name ||
+    [doctor.first_name, doctor.last_name]
+        .filter(Boolean)
+        .join(" ") ||
+    "Attending Doctor";
 
 const prescriptionDate =
-    prescription?.prescription_date ||
-    prescription?.date ||
-    prescription?.created_at ||
-    record?.visit_date ||
-    record?.created_at;
-
-const prescriptionNotes =
-    prescription?.notes ||
-    prescription?.instructions ||
-    record?.prescription_notes ||
-    "";
-
-const allergies =
-    record?.allergies ||
-    patient?.allergies ||
-    "";
-
-
-/* =========================================================
-   RENDER
-========================================================= */
+    prescription.date ||
+    prescription.created_at ||
+    new Date();
 
 return (
     <div className="print-document print-prescription">
-
-        {/* =================================================
-            HEADER
-        ================================================= */}
 
         <PrintHeader
             hospitalName={hospitalName}
             hospitalAddress={hospitalAddress}
             hospitalPhone={hospitalPhone}
             hospitalEmail={hospitalEmail}
-            documentTitle="Prescription"
-            documentSubtitle="Patient Medication Order"
+            documentTitle="PRESCRIPTION"
+            documentSubtitle="Medication Order"
         />
 
+        {/* =====================================================
+            PATIENT INFORMATION
+           ===================================================== */}
 
-        {/* =================================================
-            PRESCRIPTION INTRO
-        ================================================= */}
+        <section className="print-section prescription-patient-section">
 
-        <section className="print-section">
-
-            <div className="print-section-title">
-
-                <span>
-                    Medication Documentation
-                </span>
-
-                <h3>
-                    Prescription Details
-                </h3>
-
+            <div className="print-section-heading">
+                <h2>Patient Information</h2>
             </div>
-
 
             <div className="print-info-grid">
 
-                <div className="print-info-card">
-
-                    <span className="print-label">
-                        Patient
-                    </span>
-
-                    <strong>
-                        {patientName}
-                    </strong>
-
-                    <small>
-                        Patient No. {patientNumber}
-                    </small>
-
+                <div className="print-info-item">
+                    <span>Patient Name</span>
+                    <strong>{patientName}</strong>
                 </div>
 
-
-                <div className="print-info-card">
-
-                    <span className="print-label">
-                        Prescribing Doctor
-                    </span>
-
+                <div className="print-info-item">
+                    <span>Patient Number</span>
                     <strong>
-                        Dr. {doctorName}
+                        {patient.patient_number || "—"}
                     </strong>
-
-                    {specialization && (
-                        <small>
-                            {specialization}
-                        </small>
-                    )}
-
                 </div>
 
-
-                <div className="print-info-card">
-
-                    <span className="print-label">
-                        Prescription Date
-                    </span>
-
+                <div className="print-info-item">
+                    <span>Date of Birth</span>
                     <strong>
-                        {formatDate(
-                            prescriptionDate
-                        )}
+                        {formatDate(patient.date_of_birth)}
                     </strong>
-
                 </div>
 
-
-                <div className="print-info-card">
-
-                    <span className="print-label">
-                        Prescription No.
-                    </span>
-
+                <div className="print-info-item">
+                    <span>Gender</span>
                     <strong>
-                        {prescriptionNumber}
+                        {patient.gender || "—"}
                     </strong>
+                </div>
 
+                <div className="print-info-item">
+                    <span>Phone</span>
+                    <strong>
+                        {patient.phone || "—"}
+                    </strong>
+                </div>
+
+                <div className="print-info-item">
+                    <span>Prescription Date</span>
+                    <strong>
+                        {formatDate(prescriptionDate)}
+                    </strong>
                 </div>
 
             </div>
@@ -302,154 +119,39 @@ return (
         </section>
 
 
-        {/* =================================================
-            PATIENT INFORMATION
-        ================================================= */}
+        {/* =====================================================
+            PRESCRIBING DOCTOR
+           ===================================================== */}
 
         <section className="print-section">
 
-            <div className="print-section-title">
-
-                <span>
-                    Patient Information
-                </span>
-
-                <h3>
-                    Patient Details
-                </h3>
-
+            <div className="print-section-heading">
+                <h2>Prescribing Doctor</h2>
             </div>
 
+            <div className="print-doctor-box">
 
-            <div className="print-details-table">
-
-                <div className="print-detail-row">
-
-                    <span>
-                        Full Name
-                    </span>
-
-                    <strong>
-                        {patientName}
-                    </strong>
-
+                <div>
+                    <span>Doctor</span>
+                    <strong>{doctorName}</strong>
                 </div>
 
-
-                <div className="print-detail-row">
-
-                     <span>
-                        Patient No.
-                    </span>
-
-                     <strong>
-                            {displayValue(
-                                patientNumber
-                            )}
-                        </strong>
-
-                </div>
-
-
-                <div className="print-detail-row">
-
-                    <span>
-                        Medical Record No.
-                    </span>
-
-                    <strong>
-                        {record?.medical_record_id ||
-                            record?.record_id ||
-                            "N/A"}
-                    </strong>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        {/* =================================================
-            DOCTOR INFORMATION
-        ================================================= */}
-
-        <section className="print-section">
-
-            <div className="print-section-title">
-
-                <span>
-                    Clinical Provider
-                </span>
-
-                <h3>
-                    Prescribing Doctor
-                </h3>
-
-            </div>
-
-
-            <div className="print-details-table">
-
-                <div className="print-detail-row">
-
-                    <span>
-                        Doctor
-                    </span>
-
-                    <strong>
-                        Dr. {doctorName}
-                    </strong>
-
-                </div>
-
-
-                <div className="print-detail-row">
-
-                    <span>
-                        Doctor No.
-                    </span>
-
-                    <strong>
-                        {doctorNumber}
-                    </strong>
-
-                </div>
-
-
-                <div className="print-detail-row">
-
-                    <span>
-                        Specialization
-                    </span>
-
-                    <strong>
-                        {displayValue(
-                            specialization
-                        )}
-                    </strong>
-
-                </div>
-
-
-                {(doctor?.mdcn_number ||
-                    doctor?.license_number ||
-                    record?.mdcn_number) && (
-
-                    <div className="print-detail-row">
-
-                        <span>
-                            Professional Registration
-                        </span>
-
+                {doctor.specialization && (
+                    <div>
+                        <span>Specialization</span>
                         <strong>
-                            {doctor?.mdcn_number ||
-                                doctor?.license_number ||
-                                record?.mdcn_number}
+                            {doctor.specialization}
                         </strong>
-
                     </div>
+                )}
 
+                {doctor.license_number && (
+                    <div>
+                        <span>License Number</span>
+                        <strong>
+                            {doctor.license_number}
+                        </strong>
+                    </div>
                 )}
 
             </div>
@@ -457,142 +159,115 @@ return (
         </section>
 
 
-        {/* =================================================
-            MEDICATIONS
-        ================================================= */}
+        {/* =====================================================
+            PRESCRIPTION DETAILS
+           ===================================================== */}
 
         <section className="print-section">
 
-            <div className="print-section-title">
+            <div className="print-section-heading">
+                <h2>Prescription</h2>
 
-                <span>
-                    Medication Order
-                </span>
-
-                <h3>
-                    Prescribed Medicines
-                </h3>
-
+                {prescription.reference && (
+                    <span>
+                        Ref: {prescription.reference}
+                    </span>
+                )}
             </div>
 
 
-            {prescriptionItems.length > 0 ? (
+            {medicines.length > 0 ? (
 
-                <div className="print-details-table">
+                <div className="print-table-wrapper">
 
-                    <div className="print-detail-row">
+                    <table className="print-table prescription-table">
 
-                        <span>
-                            Medicine
-                        </span>
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Medicine</th>
+                                <th>Dosage</th>
+                                <th>Frequency</th>
+                                <th>Duration</th>
+                                <th>Route</th>
+                                <th>Instructions</th>
+                            </tr>
+                        </thead>
 
-                        <strong>
-                            Instructions
-                        </strong>
+                        <tbody>
 
-                    </div>
+                            {medicines.map((medicine, index) => (
 
-
-                    {prescriptionItems.map(
-                        (item, index) => {
-
-                            const medicineName =
-                                item?.medicine_name ||
-                                item?.name ||
-                                item?.medicine?.medicine_name ||
-                                "Medicine";
-
-                            const strength =
-                                item?.strength ||
-                                item?.dose_strength ||
-                                "";
-
-                            const dosage =
-                                item?.dosage ||
-                                item?.dose ||
-                                "";
-
-                            const frequency =
-                                item?.frequency ||
-                                "";
-
-                            const duration =
-                                item?.duration ||
-                                "";
-
-                            const route =
-                                item?.route ||
-                                "";
-
-                            const instructions =
-                                item?.instructions ||
-                                "";
-
-                            return (
-                                <div
+                                <tr
                                     key={
-                                        item?.prescription_item_id ??
-                                        item?.medicine_id ??
-                                        `${medicineName}-${index}`
+                                        medicine.medicine_id ||
+                                        medicine.id ||
+                                        index
                                     }
-                                    className="print-detail-row"
                                 >
 
-                                    <span>
+                                    <td>
+                                        {index + 1}
+                                    </td>
 
+                                    <td>
                                         <strong>
-                                            {index + 1}.{" "}
-                                            {medicineName}
+                                            {medicine.medicine_name ||
+                                                medicine.name ||
+                                                "—"}
                                         </strong>
 
-                                        {strength && (
-                                            <>
-                                                {" "}
-                                                • {strength}
-                                            </>
+                                        {medicine.category && (
+                                            <small>
+                                                {medicine.category}
+                                            </small>
                                         )}
+                                    </td>
 
-                                    </span>
+                                    <td>
+                                        {medicine.dosage ||
+                                            medicine.strength ||
+                                            "—"}
+                                    </td>
 
+                                    <td>
+                                        {medicine.frequency ||
+                                            "—"}
+                                    </td>
 
-                                    <strong>
+                                    <td>
+                                        {medicine.duration ||
+                                            "—"}
+                                    </td>
 
-                                        {[
-                                            dosage &&
-                                                `Dosage: ${dosage}`,
-                                            frequency &&
-                                                `Frequency: ${frequency}`,
-                                            duration &&
-                                                `Duration: ${duration}`,
-                                            route &&
-                                                `Route: ${route}`,
-                                            instructions &&
-                                                instructions,
-                                        ]
-                                            .filter(Boolean)
-                                            .join(" • ") ||
-                                            "As directed"
-                                        }
+                                    <td>
+                                        {medicine.route ||
+                                            "—"}
+                                    </td>
 
-                                    </strong>
+                                    <td>
+                                        {medicine.instructions ||
+                                            medicine.instruction ||
+                                            "—"}
+                                    </td>
 
-                                </div>
-                            );
+                                </tr>
 
-                        }
-                    )}
+                            ))}
+
+                        </tbody>
+
+                    </table>
 
                 </div>
 
             ) : (
 
-                <div className="print-text-box">
-
-                    {displayValue(
-                        record?.prescription,
-                        "No structured prescription items were recorded."
-                    )}
-
+                <div className="print-empty-state">
+                    <p>
+                        No medication items were added to this
+                        prescription.
+                    </p>
                 </div>
 
             )}
@@ -600,155 +275,65 @@ return (
         </section>
 
 
-        {/* =================================================
-            ADDITIONAL INSTRUCTIONS
-        ================================================= */}
+        {/* =====================================================
+            PRESCRIPTION NOTES
+           ===================================================== */}
 
-        {prescriptionNotes && (
+        {(prescription.notes ||
+            prescription.instructions ||
+            prescription.prescription) && (
 
             <section className="print-section">
 
-                <div className="print-section-title">
-
-                    <span>
-                        Patient Guidance
-                    </span>
-
-                    <h3>
-                        Additional Instructions
-                    </h3>
-
+                <div className="print-section-heading">
+                    <h2>Additional Instructions</h2>
                 </div>
 
+                <div className="print-notes-box">
 
-                <div className="print-text-box">
-
-                    {prescriptionNotes}
+                    <p>
+                        {prescription.notes ||
+                            prescription.instructions ||
+                            prescription.prescription}
+                    </p>
 
                 </div>
 
             </section>
-
         )}
 
 
-        {/* =================================================
+        {/* =====================================================
             ALLERGY WARNING
-        ================================================= */}
+           ===================================================== */}
 
-        <section className="print-section">
+        {patient.allergies && (
 
-            <div className="print-section-title">
+            <section className="print-warning">
 
-                <span>
-                    Patient Safety
-                </span>
+                <strong>Allergies</strong>
 
-                <h3>
-                    Allergy Information
-                </h3>
+                <p>
+                    {patient.allergies}
+                </p>
 
-            </div>
-
-
-            <div className="print-text-box">
-
-                {allergies
-                    ? `Known allergies: ${allergies}`
-                    : "No known allergies reported."
-                }
-
-            </div>
-
-        </section>
+            </section>
+        )}
 
 
-        {/* =================================================
-            PRESCRIPTION REFERENCES
-        ================================================= */}
-
-        <section className="print-section">
-
-            <div className="print-section-title">
-
-                <span>
-                    Record Information
-                </span>
-
-                <h3>
-                    Hospital References
-                </h3>
-
-            </div>
-
-
-            <div className="print-details-table">
-
-                <div className="print-detail-row">
-
-                    <span>
-                        Prescription No.
-                    </span>
-
-                    <strong>
-                        {prescriptionNumber}
-                    </strong>
-
-                </div>
-
-
-                <div className="print-detail-row">
-
-                    <span>
-                        Patient No.
-                    </span>
-
-                     <strong>
-                            {displayValue(
-                                patientNumber
-                            )}
-                        </strong>
-
-                </div>
-
-
-                <div className="print-detail-row">
-
-                    <span>
-                        Doctor No.
-                    </span>
-
-                    <strong>
-                        {doctorNumber}
-                    </strong>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        {/* =================================================
-            SIGNATURES
-        ================================================= */}
+        {/* =====================================================
+            SIGNATURE
+           ===================================================== */}
 
         <section className="print-signature-section">
 
-            <div className="print-signature-box">
+            <div className="print-signature">
 
                 <div className="print-signature-line" />
 
-                <span>
-                    Patient / Representative
-                </span>
-
-            </div>
-
-
-            <div className="print-signature-box">
-
-                <div className="print-signature-line" />
+                <strong>
+                    {doctorName}
+                </strong>
 
                 <span>
                     Prescribing Doctor
@@ -756,52 +341,38 @@ return (
 
             </div>
 
+
+            <div className="print-signature">
+
+                <div className="print-signature-line" />
+
+                <strong>
+                    {formatDate(prescriptionDate)}
+                </strong>
+
+                <span>
+                    Date
+                </span>
+
+            </div>
+
         </section>
 
 
-        {/* =================================================
+        {/* =====================================================
             FOOTER
-        ================================================= */}
+           ===================================================== */}
 
         <footer className="print-document-footer">
 
-            <div>
+            <span>
+                {hospitalName}
+            </span>
 
-                <strong>
-                    {hospitalName}
-                </strong>
-
-                <span>
-                    Prescription
-                </span>
-
-            </div>
-
-
-            <div>
-
-                <span>
-                    Prescription No.
-                </span>
-
-                <strong>
-                    {prescriptionNumber}
-                </strong>
-
-            </div>
-
-
-            <div>
-
-                <span>
-                    Printed
-                </span>
-
-                <strong>
-                    {formatDate(new Date())}
-                </strong>
-
-            </div>
+            <span>
+                Prescription generated from the hospital
+                management system.
+            </span>
 
         </footer>
 
