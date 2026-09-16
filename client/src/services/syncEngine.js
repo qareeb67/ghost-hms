@@ -271,7 +271,7 @@ const getStoreConfig = (
 
     const config =
         STORE_CONFIG[
-        storeName
+            storeName
         ];
 
 
@@ -296,14 +296,15 @@ CLEAN PAYLOAD
 
 Removes IndexedDB-only metadata.
 
-Also removes the local ID.
-
 The server must never receive:
 
     id
     _syncStatus
     _localOnly
     etc.
+
+Also removes empty values and normalizes
+date_of_birth.
 ==================================================
 */
 
@@ -318,7 +319,16 @@ const cleanPayload = (
     }
 
 
-    const payload = { ...record };
+    const payload = {
+        ...record
+    };
+
+
+    /*
+    ----------------------------------------------
+    REMOVE INDEXEDDB METADATA
+    ----------------------------------------------
+    */
 
     [
         "id",
@@ -329,152 +339,13 @@ const cleanPayload = (
         "_createdAt",
         "_updatedAt",
         "_syncedAt"
-    ].forEach((field) => {
-        delete payload[field];
-    });
+    ].forEach(
+        (field) => {
 
-    const cleanPayload = (record) => {
-    // clean metadata
-    // remove empty values
-    // normalize date_of_birth
+            delete payload[field];
 
-    return payload;
-};
-
-
-/*
-==================================================
-PREPARE CREATE PAYLOAD
-==================================================
-Central CREATE payload preparation.
-
-All CREATE operations pass through this function.
-
-Only resources with a special server contract
-receive resource-specific transformation.
-
-Other resources safely receive the cleaned payload.
-==================================================
-*/
-
-const prepareCreatePayload = (
-    storeName,
-    payload
-) => {
-
-    /*
-    ----------------------------------------------
-    DEFAULT
-    ----------------------------------------------
-    Patients, doctors, medical records, laboratory,
-    billing, medicines and emergency currently use
-    the generic cleaned payload.
-    ----------------------------------------------
-    */
-
-    if (storeName !== "appointments") {
-        return payload;
-    }
-
-    /*
-    ----------------------------------------------
-    APPOINTMENTS
-    ----------------------------------------------
-    */
-
-    const patientId = Number(
-        payload?.patient_id
+        }
     );
-
-    const doctorId = Number(
-        payload?.doctor_id
-    );
-
-    const appointmentDate =
-        typeof payload?.appointment_date === "string"
-            ? payload.appointment_date.split("T")[0]
-            : payload?.appointment_date;
-
-    const appointmentTime =
-        typeof payload?.appointment_time === "string"
-            ? payload.appointment_time.slice(0, 5)
-            : payload?.appointment_time;
-
-    const status =
-        payload?.status || "Scheduled";
-
-    if (
-        !Number.isInteger(patientId) ||
-        patientId < 1
-    ) {
-        throw new Error(
-            "Cannot sync appointment: valid patient_id is required."
-        );
-    }
-
-    if (
-        !Number.isInteger(doctorId) ||
-        doctorId < 1
-    ) {
-        throw new Error(
-            "Cannot sync appointment: valid doctor_id is required."
-        );
-    }
-
-    if (
-        typeof appointmentDate !== "string" ||
-        !/^\d{4}-\d{2}-\d{2}$/.test(
-            appointmentDate
-        )
-    ) {
-        throw new Error(
-            "Cannot sync appointment: appointment_date must be YYYY-MM-DD."
-        );
-    }
-
-    if (
-        typeof appointmentTime !== "string" ||
-        !/^([01]\d|2[0-3]):([0-5]\d)$/.test(
-            appointmentTime
-        )
-    ) {
-        throw new Error(
-            "Cannot sync appointment: appointment_time must be HH:MM."
-        );
-    }
-
-    if (
-        ![
-            "Scheduled",
-            "Completed",
-            "Cancelled"
-        ].includes(status)
-    ) {
-        throw new Error(
-            "Cannot sync appointment: status must be Scheduled, Completed, or Cancelled."
-        );
-    }
-
-    const prepared = {
-        patient_id: patientId,
-        doctor_id: doctorId,
-        appointment_date: appointmentDate,
-        appointment_time: appointmentTime,
-        status
-    };
-
-    if (
-        payload?.reason !== undefined &&
-        payload?.reason !== null &&
-        String(payload.reason).trim() !== ""
-    ) {
-        prepared.reason = String(
-            payload.reason
-        );
-    }
-
-    return prepared;
-};
 
 
     /*
@@ -493,16 +364,12 @@ const prepareCreatePayload = (
 
 
             if (
-
                 value === null ||
                 value === undefined ||
                 value === ""
-
             ) {
 
-                delete payload[
-                    key
-                ];
+                delete payload[key];
 
             }
 
@@ -549,6 +416,232 @@ const prepareCreatePayload = (
 
 /*
 ==================================================
+PREPARE CREATE PAYLOAD
+==================================================
+
+Central CREATE payload preparation.
+
+All CREATE operations pass through this function.
+
+Only resources with a special server contract
+receive resource-specific transformation.
+
+Other resources safely receive the cleaned payload.
+==================================================
+*/
+
+const prepareCreatePayload = (
+    storeName,
+    payload
+) => {
+
+    /*
+    ----------------------------------------------
+    DEFAULT
+    ----------------------------------------------
+
+    Patients, doctors, medical records, laboratory,
+    billing, medicines and emergency currently use
+    the generic cleaned payload.
+    */
+
+    if (
+        storeName !== "appointments"
+    ) {
+
+        return payload;
+
+    }
+
+
+    /*
+    ----------------------------------------------
+    APPOINTMENTS
+    ----------------------------------------------
+    */
+
+    const patientId =
+        Number(
+            payload?.patient_id
+        );
+
+
+    const doctorId =
+        Number(
+            payload?.doctor_id
+        );
+
+
+    const appointmentDate =
+        typeof payload?.appointment_date === "string"
+            ? payload.appointment_date.split("T")[0]
+            : payload?.appointment_date;
+
+
+    const appointmentTime =
+        typeof payload?.appointment_time === "string"
+            ? payload.appointment_time.slice(0, 5)
+            : payload?.appointment_time;
+
+
+    const status =
+        payload?.status ||
+        "Scheduled";
+
+
+    /*
+    ----------------------------------------------
+    VALIDATE PATIENT
+    ----------------------------------------------
+    */
+
+    if (
+        !Number.isInteger(patientId) ||
+        patientId < 1
+    ) {
+
+        throw new Error(
+            "Cannot sync appointment: valid patient_id is required."
+        );
+
+    }
+
+
+    /*
+    ----------------------------------------------
+    VALIDATE DOCTOR
+    ----------------------------------------------
+    */
+
+    if (
+        !Number.isInteger(doctorId) ||
+        doctorId < 1
+    ) {
+
+        throw new Error(
+            "Cannot sync appointment: valid doctor_id is required."
+        );
+
+    }
+
+
+    /*
+    ----------------------------------------------
+    VALIDATE DATE
+    ----------------------------------------------
+    */
+
+    if (
+        typeof appointmentDate !== "string" ||
+        !/^\d{4}-\d{2}-\d{2}$/.test(
+            appointmentDate
+        )
+    ) {
+
+        throw new Error(
+            "Cannot sync appointment: appointment_date must be YYYY-MM-DD."
+        );
+
+    }
+
+
+    /*
+    ----------------------------------------------
+    VALIDATE TIME
+    ----------------------------------------------
+    */
+
+    if (
+        typeof appointmentTime !== "string" ||
+        !/^([01]\d|2[0-3]):([0-5]\d)$/.test(
+            appointmentTime
+        )
+    ) {
+
+        throw new Error(
+            "Cannot sync appointment: appointment_time must be HH:MM."
+        );
+
+    }
+
+
+    /*
+    ----------------------------------------------
+    VALIDATE STATUS
+    ----------------------------------------------
+    */
+
+    if (
+        ![
+            "Scheduled",
+            "Completed",
+            "Cancelled"
+        ].includes(
+            status
+        )
+    ) {
+
+        throw new Error(
+            "Cannot sync appointment: status must be Scheduled, Completed, or Cancelled."
+        );
+
+    }
+
+
+    /*
+    ----------------------------------------------
+    BUILD FINAL APPOINTMENT PAYLOAD
+    ----------------------------------------------
+    */
+
+    const prepared = {
+
+        patient_id:
+            patientId,
+
+        doctor_id:
+            doctorId,
+
+        appointment_date:
+            appointmentDate,
+
+        appointment_time:
+            appointmentTime,
+
+        status
+
+    };
+
+
+    /*
+    ----------------------------------------------
+    OPTIONAL REASON
+    ----------------------------------------------
+    */
+
+    if (
+        payload?.reason !== undefined &&
+        payload?.reason !== null &&
+        String(
+            payload.reason
+        ).trim() !== ""
+    ) {
+
+        prepared.reason =
+            String(
+                payload.reason
+            );
+
+    }
+
+
+    return prepared;
+
+};
+
+
+/*
+==================================================
 FIND LOCAL RECORD
 ==================================================
 */
@@ -559,10 +652,8 @@ const findLocalRecord = async (
 ) => {
 
     if (
-
         identifier === undefined ||
         identifier === null
-
     ) {
 
         return null;
@@ -600,7 +691,7 @@ const findLocalRecord = async (
 
                 const serverId =
                     record?.[
-                    config.idField
+                        config.idField
                     ];
 
 
@@ -614,13 +705,13 @@ const findLocalRecord = async (
 
                 ) || (
 
-                        serverId !== undefined &&
-                        serverId !== null &&
-                        String(
-                            serverId
-                        ) === identifierString
+                    serverId !== undefined &&
+                    serverId !== null &&
+                    String(
+                        serverId
+                    ) === identifierString
 
-                    );
+                );
 
             }
         );
@@ -776,44 +867,59 @@ const syncCreate = async (
         );
 
 
+    /*
+    ----------------------------------------------
+    RESOLVE LOCAL RELATIONS
+    ----------------------------------------------
+    */
+
     const relationResult =
         await resolveLocalRelations(
             localRecord
         );
 
+
     if (
         relationResult.unresolved.length > 0
     ) {
+
         console.log(
             `⏳ ${storeName} CREATE deferred. Waiting for referenced records to synchronize.`,
             relationResult.unresolved
         );
 
+
         return {
-            deferred: true
+
+            deferred:
+                true
+
         };
+
     }
 
+
     payload = {
+
         ...payload,
+
         ...relationResult.payload
+
     };
+
 
     /*
     ----------------------------------------------
     PREPARE RESOURCE-SPECIFIC CREATE PAYLOAD
     ----------------------------------------------
-    
-    Appointments must reach the API using the exact
-    server contract. This also converts form/string IDs
-    into integers and guarantees valid date/time/status.
-    ----------------------------------------------
     */
 
-    payload = prepareCreatePayload(
-        storeName,
-        payload
-    );
+    payload =
+        prepareCreatePayload(
+            storeName,
+            payload
+        );
+
 
     /*
     ----------------------------------------------
@@ -825,10 +931,14 @@ const syncCreate = async (
         config.idField
     ];
 
-    if (storeName === "medical_records") {
-        delete payload.medical_record_id;
-    }
 
+    if (
+        storeName === "medical_records"
+    ) {
+
+        delete payload.medical_record_id;
+
+    }
 
 
     console.log(
@@ -876,7 +986,7 @@ const syncCreate = async (
 
     const serverRecord =
         response.data?.[
-        config.responseKey
+            config.responseKey
         ]
         ||
         response.data?.record;
@@ -984,7 +1094,7 @@ const syncUpdate = async (
         queuedServerId
         ??
         localRecord?.[
-        config.idField
+            config.idField
         ];
 
 
@@ -995,11 +1105,9 @@ const syncUpdate = async (
     */
 
     if (
-
         serverId === undefined ||
         serverId === null ||
         serverId === ""
-
     ) {
 
         console.log(
@@ -1022,14 +1130,7 @@ const syncUpdate = async (
     MERGE LATEST LOCAL STATE
     ----------------------------------------------
 
-    IMPORTANT:
-
     Local IndexedDB state wins.
-
-    This means if the user edited the doctor
-    again after the operation was queued,
-    the newest local data gets synchronized.
-    ----------------------------------------------
     */
 
     const mergedRecord = {
@@ -1053,27 +1154,44 @@ const syncUpdate = async (
         );
 
 
+    /*
+    ----------------------------------------------
+    RESOLVE LOCAL RELATIONS
+    ----------------------------------------------
+    */
+
     const relationResult =
         await resolveLocalRelations(
             mergedRecord
         );
 
+
     if (
         relationResult.unresolved.length > 0
     ) {
+
         console.log(
             `⏳ ${storeName} UPDATE deferred. Waiting for referenced records to synchronize.`,
             relationResult.unresolved
         );
 
+
         return {
-            deferred: true
+
+            deferred:
+                true
+
         };
+
     }
 
+
     payload = {
+
         ...payload,
+
         ...relationResult.payload
+
     };
 
 
@@ -1087,8 +1205,13 @@ const syncUpdate = async (
         config.idField
     ];
 
-    if (storeName === "medical_records") {
+
+    if (
+        storeName === "medical_records"
+    ) {
+
         delete payload.medical_record_id;
+
     }
 
 
@@ -1112,7 +1235,7 @@ const syncUpdate = async (
     */
 
     switch (
-    config.updateMethod
+        config.updateMethod
     ) {
 
         case "put":
@@ -1156,7 +1279,7 @@ const syncUpdate = async (
 
     const serverRecord =
         response.data?.[
-        config.responseKey
+            config.responseKey
         ]
         ||
         response.data?.record;
@@ -1266,7 +1389,7 @@ const syncComplete = async (
         queuedServerId
         ??
         localRecord?.[
-        config.idField
+            config.idField
         ];
 
 
@@ -1277,11 +1400,9 @@ const syncComplete = async (
     */
 
     if (
-
         serverId === undefined ||
         serverId === null ||
         serverId === ""
-
     ) {
 
         console.log(
@@ -1307,7 +1428,9 @@ const syncComplete = async (
 
     const payload =
         cleanPayload(
-            data || localRecord || {}
+            data ||
+            localRecord ||
+            {}
         );
 
 
@@ -1325,7 +1448,7 @@ const syncComplete = async (
 
 
     switch (
-    config.completeMethod
+        config.completeMethod
     ) {
 
         case "patch":
@@ -1369,7 +1492,7 @@ const syncComplete = async (
 
     const serverRecord =
         response.data?.[
-        config.completeResponseKey
+            config.completeResponseKey
         ]
         ||
         response.data?.record;
@@ -1469,7 +1592,7 @@ const syncDelete = async (
         queuedServerId
         ??
         localRecord?.[
-        config.idField
+            config.idField
         ]
         ??
         null;
@@ -1483,15 +1606,12 @@ const syncDelete = async (
     If the record was created offline and deleted
     before synchronization, there is nothing to
     delete remotely.
-    ----------------------------------------------
     */
 
     if (
-
         serverId === undefined ||
         serverId === null ||
         serverId === ""
-
     ) {
 
         console.log(
@@ -1545,12 +1665,6 @@ const syncDelete = async (
         ------------------------------------------
         SERVER ALREADY DELETED
         ------------------------------------------
-
-        HTTP 404 means the desired remote state
-        already exists.
-
-        We can safely remove the local copy.
-        ------------------------------------------
         */
 
         if (
@@ -1577,10 +1691,8 @@ const syncDelete = async (
     */
 
     if (
-
         localRecord?.id !== undefined &&
         localRecord?.id !== null
-
     ) {
 
         await offlineDelete(
@@ -1622,7 +1734,7 @@ const syncOperation = async (
 
 
     switch (
-    operation.type
+        operation.type
     ) {
 
         case "CREATE":
@@ -1793,19 +1905,6 @@ export const syncPendingOperations =
         ------------------------------------------
         PROCESS IN QUEUE ORDER
         ------------------------------------------
-
-        This is important because:
-
-        CREATE
-           ↓
-        UPDATE
-           ↓
-        COMPLETE
-           ↓
-        DELETE
-
-        may depend on each other.
-        ------------------------------------------
         */
 
         for (
@@ -1824,6 +1923,7 @@ export const syncPendingOperations =
                 console.warn(
                     "📴 Internet connection lost. Stopping synchronization."
                 );
+
 
                 break;
 
@@ -1885,16 +1985,6 @@ export const syncPendingOperations =
                     );
 
 
-                    /*
-                    IMPORTANT:
-
-                    Do NOT count deferred as failure.
-                    Do NOT stop the entire queue.
-
-                    The CREATE operation may appear later
-                    in the queue depending on queue order.
-                    */
-
                     continue;
 
                 }
@@ -1919,7 +2009,7 @@ export const syncPendingOperations =
                 );
 
             } catch (
-            error
+                error
             ) {
 
                 failedCount++;
@@ -1969,12 +2059,6 @@ export const syncPendingOperations =
         ------------------------------------------
         RETRY DEFERRED OPERATIONS
         ------------------------------------------
-
-        A dependent CREATE can be deferred until
-        its parent (for example patient -> appointment)
-        receives a real server ID. Retry the remaining
-        queue after successful work, up to a safe limit.
-        ------------------------------------------
         */
 
         if (
@@ -1982,23 +2066,35 @@ export const syncPendingOperations =
             syncedCount > 0 &&
             attempt < 5
         ) {
+
             console.log(
                 `🔁 Retrying ${deferredCount} deferred operation(s).`
             );
+
 
             const retryResult =
                 await syncPendingOperations(
                     attempt + 1
                 );
 
+
             syncedCount +=
-                Number(retryResult?.synced || 0);
+                Number(
+                    retryResult?.synced || 0
+                );
+
 
             deferredCount =
-                Number(retryResult?.deferred || 0);
+                Number(
+                    retryResult?.deferred || 0
+                );
+
 
             failedCount +=
-                Number(retryResult?.failed || 0);
+                Number(
+                    retryResult?.failed || 0
+                );
+
         }
 
 
@@ -2011,6 +2107,7 @@ export const syncPendingOperations =
         console.log(
             `🎉 Hospital Management System sync finished.`,
             {
+
                 synced:
                     syncedCount,
 
@@ -2022,6 +2119,7 @@ export const syncPendingOperations =
 
                 total:
                     operations.length
+
             }
         );
 
@@ -2051,13 +2149,6 @@ export const syncPendingOperations =
 /*
 ==================================================
 AUTOMATIC SYNC ENGINE
-==================================================
-
-This function installs the browser listeners.
-
-It returns a cleanup function.
-
-Use it once at application level.
 ==================================================
 */
 
@@ -2117,15 +2208,9 @@ export const startSyncEngine = () => {
 
 
             /*
-            ----------------------------------------------
-            NOTIFY THE APPLICATION
-            ----------------------------------------------
-
-            React pages may already be mounted while
-            synchronization is happening. Tell them to
-            reload their current local/server view after
-            reconciliation completes.
-            ----------------------------------------------
+            ------------------------------------------
+            NOTIFY APPLICATION
+            ------------------------------------------
             */
 
             if (
@@ -2136,7 +2221,8 @@ export const startSyncEngine = () => {
                     new CustomEvent(
                         "ghost-hms-sync-complete",
                         {
-                            detail: result
+                            detail:
+                                result
                         }
                     )
                 );
@@ -2147,7 +2233,7 @@ export const startSyncEngine = () => {
             return result;
 
         } catch (
-        error
+            error
         ) {
 
             console.error(
@@ -2256,7 +2342,7 @@ export const testHMSSync =
             return result;
 
         } catch (
-        error
+            error
         ) {
 
             console.error(
