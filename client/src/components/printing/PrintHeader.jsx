@@ -15,7 +15,7 @@ function PrintHeader({
                 <div className="print-hospital">
 
                     <div className="print-hospital-logo">
-                        <span>GH</span>
+                        <span>HSM</span>
                     </div>
 
                     <div className="print-hospital-info">
