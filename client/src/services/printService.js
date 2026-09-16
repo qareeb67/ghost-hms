@@ -224,7 +224,7 @@ if (!record) {
 
 const { default: PrintMedicalRecord } =
     await import(
-        "../components/Printing/PrintMedicalRecord"
+        "../components/printing/PrintMedicalRecord"
     );
 
 
@@ -294,7 +294,7 @@ export function printAppointment(appointment) {
 
 
 return import(
-    "../components/Printing/PrintAppointment"
+    "../components/printing/PrintAppointment"
 ).then(({ default: PrintAppointment }) => {
 
     printDocument(
@@ -355,10 +355,10 @@ return import(
 * {
 * 
   patient,
-  ```
-* ```
+
+* 
   record
-  ```
+  
 * }
 *
 * Therefore this function resolves the actual prescription
@@ -743,7 +743,7 @@ if (
 
 const { default: PrintPrescription } =
     await import(
-        "../components/Printing/PrintPrescription"
+        "../components/printing/PrintPrescription"
     );
 
 
