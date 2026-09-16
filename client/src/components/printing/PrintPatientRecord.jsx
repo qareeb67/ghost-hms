@@ -1,5 +1,5 @@
 
-import PrintHeader from "./PrintHeader";
+import PrintHeader from "../PrintHeader";
 
 function PrintPatientRecord({
     patient,

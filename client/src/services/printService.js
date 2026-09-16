@@ -788,7 +788,7 @@ if (!payment) {
 const {
     default: PrintPaymentReceipt
 } = await import(
-    "../components/Printing/PrintPaymentReceipt"
+    "../components/printing/PrintPaymentReceipt"
 );
 
 
