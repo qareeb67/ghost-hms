@@ -19,7 +19,7 @@ import {
     ShieldCheck
 } from "lucide-react";
 
-
+import "./AddDoctorForm.css";
 /*
 ==================================================
 GHOST HMS — ADD / EDIT DOCTOR FORM
