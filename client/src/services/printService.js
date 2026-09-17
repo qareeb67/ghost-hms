@@ -280,7 +280,7 @@ export async function printMedicalRecord({
 
     const { default: PrintMedicalRecord } =
         await import(
-            "../components/Printing/PrintMedicalRecord"
+            "../components/printing/PrintMedicalRecord"
         );
 
 
@@ -343,23 +343,20 @@ export async function printPatientRecord(patient) {
  * =========================================================
  */
 
-export function printAppointment(appointment) {
+export async function printAppointment(appointment) {
 
-    return import(
-        "../components/Printing/PrintAppointment"
-    ).then(({ default: PrintAppointment }) => {
-
-        printDocument(
-            React.createElement(
-                PrintAppointment,
-                {
-                    appointment,
-                }
-            ),
-            "Appointment"
-        );
-
-    });
+    const { default: PrintAppointment } = await import(
+        "../components/printing/PrintAppointment"
+    );
+    printDocument(
+        React.createElement(
+            PrintAppointment,
+            {
+                appointment,
+            }
+        ),
+        "Appointment"
+    );
 
 }
 
@@ -370,23 +367,20 @@ export function printAppointment(appointment) {
  * =========================================================
  */
 
-export function printEmergency(emergency) {
+export async function printEmergency(emergency) {
 
-    return import(
+    const { default: PrintEmergency } = await import(
         "../components/printing/PrintEmergency"
-    ).then(({ default: PrintEmergency }) => {
-
-        printDocument(
-            React.createElement(
-                PrintEmergency,
-                {
-                    emergency,
-                }
-            ),
-            "Emergency Case"
-        );
-
-    });
+    );
+    printDocument(
+        React.createElement(
+            PrintEmergency,
+            {
+                emergency,
+            }
+        ),
+        "Emergency Case"
+    );
 
 }
 
@@ -452,7 +446,7 @@ export async function printPrescription({
 
     const { default: PrintPrescription } =
         await import(
-            "../components/Printing/PrintPrescription"
+            "../components/printing/PrintPrescription"
         );
 
 
