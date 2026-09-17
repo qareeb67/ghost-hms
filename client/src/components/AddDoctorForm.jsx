@@ -1,4 +1,7 @@
+
 import { useEffect, useState } from "react";
+
+import api from "../services/api";
 
 import {
     UserRound,
@@ -16,11 +19,6 @@ import {
     ShieldCheck
 } from "lucide-react";
 
-import {
-    getActiveDepartments
-} from "../services/departmentService";
-
-import "./AddDoctorForm.css";
 
 /*
 ==================================================
@@ -29,18 +27,10 @@ GHOST HMS — ADD / EDIT DOCTOR FORM
 
 Supports:
 
-- Personal Information
-- Professional Information
-- Department selection
-- Medical Registration
-- Employment Information
-
-Department Integration:
-
-- Loads active departments from backend
-- Uses department_id as the saved relationship
-- Uses department code + department name in dropdown
-- Falls back to cached departments when offline
+Personal Information
+Professional Information
+Medical Registration
+Employment Information
 
 Compatible with:
 
@@ -50,11 +40,13 @@ updateDoctor()
 ==================================================
 */
 
+
 function AddDoctorForm({
     doctor,
     onSave,
     onCancel
 }) {
+
 
     /*
     ==================================================
@@ -87,19 +79,301 @@ function AddDoctorForm({
         employment_start_date: "",
         employment_end_date: "",
         employment_status: ""
+
     });
+
+    const [departments, setDepartments] = useState([]);
+    const [departmentsLoading, setDepartmentsLoading] = useState(false);
+    const [departmentsError, setDepartmentsError] = useState("");
 
 
     /*
     ==================================================
-    DEPARTMENT STATE
+    LOAD DEPARTMENTS
     ==================================================
     */
 
-    const [departments, setDepartments] = useState([]);
+    useEffect(() => {
 
-    const [departmentsLoading, setDepartmentsLoading] =
-        useState(false);
+        let cancelled = false;
+
+        const loadDepartments = async () => {
+
+            setDepartmentsLoading(true);
+            setDepartmentsError("");
+
+            try {
+
+                const token =
+                    localStorage.getItem("token");
+
+                const response =
+                    await api.get(
+                        "/departments",
+                        {
+                            headers: {
+                                Authorization:
+                                    `Bearer ${token}`
+                            }
+                        }
+                    );
+
+                if (cancelled) {
+                    return;
+                }
+
+                const receivedDepartments =
+                    Array.isArray(
+                        response?.data?.departments
+                    )
+                        ? response.data.departments
+                        : Array.isArray(
+                            response?.data?.data
+                        )
+                            ? response.data.data
+                            : Array.isArray(
+                                response?.data
+                            )
+                                ? response.data
+                                : [];
+
+                const normalizedDepartments =
+                    receivedDepartments
+                        .map((department) => {
+
+                            const id =
+                                department?.department_id ??
+                                department?.id;
+
+                            const name =
+                                department?.department_name ??
+                                department?.name ??
+                                "";
+
+                            const code =
+                                department?.department_code ??
+                                department?.code ??
+                                "";
+
+                            return {
+                                ...department,
+                                department_id: id,
+                                department_name: name,
+                                department_code: code
+                            };
+
+                        })
+                        .filter(
+                            (department) =>
+                                department.department_id !==
+                                    undefined &&
+                                department.department_id !==
+                                    null &&
+                                department.department_name
+                        )
+                        .sort(
+                            (a, b) =>
+                                String(
+                                    a.department_name
+                                ).localeCompare(
+                                    String(
+                                        b.department_name
+                                    )
+                                )
+                        );
+
+                setDepartments(
+                    normalizedDepartments
+                );
+
+                /*
+                Cache the latest successful list so
+                the form can still offer the known
+                departments during a temporary outage.
+                */
+                try {
+                    localStorage.setItem(
+                        "ghost_hms_departments",
+                        JSON.stringify(
+                            normalizedDepartments
+                        )
+                    );
+                } catch (storageError) {
+                    console.warn(
+                        "Unable to cache departments:",
+                        storageError
+                    );
+                }
+
+            } catch (error) {
+
+                console.error(
+                    "Failed to load departments:",
+                    error
+                );
+
+                let cachedDepartments = [];
+
+                try {
+
+                    const cached =
+                        localStorage.getItem(
+                            "ghost_hms_departments"
+                        );
+
+                    cachedDepartments =
+                        cached
+                            ? JSON.parse(cached)
+                            : [];
+
+                } catch (storageError) {
+
+                    console.warn(
+                        "Unable to read cached departments:",
+                        storageError
+                    );
+
+                }
+
+                if (
+                    !cancelled &&
+                    Array.isArray(
+                        cachedDepartments
+                    ) &&
+                    cachedDepartments.length > 0
+                ) {
+
+                    setDepartments(
+                        cachedDepartments
+                    );
+
+                    setDepartmentsError(
+                        "Using cached departments while the server is unavailable."
+                    );
+
+                } else if (!cancelled) {
+
+                    setDepartmentsError(
+                        error?.response?.data?.message ||
+                        error?.message ||
+                        "Unable to load hospital departments."
+                    );
+
+                }
+
+            } finally {
+
+                if (!cancelled) {
+                    setDepartmentsLoading(false);
+                }
+
+            }
+
+        };
+
+        loadDepartments();
+
+        return () => {
+            cancelled = true;
+        };
+
+    }, []);
+
+
+    /*
+    ==================================================
+    LOAD DOCTOR FOR EDITING
+    ==================================================
+    */
+
+    useEffect(() => {
+
+        if (doctor) {
+
+            setFormData({
+
+                first_name:
+                    doctor.first_name || "",
+
+                middle_name:
+                    doctor.middle_name || "",
+
+                last_name:
+                    doctor.last_name || "",
+
+                gender:
+                    doctor.gender || "",
+
+
+                specialization:
+                    doctor.specialization || "",
+
+                specialization_id:
+                    doctor.specialization_id ?? "",
+
+                department_id:
+                    doctor.department_id ??
+                    doctor.department ??
+                    "",
+
+
+                phone:
+                    doctor.phone || "",
+
+                email:
+                    doctor.email || "",
+
+                address:
+                    doctor.address || "",
+
+
+                years_of_experience:
+                    doctor.years_of_experience ?? "",
+
+
+                mdcn_number:
+                    doctor.mdcn_number || "",
+
+                mdcn_status:
+                    doctor.mdcn_status || "",
+
+                license_expiry_date:
+                    doctor.license_expiry_date
+                        ? String(
+                            doctor.license_expiry_date
+                        ).slice(0, 10)
+                        : "",
+
+
+                employment_type:
+                    doctor.employment_type || "",
+
+                employment_start_date:
+                    doctor.employment_start_date
+                        ? String(
+                            doctor.employment_start_date
+                        ).slice(0, 10)
+                        : "",
+
+                employment_end_date:
+                    doctor.employment_end_date
+                        ? String(
+                            doctor.employment_end_date
+                        ).slice(0, 10)
+                        : "",
+
+                employment_status:
+                    doctor.employment_status || ""
+
+            });
+
+        } else {
+
+            resetForm();
+
+        }
+
+    }, [doctor]);
 
 
     /*
@@ -135,183 +409,10 @@ function AddDoctorForm({
             employment_start_date: "",
             employment_end_date: "",
             employment_status: ""
+
         });
 
     };
-
-
-    /*
-    ==================================================
-    LOAD DEPARTMENTS
-    ==================================================
-
-    Reference/master data.
-
-    Online:
-        GET /departments/active
-
-    Offline:
-        departmentService returns cached departments.
-
-    ==================================================
-    */
-
-    useEffect(() => {
-
-        let mounted = true;
-
-        const loadDepartments = async () => {
-
-            try {
-
-                setDepartmentsLoading(true);
-
-                const data =
-                    await getActiveDepartments();
-
-                const departmentList =
-                    Array.isArray(
-                        data?.departments
-                    )
-                        ? data.departments
-                        : [];
-
-                if (mounted) {
-
-                    setDepartments(
-                        departmentList
-                    );
-
-                    console.log(
-                        "🏥 Ghost HMS departments loaded:",
-                        departmentList
-                    );
-
-                }
-
-            } catch (error) {
-
-                console.error(
-                    "❌ Failed to load departments:",
-                    error
-                );
-
-                if (mounted) {
-
-                    setDepartments([]);
-                }
-
-            } finally {
-
-                if (mounted) {
-
-                    setDepartmentsLoading(false);
-                }
-
-            }
-
-        };
-
-        loadDepartments();
-
-        return () => {
-
-            mounted = false;
-
-        };
-
-    }, []);
-
-
-    /*
-    ==================================================
-    LOAD DOCTOR FOR EDITING
-    ==================================================
-    */
-
-    useEffect(() => {
-
-        if (doctor) {
-
-            setFormData({
-
-                first_name:
-                    doctor.first_name || "",
-
-                middle_name:
-                    doctor.middle_name || "",
-
-                last_name:
-                    doctor.last_name || "",
-
-                gender:
-                    doctor.gender || "",
-
-                specialization:
-                    doctor.specialization || "",
-
-                specialization_id:
-                    doctor.specialization_id ?? "",
-
-                department_id:
-                    doctor.department_id ??
-                    doctor.department ??
-                    "",
-
-                phone:
-                    doctor.phone || "",
-
-                email:
-                    doctor.email || "",
-
-                address:
-                    doctor.address || "",
-
-                years_of_experience:
-                    doctor.years_of_experience ??
-                    "",
-
-                mdcn_number:
-                    doctor.mdcn_number || "",
-
-                mdcn_status:
-                    doctor.mdcn_status || "",
-
-                license_expiry_date:
-                    doctor.license_expiry_date
-                        ? String(
-                            doctor.license_expiry_date
-                        ).slice(0, 10)
-                        : "",
-
-                employment_type:
-                    doctor.employment_type || "",
-
-                employment_start_date:
-                    doctor.employment_start_date
-                        ? String(
-                            doctor.employment_start_date
-                        ).slice(0, 10)
-                        : "",
-
-                employment_end_date:
-                    doctor.employment_end_date
-                        ? String(
-                            doctor.employment_end_date
-                        ).slice(0, 10)
-                        : "",
-
-                employment_status:
-                    doctor.employment_status || ""
-            });
-
-        } else {
-
-            resetForm();
-
-        }
-
-    }, [doctor]);
 
 
     /*
@@ -327,13 +428,16 @@ function AddDoctorForm({
             value
         } = e.target;
 
-        setFormData(previous => ({
 
-            ...previous,
+        setFormData(
+            previous => ({
 
-            [name]: value
+                ...previous,
 
-        }));
+                [name]: value
+
+            })
+        );
 
     };
 
@@ -379,6 +483,7 @@ function AddDoctorForm({
                         formData.years_of_experience
                     )
                     : undefined
+
         };
 
 
@@ -392,7 +497,8 @@ function AddDoctorForm({
             key => {
 
                 if (
-                    payload[key] === "" ||
+                    payload[key] === ""
+                    ||
                     payload[key] === undefined
                 ) {
 
@@ -403,12 +509,6 @@ function AddDoctorForm({
             }
         );
 
-
-        /*
-        ----------------------------------------------
-        SAVE
-        ----------------------------------------------
-        */
 
         onSave(payload);
 
@@ -454,6 +554,7 @@ function AddDoctorForm({
                                 }
 
                             </h2>
+
 
                             <p>
 
@@ -559,13 +660,10 @@ function AddDoctorForm({
                             <div className="doctor-field">
 
                                 <label htmlFor="middle_name">
-
                                     Middle Name
-
                                     <span className="doctor-optional">
                                         Optional
                                     </span>
-
                                 </label>
 
                                 <div className="doctor-input-wrapper">
@@ -628,13 +726,10 @@ function AddDoctorForm({
                             <div className="doctor-field">
 
                                 <label htmlFor="gender">
-
                                     Gender
-
                                     <span className="doctor-optional">
                                         Optional
                                     </span>
-
                                 </label>
 
                                 <div className="doctor-input-wrapper">
@@ -680,13 +775,10 @@ function AddDoctorForm({
                             <div className="doctor-field">
 
                                 <label htmlFor="phone">
-
                                     Phone Number
-
                                     <span className="doctor-optional">
                                         Optional
                                     </span>
-
                                 </label>
 
                                 <div className="doctor-input-wrapper">
@@ -717,13 +809,10 @@ function AddDoctorForm({
                             <div className="doctor-field">
 
                                 <label htmlFor="email">
-
                                     Email Address
-
                                     <span className="doctor-optional">
                                         Optional
                                     </span>
-
                                 </label>
 
                                 <div className="doctor-input-wrapper">
@@ -753,13 +842,10 @@ function AddDoctorForm({
                             <div className="doctor-field doctor-field-full">
 
                                 <label htmlFor="address">
-
                                     Address
-
                                     <span className="doctor-optional">
                                         Optional
                                     </span>
-
                                 </label>
 
                                 <div className="doctor-input-wrapper doctor-textarea-wrapper">
@@ -854,13 +940,10 @@ function AddDoctorForm({
                             <div className="doctor-field">
 
                                 <label htmlFor="specialization_id">
-
                                     Specialization ID
-
                                     <span className="doctor-optional">
                                         Optional
                                     </span>
-
                                 </label>
 
                                 <div className="doctor-input-wrapper">
@@ -886,20 +969,15 @@ function AddDoctorForm({
                             </div>
 
 
-                            {/* ==================================
-                                DEPARTMENT
-                            ================================== */}
+                            {/* DEPARTMENT */}
 
                             <div className="doctor-field">
 
                                 <label htmlFor="department_id">
-
                                     Department
-
                                     <span className="doctor-optional">
                                         Optional
                                     </span>
-
                                 </label>
 
                                 <div className="doctor-input-wrapper">
@@ -915,67 +993,63 @@ function AddDoctorForm({
                                         onChange={
                                             handleChange
                                         }
+                                        disabled={
+                                            departmentsLoading ||
+                                            departments.length === 0
+                                        }
                                     >
 
                                         <option value="">
-
                                             {
                                                 departmentsLoading
                                                     ? "Loading departments..."
-                                                    : departments.length
-                                                        ? "Select department"
-                                                        : "No departments available"
+                                                    : departments.length === 0
+                                                        ? "No departments available"
+                                                        : "Select department"
                                             }
-
                                         </option>
-
 
                                         {
                                             departments.map(
-                                                (department) => {
-
-                                                    const departmentId =
-                                                        department.department_id ??
-                                                        department.id;
-
-                                                    const departmentCode =
-                                                        department.department_code ??
-                                                        department.code;
-
-                                                    const departmentName =
-                                                        department.department_name ??
-                                                        department.name ??
-                                                        "Unnamed Department";
-
-
-                                                    return (
-
-                                                        <option
-                                                            key={
-                                                                departmentId
-                                                            }
-                                                            value={
-                                                                departmentId
-                                                            }
-                                                        >
-
-                                                            {
-                                                                departmentCode
-                                                                    ? `${departmentCode} — ${departmentName}`
-                                                                    : departmentName
-                                                            }
-
-                                                        </option>
-
-                                                    );
-
-                                                }
+                                                (department) => (
+                                                    <option
+                                                        key={
+                                                            department.department_id
+                                                        }
+                                                        value={
+                                                            department.department_id
+                                                        }
+                                                    >
+                                                        {
+                                                            department.department_name
+                                                        }
+                                                        {
+                                                            department.department_code
+                                                                ? ` (${department.department_code})`
+                                                                : ""
+                                                        }
+                                                    </option>
+                                                )
                                             )
                                         }
 
                                     </select>
 
                                 </div>
+
+                                {
+                                    departmentsError && (
+                                        <span
+                                            className="doctor-optional"
+                                            style={{
+                                                display: "block",
+                                                marginTop: "5px"
+                                            }}
+                                        >
+                                            {departmentsError}
+                                        </span>
+                                    )
+                                }
 
                             </div>
 
@@ -985,13 +1059,10 @@ function AddDoctorForm({
                             <div className="doctor-field">
 
                                 <label htmlFor="years_of_experience">
-
                                     Years of Experience
-
                                     <span className="doctor-optional">
                                         Optional
                                     </span>
-
                                 </label>
 
                                 <div className="doctor-input-wrapper">
@@ -1055,13 +1126,10 @@ function AddDoctorForm({
                             <div className="doctor-field">
 
                                 <label htmlFor="mdcn_number">
-
                                     MDCN Number
-
                                     <span className="doctor-optional">
                                         Optional
                                     </span>
-
                                 </label>
 
                                 <div className="doctor-input-wrapper">
@@ -1092,13 +1160,10 @@ function AddDoctorForm({
                             <div className="doctor-field">
 
                                 <label htmlFor="mdcn_status">
-
                                     MDCN Status
-
                                     <span className="doctor-optional">
                                         Optional
                                     </span>
-
                                 </label>
 
                                 <div className="doctor-input-wrapper">
@@ -1152,13 +1217,10 @@ function AddDoctorForm({
                             <div className="doctor-field">
 
                                 <label htmlFor="license_expiry_date">
-
                                     License Expiry Date
-
                                     <span className="doctor-optional">
                                         Optional
                                     </span>
-
                                 </label>
 
                                 <div className="doctor-input-wrapper">
@@ -1219,13 +1281,10 @@ function AddDoctorForm({
                             <div className="doctor-field">
 
                                 <label htmlFor="employment_type">
-
                                     Employment Type
-
                                     <span className="doctor-optional">
                                         Optional
                                     </span>
-
                                 </label>
 
                                 <div className="doctor-input-wrapper">
@@ -1279,13 +1338,10 @@ function AddDoctorForm({
                             <div className="doctor-field">
 
                                 <label htmlFor="employment_status">
-
                                     Employment Status
-
                                     <span className="doctor-optional">
                                         Optional
                                     </span>
-
                                 </label>
 
                                 <div className="doctor-input-wrapper">
@@ -1347,13 +1403,10 @@ function AddDoctorForm({
                             <div className="doctor-field">
 
                                 <label htmlFor="employment_start_date">
-
                                     Employment Start Date
-
                                     <span className="doctor-optional">
                                         Optional
                                     </span>
-
                                 </label>
 
                                 <div className="doctor-input-wrapper">
@@ -1382,13 +1435,10 @@ function AddDoctorForm({
                             <div className="doctor-field">
 
                                 <label htmlFor="employment_end_date">
-
                                     Employment End Date
-
                                     <span className="doctor-optional">
                                         Optional
                                     </span>
-
                                 </label>
 
                                 <div className="doctor-input-wrapper">
@@ -1465,3 +1515,4 @@ function AddDoctorForm({
 
 
 export default AddDoctorForm;
+
